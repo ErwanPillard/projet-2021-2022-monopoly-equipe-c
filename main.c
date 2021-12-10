@@ -2,7 +2,7 @@
 
 
 int main(){
-    printf("merdeouille sa focntionne ?")
+    printf("merdeouille sa focntion")
     return 0;
 }
 
