@@ -1,8 +1,8 @@
 #include <stdio.h>
-
+#include "menu.h"
 
 int main(){
-    printf("merdeouille sa focntion");
+    menuPrincipale();
     return 0;
 }
 

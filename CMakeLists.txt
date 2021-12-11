@@ -3,4 +3,4 @@ project(projet-2021-2022-monopoly-equipe-c C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(projet-2021-2022-monopoly-equipe-c main.c)
+add_executable(projet-2021-2022-monopoly-equipe-c main.c menu.c menu.h)
