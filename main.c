@@ -15,5 +15,8 @@ int main(){
     assert(display != NULL);
 
     al_set_window_title(display, "Monopoly");
-    al_flip_display();
+
+    al_rest(5);
+    al_destroy_display(display);
+
 }
