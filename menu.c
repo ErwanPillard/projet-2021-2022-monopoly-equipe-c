@@ -11,14 +11,13 @@ void ajouterJoueur(int taille_logique){
     for(int i = 0; i < taille_logique; i++){
         printf("Entrez le pseudo du joueur %d: ", i + 1);
         scanf("%c", &parametreJ.nomJoueur);
-        parametreJ.argentJoueur = 1500; // argent initiale du joueur
+        parametreJ.argentJoueur = 1500.0f; // argent initiale du joueur
         tabNomJoueurs[i] = parametreJ;
     }
 }
 
 
 void lancerNouvellePartie(){
-    nvJoueur parametreJ;
     int nombreJoueurs = 0;
     printf("Entrez le nombre de joueur: ");
     scanf("%d", &nombreJoueurs);

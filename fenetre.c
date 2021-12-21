@@ -7,25 +7,23 @@
 
 int setWindow(){
     ALLEGRO_DISPLAY* display;
-    ALLEGRO_BITMAP *plateau;
 
     //variables
     int width = 640;
     int height = 480;
-
     al_init();
     al_init_image_addon();
 
     display = al_create_display(width, height);
-
+    //al_clear_to_color(al_map_rgb(255, 0, 0));
     al_set_window_position(display,10,10);
     al_set_window_title(display, "Monopoly");
 
-    plateau = al_load_bitmap("case1.jpg");
+    ALLEGRO_BITMAP *plateau = al_load_bitmap("image/case1.jpg");
 
+    al_draw_bitmap(plateau,0,0,0);
     al_flip_display();
     al_rest(10);
-
     al_destroy_bitmap(plateau);
     al_destroy_display(display);
 }
