@@ -19,7 +19,7 @@ int setWindow(){
     al_set_window_position(display,10,10);
     al_set_window_title(display, "Monopoly");
 
-    ALLEGRO_BITMAP *plateau = al_load_bitmap("image/case1.jpg");
+    ALLEGRO_BITMAP *plateau = al_load_bitmap("/image/case1.jpg");
 
     al_draw_bitmap(plateau,0,0,0);
     al_flip_display();

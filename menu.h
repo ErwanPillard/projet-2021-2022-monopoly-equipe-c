@@ -7,22 +7,28 @@
 
 #define NOMBRE_MAX_JOUEURS 10
 
-void exit(int status);
 
 typedef struct{
-    char nomJoueur;
+    int numJoueur;
+    char nomJoueur[10];
     float argentJoueur;
 
-}nvJoueur;
 
-nvJoueur tabNomJoueurs[NOMBRE_MAX_JOUEURS];
+}Joueur;
 
-void lancerNouvellePartie();
 
-void ajouterJoueur(int taille_logique);
-
-int quitterJeu();
+Joueur tabJoueur[NOMBRE_MAX_JOUEURS];
 
 int menuPrincipale();
+
+int lancerNouvellePartie();
+
+Joueur ajouterJoueur(int i);
+int  ajouterJoueursTab(int taille_logique);
+
+void afficherRegle();
+void afficherNomMembresProjet();
+
+int quitter();
 
 #endif //PROJET_2021_2022_MONOPOLY_EQUIPE_C_MENU_H
