@@ -16,7 +16,6 @@ typedef struct{
 
 }Joueur;
 
-
 Joueur tabJoueur[NOMBRE_MAX_JOUEURS];
 
 int menuPrincipale();

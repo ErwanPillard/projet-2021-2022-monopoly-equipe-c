@@ -4,6 +4,7 @@
 
 #include "menu.h"
 #include "stdio.h"
+#include <stdlib.h>
 
 int menuPrincipale(){
     int choixMenu = 0;
@@ -19,7 +20,7 @@ int menuPrincipale(){
 Joueur ajouterJoueur(int i){
     Joueur parametreJ;
     printf("Entrez le pseudo du joueur %d: ", i + 1);
-    scanf("%s", parametreJ.nomJoueur[10]);
+    scanf("%s", parametreJ.nomJoueur);
     parametreJ.argentJoueur = 1500.0f; // argent initiale du joueur
     parametreJ.numJoueur = i + 1;
     return parametreJ;
@@ -35,17 +36,16 @@ int  ajouterJoueursTab(int taille_logique){
 
 int lancerNouvellePartie(){
     int nombreJoueurs = 0;
-    /*
     char nomPartie[20];
     printf("Nom de la partie (20 caractere max): ");
-    scanf("%s", nomPartie[20]);*/
-    printf("Entrez le nombre de joueurs: ");
+    scanf("%s", nomPartie);
+    printf("Entrez le nombre de joueurs (max 10) ");
     scanf("%d", &nombreJoueurs);
     ajouterJoueursTab(nombreJoueurs);
 }
 
 void afficherRegle(){
-
+// texte avec la mise en forme pour afficher les règles du monopoly
 }
 
 void afficherNomMembresProjet(){
@@ -57,4 +57,14 @@ void afficherNomMembresProjet(){
 }
 
 int quitter(){
+    int choix = 0;
+    printf("Etes vous sur de vouloir quitter ?");
+    scanf("%d", &choix);
+    if(choix == 1){
+        exit(EXIT_SUCCESS);
+    }
+    else{
+        return 0;
+    }
 }
+
