@@ -2,8 +2,10 @@
 
 
 #include "menu.h"
+#include "fenetre.h"
 
 int main(){
+    setWindow();
     int choixMenu;
     choixMenu = menuPrincipale();
     switch (choixMenu) {

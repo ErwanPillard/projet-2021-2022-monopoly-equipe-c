@@ -57,14 +57,7 @@ void afficherNomMembresProjet(){
 }
 
 int quitter(){
-    int choix = 0;
-    printf("Etes vous sur de vouloir quitter ?");
-    scanf("%d", &choix);
-    if(choix == 1){
-        exit(EXIT_SUCCESS);
-    }
-    else{
-        return 0;
-    }
+    exit(EXIT_SUCCESS);
+
 }
 
