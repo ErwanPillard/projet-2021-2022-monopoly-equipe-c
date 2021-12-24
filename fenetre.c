@@ -1,6 +1,3 @@
-//
-// Created by 33782 on 20/12/2021.
-//
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <assert.h>
@@ -10,6 +7,8 @@
 
 int setWindow(){
     ALLEGRO_DISPLAY* display = NULL;
+    ALLEGRO_BITMAP *plateau = NULL;
+
 
     //variables
     int width = 640;
@@ -23,16 +22,18 @@ int setWindow(){
     al_set_window_position(display,10,10);
     al_set_window_title(display, "Monopoly");
 
-    ALLEGRO_BITMAP* plateau = al_load_bitmap("C:Users/33782/CLionProjects/projet-2021-2022-monopoly-equipe-c/images/case1.jpg");
-    if(plateau == NULL) printf("Le chemin est pas bon") ;
+    plateau = al_load_bitmap("../images/case1.jpg");
 
-    al_rest(10);
+    if(plateau == NULL) printf("Le chemin est pas bon");
+
     /*
     while(!isEnd){
         if(quitter() == true){
             isEnd = 1;
         }
-    }*/
+    }
     al_destroy_bitmap(plateau);
-    al_destroy_display(display);
+    al_destroy_display(display);*/
+
+
 }

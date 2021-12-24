@@ -58,6 +58,5 @@ void afficherNomMembresProjet(){
 
 int quitter(){
     exit(EXIT_SUCCESS);
-
 }
 
