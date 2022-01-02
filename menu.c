@@ -4,7 +4,10 @@
 
 #include "menu.h"
 #include "stdio.h"
+#include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 int menuPrincipale(){
     int choixMenu = 0;
@@ -22,7 +25,7 @@ Joueur ajouterJoueur(int i){
     printf("Entrez le pseudo du joueur %d: ", i + 1);
     scanf("%s", parametreJ.nomJoueur);
     parametreJ.argentJoueur = 1500.0f; // argent initiale du joueur
-    parametreJ.numJoueur = i + 1;
+    parametreJ.numJoueur = i; // on affecte le num 0 au joueur 1, ect...
     return parametreJ;
 }
 
@@ -42,6 +45,7 @@ int lancerNouvellePartie(){
     printf("Entrez le nombre de joueurs (max 10) ");
     scanf("%d", &nombreJoueurs);
     ajouterJoueursTab(nombreJoueurs);
+    random(nombreJoueurs);
 }
 
 void afficherRegle(){
@@ -54,6 +58,27 @@ void afficherNomMembresProjet(){
            "Theo\n"
            "Lucas\n"
            "Constantin");
+}
+
+
+int random(int nbJoueurs) {
+    int nbaleatoire;
+    for (int i = 0; i < nbJoueurs; i++){
+        nbaleatoire = rand() % (nbJoueurs + 1);
+        printf("%d", nbaleatoire);
+        for(int j = 0; j < nbJoueurs; j++){
+            if(ordreJoueurs[j].numJoueur == nbaleatoire){
+                i--;
+            }
+            else{
+                ordreJoueurs[j].numJoueur = tabJoueur[i].numJoueur;
+            }
+        }
+    }
+    printf("\n");
+    for(int i = 0; i < nbJoueurs; i++){
+        printf("%d", ordreJoueurs[i].numJoueur);
+    }
 }
 
 int quitter(){

@@ -1,17 +1,12 @@
 
 #include "menu.h"
 #include "fenetre.h"
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_image.h>
-#include <assert.h>
-#include <stdio.h>
-
 
 int main(){
-    setWindow();
+    //setWindow();
     int choixMenu;
     choixMenu = menuPrincipale();
-    switch (choixMenu) {
+    switch(choixMenu){
         case 1:
             lancerNouvellePartie();
             break;
