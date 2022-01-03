@@ -6,6 +6,9 @@
 int setWindow(){
 
     ALLEGRO_DISPLAY* display;
+    ALLEGRO_KEYBOARD_STATE keyboard_state;
+    ALLEGRO_MOUSE_STATE mouse_state;
+
 
     if(!al_init()){
         printf("Erreur initialisation");

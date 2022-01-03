@@ -3,7 +3,7 @@ project(projet-2021-2022-monopoly-equipe-c C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(projet-2021-2022-monopoly-equipe-c main.c menu.c menu.h fenetre.c fenetre.h)
+add_executable(projet-2021-2022-monopoly-equipe-c main.c menu.c menu.h fenetre.c fenetre.h partieEnCours.c partieEnCours.h)
 
 IF(WIN32)
     target_link_libraries(projet-2021-2022-monopoly-equipe-c -lmingw32 -lallegro-5.0.10-monolith-md-debug)

@@ -12,8 +12,6 @@ typedef struct{
     int numJoueur;
     char nomJoueur[10];
     float argentJoueur;
-
-
 }Joueur;
 
 Joueur tabJoueur[NOMBRE_MAX_JOUEURS];
@@ -25,7 +23,7 @@ int menuPrincipale();
 int lancerNouvellePartie();
 
 Joueur ajouterJoueur(int i);
-int random(int nbJoueurs);
+int randomJoueurs(int nbJoueurs);
 int  ajouterJoueursTab(int taille_logique);
 
 void afficherRegle();
