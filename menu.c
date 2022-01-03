@@ -80,22 +80,21 @@ int random(int nbJoueurs) {
 
 void ordrePassage(int nbJoueurs) {
     srand(time(NULL));
-    int aleatoire;
+    int aleatoire, numero = 1, i, resultat;
     aleatoire = rand() % (nbJoueurs);
     printf("aleatoire : %d\n", aleatoire);
-    for(int i=1;i<=nbJoueurs;i++) {
-        if(aleatoire<=nbJoueurs) {
-            printf("Le joueur %d est : %s\n", i, tabJoueur[aleatoire].nomJoueur);
-            aleatoire++;
-            printf("aleatoire 1 : %d\n", aleatoire);
-            i++;
-        } else if (aleatoire>nbJoueurs) {
-            aleatoire = 1;
-            printf("Le joueur %d est : %s\n", i, tabJoueur[aleatoire].nomJoueur);
-            aleatoire++;
-            printf("aleatoire 2 : %d\n", aleatoire);
-            i++;
-        }
+    i = aleatoire;
+    resultat = nbJoueurs + aleatoire;
+    for(i;i<nbJoueurs;i++) {
+        printf("Le joueur %d est : %s\n", numero, tabJoueur[aleatoire].nomJoueur);
+        aleatoire++;
+        numero++;
+    }
+    aleatoire = 0;
+    for (i; i < resultat; i++) {
+        printf("Le joueur %d est : %s\n", numero, tabJoueur[aleatoire].nomJoueur);
+        aleatoire++;
+        numero++;
     }
 }
 
