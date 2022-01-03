@@ -1,9 +1,11 @@
 
 #include "menu.h"
 #include "fenetre.h"
-
+#include "partieEnCours.h"
 int main(){
-    /*setWindow();*/
+    //partieEnCours();
+    setWindow();
+/*
     int choixMenu;
     choixMenu = menuPrincipale();
     switch(choixMenu){
@@ -19,6 +21,6 @@ int main(){
         case 4:
             quitter();
             break;
-    }
+    }*/
     return 0;
 }

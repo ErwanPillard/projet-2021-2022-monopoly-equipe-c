@@ -30,7 +30,7 @@ int menuPrincipale();
 int lancerNouvellePartie();
 
 Joueur ajouterJoueur(int i);
-int random(int nbJoueurs);
+int randomJoueurs(int nbJoueurs);
 int  ajouterJoueursTab(int taille_logique);
 
 void afficherRegle();
