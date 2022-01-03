@@ -3,8 +3,8 @@
 #include "fenetre.h"
 #include "partieEnCours.h"
 int main(){
-    partieEnCours();
-    //setWindow();
+    //partieEnCours();
+    setWindow();
 /*
     int choixMenu;
     choixMenu = menuPrincipale();
