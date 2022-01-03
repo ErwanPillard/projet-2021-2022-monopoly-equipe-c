@@ -45,7 +45,7 @@ int lancerNouvellePartie(){
     printf("Entrez le nombre de joueurs (max 10) ");
     scanf("%d", &nombreJoueurs);
     ajouterJoueursTab(nombreJoueurs);
-    random(nombreJoueurs);
+    randomJoueurs(nombreJoueurs);
 }
 
 void afficherRegle(){
@@ -61,7 +61,7 @@ void afficherNomMembresProjet(){
 }
 
 
-int random(int nbJoueurs) {
+int randomJoueurs(int nbJoueurs) {
     int nbaleatoire;
     for (int i = 0; i < nbJoueurs; i++){
         nbaleatoire = rand() % (nbJoueurs + 1);
