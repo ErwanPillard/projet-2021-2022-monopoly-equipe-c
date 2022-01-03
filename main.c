@@ -3,8 +3,7 @@
 #include "fenetre.h"
 
 int main(){
-    setWindow();
-    /*
+    /*setWindow();*/
     int choixMenu;
     choixMenu = menuPrincipale();
     switch(choixMenu){
@@ -21,5 +20,5 @@ int main(){
             quitter();
             break;
     }
-    return 0;*/
+    return 0;
 }

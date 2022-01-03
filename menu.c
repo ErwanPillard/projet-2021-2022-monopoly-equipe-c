@@ -1,7 +1,3 @@
-//
-// Created by 33782 on 11/12/2021.
-//
-
 #include "menu.h"
 #include "stdio.h"
 #include <stdio.h>
@@ -38,15 +34,16 @@ int  ajouterJoueursTab(int taille_logique){
 }
 
 int lancerNouvellePartie(){
-    int nombreJoueurs = 0;
+    int nombreJoueurs = 0, premierJoueur;
     char nomPartie[20];
     printf("Nom de la partie (20 caractere max): ");
     scanf("%s", nomPartie);
     printf("Entrez le nombre de joueurs (max 10) ");
     scanf("%d", &nombreJoueurs);
     ajouterJoueursTab(nombreJoueurs);
-    random(nombreJoueurs);
-}
+   /* random(nombreJoueurs);*/
+    ordrePassage(nombreJoueurs);
+    }
 
 void afficherRegle(){
 // texte avec la mise en forme pour afficher les règles du monopoly
@@ -65,7 +62,7 @@ int random(int nbJoueurs) {
     int nbaleatoire;
     for (int i = 0; i < nbJoueurs; i++){
         nbaleatoire = rand() % (nbJoueurs + 1);
-        printf("%d", nbaleatoire);
+        printf("%d\n", nbaleatoire);
         for(int j = 0; j < nbJoueurs; j++){
             if(ordreJoueurs[j].numJoueur == nbaleatoire){
                 i--;
@@ -77,9 +74,31 @@ int random(int nbJoueurs) {
     }
     printf("\n");
     for(int i = 0; i < nbJoueurs; i++){
-        printf("%d", ordreJoueurs[i].numJoueur);
+        printf("%d\n", ordreJoueurs[i].numJoueur);
     }
 }
+
+void ordrePassage(int nbJoueurs) {
+    srand(time(NULL));
+    int aleatoire;
+    aleatoire = rand() % (nbJoueurs);
+    printf("aleatoire : %d\n", aleatoire);
+    for(int i=1;i<=nbJoueurs;i++) {
+        if(aleatoire<=nbJoueurs) {
+            printf("Le joueur %d est : %s\n", i, tabJoueur[aleatoire].nomJoueur);
+            aleatoire++;
+            printf("aleatoire 1 : %d\n", aleatoire);
+            i++;
+        } else if (aleatoire>nbJoueurs) {
+            aleatoire = 1;
+            printf("Le joueur %d est : %s\n", i, tabJoueur[aleatoire].nomJoueur);
+            aleatoire++;
+            printf("aleatoire 2 : %d\n", aleatoire);
+            i++;
+        }
+    }
+}
+
 
 int quitter(){
     exit(EXIT_SUCCESS);
