@@ -64,9 +64,32 @@ int partieEnCours(){
 int randomDe(){
     int result = 0;
     srand(time(NULL));
-    for(int i = 0; i <= 2; i++){
-        result += rand() % 6;
-    }
+    result = rand() % 6;
     return result;
 }
 
+int lancerDesDe() {
+    int de1, de2, lancer, nbDouble = 1;
+    de1 = randomDe();
+    de2 = randomDe();
+    lancer = de1 + de2;
+    if(doubleDe(de1, de2)) {
+        nbDouble++;
+        lancerDesDe();
+        if(nbDouble=3){
+            //aller en prison
+        }
+    }
+    return lancer;
+}
+
+
+int doubleDe(int de1, int de2) {
+    if(de1 = de2) {
+        printf("double");
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}

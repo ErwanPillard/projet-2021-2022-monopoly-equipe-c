@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+
 int menuPrincipale(){
     int choixMenu = 0;
     do{
@@ -41,7 +42,7 @@ int lancerNouvellePartie(){
     printf("Entrez le nombre de joueurs (max 10) ");
     scanf("%d", &nombreJoueurs);
     ajouterJoueursTab(nombreJoueurs);
-   /* random(nombreJoueurs);*/
+    /*random(nombreJoueurs);*/
     ordrePassage(nombreJoueurs);
     }
 
@@ -58,7 +59,7 @@ void afficherNomMembresProjet(){
 }
 
 
-int random(int nbJoueurs) {
+/*int random(int nbJoueurs) {
     int nbaleatoire;
     for (int i = 0; i < nbJoueurs; i++){
         nbaleatoire = rand() % (nbJoueurs + 1);
@@ -76,7 +77,7 @@ int random(int nbJoueurs) {
     for(int i = 0; i < nbJoueurs; i++){
         printf("%d\n", ordreJoueurs[i].numJoueur);
     }
-}
+}*/
 
 void ordrePassage(int nbJoueurs) {
     srand(time(NULL));
@@ -97,7 +98,6 @@ void ordrePassage(int nbJoueurs) {
         numero++;
     }
 }
-
 
 int quitter(){
     exit(EXIT_SUCCESS);

@@ -8,5 +8,7 @@
 int randomDe();
 int fenetre();
 int partieEnCours();
+int doubleDe(int de1, int de2);
+
 
 #endif //PROJET_2021_2022_MONOPOLY_EQUIPE_C_PARTIEENCOURS_H
