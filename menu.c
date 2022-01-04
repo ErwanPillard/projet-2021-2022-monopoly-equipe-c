@@ -42,7 +42,6 @@ int lancerNouvellePartie(){
     printf("Entrez le nombre de joueurs (max 10) ");
     scanf("%d", &nombreJoueurs);
     ajouterJoueursTab(nombreJoueurs);
-    /*random(nombreJoueurs);*/
     ordrePassage(nombreJoueurs);
     }
 
@@ -59,31 +58,11 @@ void afficherNomMembresProjet(){
 }
 
 
-/*int random(int nbJoueurs) {
-    int nbaleatoire;
-    for (int i = 0; i < nbJoueurs; i++){
-        nbaleatoire = rand() % (nbJoueurs + 1);
-        printf("%d\n", nbaleatoire);
-        for(int j = 0; j < nbJoueurs; j++){
-            if(ordreJoueurs[j].numJoueur == nbaleatoire){
-                i--;
-            }
-            else{
-                ordreJoueurs[j].numJoueur = tabJoueur[i].numJoueur;
-            }
-        }
-    }
-    printf("\n");
-    for(int i = 0; i < nbJoueurs; i++){
-        printf("%d\n", ordreJoueurs[i].numJoueur);
-    }
-}*/
-
 void ordrePassage(int nbJoueurs) {
     srand(time(NULL));
     int aleatoire, numero = 1, i, resultat;
     aleatoire = rand() % (nbJoueurs);
-    printf("aleatoire : %d\n", aleatoire);
+    printf("Voici l'ordre de passage des joueur :\n");
     i = aleatoire;
     resultat = nbJoueurs + aleatoire;
     for(i;i<nbJoueurs;i++) {
