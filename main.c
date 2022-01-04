@@ -3,9 +3,10 @@
 #include "fenetre.h"
 #include "partieEnCours.h"
 int main(){
-    //partieEnCours();
-    /*setWindow();*/
-
+    //lancementPartie();
+    //setWindow();
+    fenetreNvPartie();
+/*
     int choixMenu;
     choixMenu = menuPrincipale();
     switch(choixMenu){
@@ -21,6 +22,6 @@ int main(){
         case 4:
             quitter();
             break;
-    }
+    }*/
     return 0;
 }

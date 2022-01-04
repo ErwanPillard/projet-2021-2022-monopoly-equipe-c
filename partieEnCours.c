@@ -1,20 +1,9 @@
-//
-// Created by 33782 on 27/12/2021.
-//
-
 #include "partieEnCours.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include "fenetre.h"
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_image.h>
 
-int fenetre(){
+int fenetreNvPartie(){
     ALLEGRO_DISPLAY* display;
     ALLEGRO_KEYBOARD_STATE keyboard_state;
     ALLEGRO_MOUSE_STATE mouse_state;
-
 
     if(!al_init()){
         printf("Erreur initialisation");
@@ -28,27 +17,21 @@ int fenetre(){
 
     al_set_window_position(display,0,0);
     al_set_window_title(display, "Monopoly");
+    al_clear_to_color(al_map_rgb(255, 255, 255));
 
     ALLEGRO_BITMAP *plateau = NULL;
-    ALLEGRO_BITMAP *case1 = NULL;
-    ALLEGRO_BITMAP *case2 = NULL;
 
 
     if(!al_init_image_addon()){
         printf("Erreur initialisation addon");
     }
 
-    plateau = al_load_bitmap("../images/plateaumilieu.jpg");
-    case1 = al_load_bitmap("../images/case1.jpg");
-    case2 = al_load_bitmap("../images/case2.jpg");
-
+    plateau = al_load_bitmap("../images/plateau.jpg");
 
 
     if(plateau == NULL) printf("Le chemin est pas bon");
 
-    al_draw_bitmap(plateau, 636,216,0);
-    al_draw_scaled_bitmap(case1,0, 0, 303, 303,1284, 864, 180, 180, 0);
-    al_draw_scaled_bitmap(case2,0, 0, 342, 517,1192, 864, 92, 180, 0);
+    al_draw_bitmap(plateau, 10,0,0);
 
     al_flip_display();
     al_rest(5);
@@ -56,15 +39,22 @@ int fenetre(){
     al_destroy_bitmap(plateau);
     al_destroy_display(display);
 }
+/*
+int lancementPartie(int nbJoueurs){
+    int lancementDe = 0, numJoueurEnCours;
+    numJoueurEnCours = rand() % nbJoueurs;
+    fenetreNvPartie(); // ouvre la fenetre de la nouvelle partie
+    while(!lancementDe){
 
-int partieEnCours(){
-    fenetre(); // ouvre la fenetre de la nouvelle partie
-}
+        printf("C'est au joueur %s", );
+    }
+
+}*/
 
 int randomDe(){
     int result = 0;
     srand(time(NULL));
-    for(int i = 0; i <= 2; i++){
+    for(int i = 0; i <= NOMBRE_DE; i++){
         result += rand() % 6;
     }
     return result;
