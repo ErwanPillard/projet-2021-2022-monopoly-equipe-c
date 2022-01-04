@@ -10,7 +10,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 
-int fenetre(){
+int fenetreNvPartie(){
     ALLEGRO_DISPLAY* display;
     ALLEGRO_KEYBOARD_STATE keyboard_state;
     ALLEGRO_MOUSE_STATE mouse_state;

@@ -2,10 +2,12 @@
 #include "menu.h"
 #include "fenetre.h"
 #include "partieEnCours.h"
+
 int main(){
     //lancementPartie();
-    //setWindow();
-    fenetreNvPartie();
+    setWindow();
+    //fenetreNvPartie();
+
 /*
     int choixMenu;
     choixMenu = menuPrincipale();
