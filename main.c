@@ -3,7 +3,7 @@
 #include "fenetre.h"
 #include "partieEnCours.h"
 int main(){
-    //setWindow();
+    setWindow();
     //fenetreNvPartie();
 
     switch(menuPrincipale()){
