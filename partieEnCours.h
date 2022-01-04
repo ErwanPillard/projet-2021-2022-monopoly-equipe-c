@@ -16,6 +16,10 @@
 #define NOMBRE_DE 2
 
 int randomDe();
+int fenetre();
+int partieEnCours();
+int doubleDe(int de1, int de2);
+
 int fenetreNvPartie();
 int lancementPartie(int nbJoueurs);
 

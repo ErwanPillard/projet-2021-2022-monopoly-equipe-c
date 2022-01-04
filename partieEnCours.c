@@ -1,9 +1,20 @@
-#include "partieEnCours.h"
+//
+// Created by 33782 on 27/12/2021.
+//
 
-int fenetreNvPartie(){
+#include "partieEnCours.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include "fenetre.h"
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
+
+int fenetre(){
     ALLEGRO_DISPLAY* display;
     ALLEGRO_KEYBOARD_STATE keyboard_state;
     ALLEGRO_MOUSE_STATE mouse_state;
+
 
     if(!al_init()){
         printf("Erreur initialisation");
@@ -54,9 +65,32 @@ int lancementPartie(int nbJoueurs){
 int randomDe(){
     int result = 0;
     srand(time(NULL));
-    for(int i = 0; i <= NOMBRE_DE; i++){
-        result += rand() % 6;
-    }
+    result = rand() % 6;
     return result;
 }
 
+int lancerDesDe() {
+    int de1, de2, lancer, nbDouble = 1;
+    de1 = randomDe();
+    de2 = randomDe();
+    lancer = de1 + de2;
+    if(doubleDe(de1, de2)) {
+        nbDouble++;
+        lancerDesDe();
+        if(nbDouble=3){
+            //aller en prison
+        }
+    }
+    return lancer;
+}
+
+
+int doubleDe(int de1, int de2) {
+    if(de1 = de2) {
+        printf("double");
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
