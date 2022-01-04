@@ -1,8 +1,4 @@
 #include "menu.h"
-void creeMenu(){
-
-}
-
 
 int menuPrincipale(){
     int choixMenu = 0;
@@ -13,6 +9,7 @@ int menuPrincipale(){
                "Quitter partie en cours 4\n");
         scanf("%d", &choixMenu);
     }while(choixMenu < 1 || choixMenu > 4);
+    return choixMenu;
 }
 
 Joueur ajouterJoueur(int i){
@@ -27,12 +24,11 @@ Joueur ajouterJoueur(int i){
 int  ajouterJoueursTab(int taille_logique){
     Joueur parametreJ;
     for(int i = 0; i < taille_logique; i++){
-        parametreJ = ajouterJoueur(i);
-        tabJoueur[i] = parametreJ;
+        tabJoueur[i] = ajouterJoueur(i);
     }
 }
 
-int lancerNouvellePartie(){
+void lancerNouvellePartie(){
     int nombreJoueurs = 0, premierJoueur;
     char nomPartie[20];
     printf("Nom de la partie (20 caractere max): ");
@@ -40,8 +36,8 @@ int lancerNouvellePartie(){
     printf("Entrez le nombre de joueurs (max 10) ");
     scanf("%d", &nombreJoueurs);
     ajouterJoueursTab(nombreJoueurs);
-    /*random(nombreJoueurs);*/
-    ordrePassage(nombreJoueurs);
+    randomJoueurs(nombreJoueurs, tabordreJoueurs);
+    initialisation(nombreJoueurs);
     }
 
 void afficherRegle(){
@@ -56,46 +52,51 @@ void afficherNomMembresProjet(){
            "Constantin");
 }
 
-
-/*int random(int nbJoueurs) {
-    int nbaleatoire;
-    for (int i = 0; i < nbJoueurs; i++){
-        nbaleatoire = rand() % (nbJoueurs + 1);
-        printf("%d\n", nbaleatoire);
-        for(int j = 0; j < nbJoueurs; j++){
-            if(ordreJoueurs[j].numJoueur == nbaleatoire){
-                i--;
+int randomJoueurs(int nbJoueurs, int tabordreJoueurs[NOMBRE_MAX_JOUEURS]){ //fonction pour melanger l'ordre des joueurs
+    int random;
+    for(int h = 0; h < NOMBRE_MAX_JOUEURS; h++){
+        tabordreJoueurs[h] = 7;
+    }
+    srand(time(NULL));
+    for (int i = 0; i < nbJoueurs; i++) {
+        int ok = 0;
+        int validation = 0;
+        do{
+            random = rand() % (nbJoueurs);
+            for (int j = 0; j < nbJoueurs; j++){
+                if(random != tabordreJoueurs[j]){
+                    validation += 1;
+                }
+            }
+            if(validation == nbJoueurs){
+                ok = 1;
             }
             else{
-                ordreJoueurs[j].numJoueur = tabJoueur[i].numJoueur;
+                validation = 0;
             }
-        }
-    }
-    printf("\n");
-    for(int i = 0; i < nbJoueurs; i++){
-        printf("%d\n", ordreJoueurs[i].numJoueur);
-    }
-}*/
-
-void ordrePassage(int nbJoueurs) {
-    srand(time(NULL));
-    int aleatoire, numero = 1, i, resultat;
-    aleatoire = rand() % (nbJoueurs);
-    printf("aleatoire : %d\n", aleatoire);
-    i = aleatoire;
-    resultat = nbJoueurs + aleatoire;
-    for(i;i<nbJoueurs;i++) {
-        printf("Le joueur %d est : %s\n", numero, tabJoueur[aleatoire].nomJoueur);
-        aleatoire++;
-        numero++;
-    }
-    aleatoire = 0;
-    for (i; i < resultat; i++) {
-        printf("Le joueur %d est : %s\n", numero, tabJoueur[aleatoire].nomJoueur);
-        aleatoire++;
-        numero++;
+        } while(ok != 1);
+        tabordreJoueurs[i] = random;
     }
 }
+
+void printf_center (const char* str)
+{
+    unsigned int n;
+    for (n = 0; n < (LARGEUR_CONSOLE-strlen(str)) / 2; n++)
+    {
+        putchar(' ');
+    }
+    printf("%s", str);
+} //fonction pour centrer du texte sur la console
+
+void initialisation(int nbJoueurs){
+    printf_center("Initialisation :\n");
+    for (int i = 0; i < nbJoueurs; i++) {
+        printf("Joueur %d\n", i + 1);
+        printf("Pseudo :%s\n", tabJoueur[tabordreJoueurs[i]].nomJoueur);
+        printf("Argent %f\n", tabJoueur[tabordreJoueurs[i]].argentJoueur);
+    }
+} // afficher dans la console les parametre des joueurs
 
 int quitter(){
     exit(EXIT_SUCCESS);

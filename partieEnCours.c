@@ -62,35 +62,27 @@ int lancementPartie(int nbJoueurs){
 
 }*/
 
-int randomDe(){
-    int result = 0;
+void randomDe(){
     srand(time(NULL));
-    result = rand() % 6;
-    return result;
-}
-
-int lancerDesDe() {
-    int de1, de2, lancer, nbDouble = 1;
-    de1 = randomDe();
-    de2 = randomDe();
-    lancer = de1 + de2;
-    if(doubleDe(de1, de2)) {
-        nbDouble++;
-        lancerDesDe();
-        if(nbDouble=3){
-            //aller en prison
-        }
+    int somme = 0, de1, de2, calcul = 0, resultat;
+    for (int i = 0; i < 2; i++) {
+        somme += (rand() % 6) + 1;
+        de1 = calcul;
+        calcul = somme;
     }
-    return lancer;
+    de2 = somme - de1;
+    printf("%d %d\n", de1, de2);
+    resultat = doubleDe(de1, de2);
+    if(resultat==1) {
+        randomDe();
+    }
 }
 
 
-int doubleDe(int de1, int de2) {
-    if(de1 = de2) {
-        printf("double");
+int doubleDe(int de1, int de2) { //pb double : tps s'écoule trop vite pas le tps de relancer même tirage jusqu'à changement de seconde (peut-être relancer dé via interface ?)
+    if (de1==de2) {
         return 1;
-    }
-    else {
+    }else {
         return 0;
     }
 }
