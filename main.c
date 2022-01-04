@@ -2,6 +2,7 @@
 #include "menu.h"
 #include "fenetre.h"
 #include "partieEnCours.h"
+
 int main(){
     setWindow();
     //fenetreNvPartie();
