@@ -28,27 +28,21 @@ int fenetre(){
 
     al_set_window_position(display,0,0);
     al_set_window_title(display, "Monopoly");
+    al_clear_to_color(al_map_rgb(255, 255, 255));
 
     ALLEGRO_BITMAP *plateau = NULL;
-    ALLEGRO_BITMAP *case1 = NULL;
-    ALLEGRO_BITMAP *case2 = NULL;
 
 
     if(!al_init_image_addon()){
         printf("Erreur initialisation addon");
     }
 
-    plateau = al_load_bitmap("../images/plateaumilieu.jpg");
-    case1 = al_load_bitmap("../images/case1.jpg");
-    case2 = al_load_bitmap("../images/case2.jpg");
-
+    plateau = al_load_bitmap("../images/plateau.jpg");
 
 
     if(plateau == NULL) printf("Le chemin est pas bon");
 
-    al_draw_bitmap(plateau, 636,216,0);
-    al_draw_scaled_bitmap(case1,0, 0, 303, 303,1284, 864, 180, 180, 0);
-    al_draw_scaled_bitmap(case2,0, 0, 342, 517,1192, 864, 92, 180, 0);
+    al_draw_bitmap(plateau, 10,0,0);
 
     al_flip_display();
     al_rest(5);
@@ -56,33 +50,47 @@ int fenetre(){
     al_destroy_bitmap(plateau);
     al_destroy_display(display);
 }
+/*
+int lancementPartie(int nbJoueurs){
+    int lancementDe = 0, numJoueurEnCours;
+    numJoueurEnCours = rand() % nbJoueurs;
+    fenetreNvPartie(); // ouvre la fenetre de la nouvelle partie
+    while(!lancementDe){
 
-int partieEnCours(){
-    fenetre(); // ouvre la fenetre de la nouvelle partie
-    randomDe();
-}
+        printf("C'est au joueur %s", );
+    }
 
-void randomDe(){
+}*/
+
+int randomDe(){
+    int result = 0;
     srand(time(NULL));
-    int somme = 0, de1, de2, calcul = 0, resultat;
-    for (int i = 0; i < 2; i++) {
-        somme += (rand() % 6) + 1;
-        de1 = calcul;
-        calcul = somme;
+    result = rand() % 6;
+    return result;
+}
+
+int lancerDesDe() {
+    int de1, de2, lancer, nbDouble = 1;
+    de1 = randomDe();
+    de2 = randomDe();
+    lancer = de1 + de2;
+    if(doubleDe(de1, de2)) {
+        nbDouble++;
+        lancerDesDe();
+        if(nbDouble=3){
+            //aller en prison
+        }
     }
-    de2 = somme - de1;
-    printf("%d %d\n", de1, de2);
-    resultat = doubleDe(de1, de2);
-    if(resultat==1) {
-        randomDe();
-    }
+    return lancer;
 }
 
 
-int doubleDe(int de1, int de2) { //pb double : tps s'écoule trop vite pas le tps de relancer même tirage jusqu'à changement de seconde (peut-être relancer dé via interface ?)
-    if (de1==de2) {
+int doubleDe(int de1, int de2) {
+    if(de1 = de2) {
+        printf("double");
         return 1;
-    }else {
+    }
+    else {
         return 0;
     }
 }

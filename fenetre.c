@@ -3,8 +3,6 @@
 #include "fenetre.h"
 #include <stdio.h>
 
-
-
 void erreur(const char *txt) {
     printf("ERREUR : %s", txt);
     exit(EXIT_FAILURE);
