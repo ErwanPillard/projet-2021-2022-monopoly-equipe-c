@@ -11,8 +11,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
-
-
+#include "partieEnCours.h"
 
 #define WIDTH 1920
 #define HEIGHT 1080
@@ -21,12 +20,9 @@
 #define BLANC al_map_rgb(255 , 255,  255)
 #define COULEURMONOP al_map_rgb(64, 64, 64)
 
-
 void erreur(const char *txt);
 void creerRectangle();
-
-
-
+unsigned char positionSouris1(int x, int y);
 
 
 void erreur(const char *txt);

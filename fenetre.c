@@ -11,13 +11,40 @@ void creerRectangle() {
     int y1 = 695;
     int x2 = 1155;
     int y2 = 735;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 4; i++) {
         al_draw_filled_rectangle(x1, y1, x2, y2, COULEURMONOP);
         y1 += 50;
         y2 += 50;
     }
 }
 
+unsigned char positionSouris1(int x, int y) {
+    if (x >= 765 && x <= 1155 && y >= 695 && y <= 735) {
+        return 1;
+    }
+    return 0;
+}
+
+unsigned char positionSouris2(int x, int y) {
+    if (x >= 765 && x <= 1155 && y >= 745 && y <= 785) {
+        return 1;
+    }
+    return 0;
+}
+
+unsigned char positionSouris3(int x, int y) {
+    if (x >= 765 && x <= 1155 && y >= 795 && y <= 835) {
+        return 1;
+    }
+    return 0;
+}
+
+unsigned char positionSouris4(int x, int y) {
+    if (x >= 765 && x <= 1155 && y >= 845 && y <= 885) {
+        return 1;
+    }
+    return 0;
+}
 
 int setWindow() {
 
@@ -25,7 +52,7 @@ int setWindow() {
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_BITMAP *imageAcceuil = NULL;
-    ALLEGRO_EVENT event;
+    ALLEGRO_EVENT event = {0};
 
 
     if (!al_init()) {
@@ -74,19 +101,19 @@ int setWindow() {
     creerRectangle();
 // texte menuPrincipal
     ALLEGRO_FONT *menu1 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
-    al_draw_text(menu1, al_map_rgb(0,0,0), 810, 700, 0, "Lancer une nouvelle partie");
+    al_draw_text(menu1, BLANC, 810, 700, 0, "Lancer une nouvelle partie");
 
     ALLEGRO_FONT *menu2 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
-    al_draw_text(menu2, al_map_rgb(0,0,0), 860, 750, 0, "Afficher les regles");
+    al_draw_text(menu2, BLANC, 860, 750, 0, "Afficher les regles");
 
     ALLEGRO_FONT *menu3 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
-    al_draw_text(menu3, al_map_rgb(0,0,0), 770, 800, 0, "Afficher nom des membres du projet");
+    al_draw_text(menu3, BLANC, 770, 800, 0, "Afficher nom des membres du projet");
 
     ALLEGRO_FONT *menu4 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
-    al_draw_text(menu4, al_map_rgb(0,0,0), 840, 850, 0, "Quitter partie en cours");
+    al_draw_text(menu4, BLANC, 840, 850, 0, "Quitter partie en cours");
 
     al_flip_display();
-
+//Boucle d'évènement
     do {
         al_wait_for_event(queue, &event);
 
@@ -99,8 +126,15 @@ int setWindow() {
                     break;
 
             }
+        }
+        if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+            positionSouris1(event.mouse.x, event.mouse.y);
+        }
+        else if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+            if ((event.mouse.button & 1) == 1){
+                lancerNouvellePartie();
+            }
             al_flip_display();
-
         }
     } while (!fin);
 
