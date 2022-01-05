@@ -33,11 +33,11 @@ void lancerNouvellePartie(){
     char nomPartie[20];
     printf("Nom de la partie (20 caractere max): ");
     scanf("%s", nomPartie);
-    printf("Entrez le nombre de joueurs (max 10) ");
+    printf("Entrez le nombre de joueurs (max 6) ");
     scanf("%d", &nombreJoueurs);
     ajouterJoueursTab(nombreJoueurs);
     randomJoueurs(nombreJoueurs, tabordreJoueurs);
-    fenetreNvPartie(nombreJoueurs);
+    //fenetreNvPartie(nombreJoueurs);
     initialisation(nombreJoueurs);
     mainPartie(nombreJoueurs);
     }

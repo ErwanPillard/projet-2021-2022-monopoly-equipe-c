@@ -15,6 +15,7 @@
 #include <allegro5/allegro_ttf.h>
 #include "menu.h"
 #include "fenetre.h"
+#include "terrain.h"
 
 #define NOMBRE_MAX_JOUEURS 6
 
@@ -42,7 +43,7 @@ int fenetre();
 int partieEnCours();
 void verifDoubleDe(int de1, int de2, int indiceJoueur);
 void initialisation(int nbJoueurs);
-int fenetreNvPartie();
+int fenetreNvPartie(int nbJoueurs);
 void mainPartie(int nbJoueurs);
 
 

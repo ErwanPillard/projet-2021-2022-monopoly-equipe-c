@@ -18,7 +18,6 @@ void creerRectangle() {
     }
 }
 
-
 int setWindow() {
 
     int fin = 0, wait = -1;
@@ -74,10 +73,10 @@ int setWindow() {
     creerRectangle();
 // texte menuPrincipal
     ALLEGRO_FONT *menu1 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
-    al_draw_text(menu1, al_map_rgb(0,0,0), 810, 700, 0, "Lancer une nouvelle partie");
+    al_draw_text(menu1, BLANC, 810, 700, 0, "Lancer une nouvelle partie");
 
     ALLEGRO_FONT *menu2 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
-    al_draw_text(menu2, al_map_rgb(0,0,0), 860, 750, 0, "Afficher les regles");
+    al_draw_text(menu2, BLANC, 860, 750, 0, "Afficher les regles");
 
     ALLEGRO_FONT *menu3 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
     al_draw_text(menu3, al_map_rgb(0,0,0), 770, 800, 0, "Afficher nom des membres du projet");

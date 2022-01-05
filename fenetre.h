@@ -11,7 +11,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
-
+#include "partieEnCours.h"
 
 
 #define WIDTH 1920
@@ -24,9 +24,6 @@
 
 void erreur(const char *txt);
 void creerRectangle();
-
-
-
 
 
 void erreur(const char *txt);

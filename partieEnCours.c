@@ -119,87 +119,24 @@ int fenetreNvPartie(int nbJoueurs){
 
     al_draw_bitmap(plateau, 10,0,0);
     al_flip_display();
-    while(!fin){
-        /*
-        int indiceJoueur = 0;
-        int winner = 0, joueursElimine = 0;
-        int lancerDe = 0, valeurLancementDe1, valeurLancementDe2, valeurDeTotale;
-
-        do{
-            if(tabParametreJoueurs[indiceJoueur].doubleDe == 0){
-                indiceJoueur++;
-            }
-
-            if(indiceJoueur >= nbJoueurs, indiceJoueur < 0){
-                indiceJoueur = 0;
-            }
-
-            ALLEGRO_FONT *pseudo = al_load_font("../font/arial.ttf", 20, 0);
-            al_draw_textf(pseudo, al_map_rgb(0,0,0), 1100, 0, 0,
-                          "C'est à %s de jouer", tabJoueur[tabordreJoueurs[indiceJoueur]].nomJoueur);
-
-            printf("Taper 1 pour lancer les dés : ");
-            scanf("%d", &lancerDe);
-            valeurLancementDe1 = randomDe(nbJoueurs);
-            valeurLancementDe2 = randomDe(nbJoueurs);
-            verifDoubleDe(valeurLancementDe1, valeurLancementDe2, tabordreJoueurs[indiceJoueur]);
-
-            valeurDeTotale = valeurLancementDe2 + valeurLancementDe1;
-
-            tabParametreJoueurs[indiceJoueur].numCase = (tabParametreJoueurs[indiceJoueur].numCase + valeurDeTotale)%32; // il y a 32 case donc on ne peut pas depasser 32
-
-            switch (indiceJoueur + 1) {
-                case 1:
-                    affichagePion(pion1);
-                    break;
-                case 2:
-                    affichagePion(pion2);
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    break;
-            }
-
-
-            if(joueursElimine == nbJoueurs - 1){ // condition de victoire
-                winner = 1;
-            }
-
-        } while(!winner);*/
-        al_flip_display();
-
-        ALLEGRO_EVENT event;
-        al_wait_for_event(queue, &event);
-
-        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-            fin = 1;
-        }
-        else if (event.type == ALLEGRO_EVENT_KEY_UP && wait == -1) {
-            switch (event.keyboard.keycode) {
-                case ALLEGRO_KEY_ESCAPE:
-                    fin = 1;
-                    break;
-            }
-        }
-
-        al_flip_display();
-    }
-
-    al_destroy_bitmap(plateau);
-    al_destroy_display(display);
-}
-
-void mainPartie(int nbJoueurs){
     int indiceJoueur = -1;
     int winner = 0, joueursElimine = 0;
     int lancerDe1 = 0, lancerDe2 = 0, valeurLancementDe1, valeurLancementDe2, valeurDeTotale;
 
     do{
+        ALLEGRO_EVENT event;
+        al_wait_for_event(queue, &event);
+
+        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+            winner = 1;
+        }
+        else if (event.type == ALLEGRO_EVENT_KEY_UP && wait == -1) {
+            switch (event.keyboard.keycode) {
+                case ALLEGRO_KEY_ESCAPE:
+                    winner = 1;
+                    break;
+            }
+        }
         if(tabParametreJoueurs[indiceJoueur].doubleDe == 0){
             indiceJoueur++;
         }
@@ -230,7 +167,69 @@ void mainPartie(int nbJoueurs){
         if(joueursElimine == nbJoueurs - 1){ // condition de victoire
             winner = 1;
         }
+    } while(!winner);
+    al_flip_display();
+    al_destroy_bitmap(plateau);
+    al_destroy_display(display);
+}
 
+void mainPartie(int nbJoueurs){
+    int indiceJoueur = -1;
+    int winner = 0, joueursElimine = 0;
+    int lancerDe1 = 0, lancerDe2 = 0, valeurLancementDe1, valeurLancementDe2, valeurDeTotale;
+
+    //initialisation tout les joueurs sur la case 0
+    for(int i = 0; i < nbJoueurs; i++){
+        tabParametreJoueurs[i].numCase = 0;
+    }
+
+    init_terrains(); // initialise les parametre des terrains
+
+    do{
+        if(tabParametreJoueurs[indiceJoueur].doubleDe == 0){
+            indiceJoueur++;
+        }
+
+        if(indiceJoueur >= nbJoueurs && indiceJoueur < 0){
+            indiceJoueur = 0;
+        }
+        printf("C est a %s de jouer\n", tabJoueur[tabordreJoueurs[indiceJoueur]].nomJoueur);
+
+        printf("Taper 1 pour lancer le premier des : ");
+        scanf("%d", &lancerDe1);
+
+        valeurLancementDe1 = randomDe(nbJoueurs);
+
+        printf("Taper 1 pour lancer le deuxieme des : ");
+        scanf("%d", &lancerDe2);
+
+        valeurLancementDe2 = randomDe(nbJoueurs);
+
+        verifDoubleDe(valeurLancementDe1, valeurLancementDe2, tabordreJoueurs[indiceJoueur]);
+
+        valeurDeTotale = valeurLancementDe2 + valeurLancementDe1;
+        printf("%d\n", valeurDeTotale);
+
+
+        tabParametreJoueurs[indiceJoueur].numCase = (tabParametreJoueurs[indiceJoueur].numCase + valeurDeTotale)%32; // il y a 32 case donc on ne peut pas depasser 32
+        printf("%d\n", tabParametreJoueurs[indiceJoueur].numCase);
+
+        if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 0){
+            int choix;
+
+            printf("Voulez vous acheter %s (si oui tapez 1)", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
+            scanf("%d", &choix);
+
+            if(choix == 1){
+                terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable = 0;
+            }
+        }
+
+
+
+        if(joueursElimine == nbJoueurs - 1){ // condition de victoire
+            winner = 1;
+        }
     } while(!winner);
 }
 
@@ -277,3 +276,4 @@ void verifDoubleDe(int de1, int de2, int indiceJoueur) {
         tabParametreJoueurs[indiceJoueur].doubleDe = 0;
     }
 }
+

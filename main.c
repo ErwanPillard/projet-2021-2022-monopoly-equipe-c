@@ -4,7 +4,7 @@
 #include "partieEnCours.h"
 
 int main(){
-    //setWindow();
+    setWindow();
     switch(menuPrincipale()){
         case 1:
             lancerNouvellePartie();

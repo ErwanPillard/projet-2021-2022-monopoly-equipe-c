@@ -5,11 +5,12 @@
 #include "terrain.h"
 
 //initialisation terrains
-int init_terrains(){
-    T terrain[33];// terrain commence a la case 1
+void init_terrains(){
 
-    terrain[1].achetable = 0;
-    terrain[1].frais = 200.0f;
+    terrain[0].achetable = 1;
+    terrain[0].vendu = 0;
+    strcpy(terrain[0].nomTerrain, "CASE DEPART");
+    terrain[0].frais = 200;
 
     terrain[2].prix = 60;
     terrain[2].achetable = 1;
@@ -88,6 +89,4 @@ int init_terrains(){
 
     terrain[32].prix = 450;
     terrain[32].achetable = 1;
-
-    return terrain;
 }
