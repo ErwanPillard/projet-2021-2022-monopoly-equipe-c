@@ -1,5 +1,3 @@
-
-#include <allegro5/allegro_font.h>
 #include "fenetre.h"
 
 
@@ -20,12 +18,6 @@ void creerRectangle() {
     }
 }
 
-void caseMenu() {
-    ALLEGRO_FONT *font = al_load_font("../Fonts/Kiwi_Maru/KiwiMaru-Medium.ttf", 30, 0);
-    al_draw_text(font, BLANC, 770, 700, ALLEGRO_ALIGN_CENTER, "Lancer une nouvelle partie");
-    al_destroy_font(font);
-}
-
 
 int setWindow() {
 
@@ -34,6 +26,7 @@ int setWindow() {
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_BITMAP *imageAcceuil = NULL;
     ALLEGRO_EVENT event;
+
 
     if (!al_init()) {
         printf("Erreur initialisation\n");
@@ -75,8 +68,23 @@ int setWindow() {
 
     imageAcceuil = al_load_bitmap("../images/imageAcceuil.jpg");
 
+
     al_draw_scaled_bitmap(imageAcceuil, 0, 0, 1300, 870, 0, 0, 1900, 1060, 0);
+
     creerRectangle();
+// texte menuPrincipal
+    ALLEGRO_FONT *menu1 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    al_draw_text(menu1, al_map_rgb(0,0,0), 810, 700, 0, "Lancer une nouvelle partie");
+
+    ALLEGRO_FONT *menu2 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    al_draw_text(menu2, al_map_rgb(0,0,0), 860, 750, 0, "Afficher les regles");
+
+    ALLEGRO_FONT *menu3 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    al_draw_text(menu3, al_map_rgb(0,0,0), 770, 800, 0, "Afficher nom des membres du projet");
+
+    ALLEGRO_FONT *menu4 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    al_draw_text(menu4, al_map_rgb(0,0,0), 840, 850, 0, "Quitter partie en cours");
+
     al_flip_display();
 
     do {
@@ -98,4 +106,6 @@ int setWindow() {
 
     al_destroy_display(display);
     al_destroy_event_queue(queue);
+    al_destroy_font(menu1);
+    al_destroy_font(menu2);
 }

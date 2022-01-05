@@ -6,6 +6,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include "partieEnCours.h"
+
 
 #define NOMBRE_MAX_JOUEURS 6
 
@@ -14,7 +16,7 @@
 typedef struct{
     int numJoueur;
     char nomJoueur[10];
-    float argentJoueur;
+    int argentJoueur;
 }Joueur;
 
 typedef struct{

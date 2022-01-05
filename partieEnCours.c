@@ -1,16 +1,6 @@
-//
-// Created by 33782 on 27/12/2021.
-//
-
 #include "partieEnCours.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include "fenetre.h"
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_image.h>
 
-int fenetreNvPartie(){
+int fenetreNvPartie(int nbJoueurs){
 
     int fin = 0, wait = -1;
 
@@ -54,6 +44,19 @@ int fenetreNvPartie(){
     if(!al_init_image_addon()){
         printf("Erreur initialisation addon");
     }
+
+    al_init_font_addon();
+    al_init_ttf_addon();
+
+    int rectangleX = 1300, rectangleY = 0;
+
+    for (int i = 0; i < nbJoueurs; i++) {
+        ALLEGRO_FONT *pseudo = al_load_font("../font/arial.ttf", 20, 0);
+        al_draw_textf(pseudo, al_map_rgb(0,0,0), rectangleX, rectangleY, 0,
+                      "%s %d $", tabJoueur[tabordreJoueurs[i]].nomJoueur, tabJoueur[tabordreJoueurs[i]].argentJoueur);
+        rectangleY += 100;
+    }
+
     ALLEGRO_BITMAP *plateau = NULL;
     plateau = al_load_bitmap("../images/plateau.jpg");
 
@@ -108,11 +111,66 @@ int fenetreNvPartie(){
     ALLEGRO_BITMAP *case17= NULL;
     case17 = al_load_bitmap("../images/case17.jpg");
 
-    al_draw_bitmap(plateau, 10,0,0);
+    ALLEGRO_BITMAP *pion1= NULL;
+    pion1 = al_load_bitmap("../images/pion.png");
 
+    ALLEGRO_BITMAP *pion2= NULL;
+    pion2  = al_load_bitmap("../images/pion2.png");
+
+    al_draw_bitmap(plateau, 10,0,0);
     al_flip_display();
     while(!fin){
-        //evenement
+        /*
+        int indiceJoueur = 0;
+        int winner = 0, joueursElimine = 0;
+        int lancerDe = 0, valeurLancementDe1, valeurLancementDe2, valeurDeTotale;
+
+        do{
+            if(tabParametreJoueurs[indiceJoueur].doubleDe == 0){
+                indiceJoueur++;
+            }
+
+            if(indiceJoueur >= nbJoueurs, indiceJoueur < 0){
+                indiceJoueur = 0;
+            }
+
+            ALLEGRO_FONT *pseudo = al_load_font("../font/arial.ttf", 20, 0);
+            al_draw_textf(pseudo, al_map_rgb(0,0,0), 1100, 0, 0,
+                          "C'est à %s de jouer", tabJoueur[tabordreJoueurs[indiceJoueur]].nomJoueur);
+
+            printf("Taper 1 pour lancer les dés : ");
+            scanf("%d", &lancerDe);
+            valeurLancementDe1 = randomDe(nbJoueurs);
+            valeurLancementDe2 = randomDe(nbJoueurs);
+            verifDoubleDe(valeurLancementDe1, valeurLancementDe2, tabordreJoueurs[indiceJoueur]);
+
+            valeurDeTotale = valeurLancementDe2 + valeurLancementDe1;
+
+            tabParametreJoueurs[indiceJoueur].numCase = (tabParametreJoueurs[indiceJoueur].numCase + valeurDeTotale)%32; // il y a 32 case donc on ne peut pas depasser 32
+
+            switch (indiceJoueur + 1) {
+                case 1:
+                    affichagePion(pion1);
+                    break;
+                case 2:
+                    affichagePion(pion2);
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+            }
+
+
+            if(joueursElimine == nbJoueurs - 1){ // condition de victoire
+                winner = 1;
+            }
+
+        } while(!winner);*/
         al_flip_display();
 
         ALLEGRO_EVENT event;
@@ -137,65 +195,85 @@ int fenetreNvPartie(){
 }
 
 void mainPartie(int nbJoueurs){
-    int indiceJoueur = 0;
+    int indiceJoueur = -1;
     int winner = 0, joueursElimine = 0;
-    int lancerDe = 0, valeurLancementDe1, valeurLancementDe2;
+    int lancerDe1 = 0, lancerDe2 = 0, valeurLancementDe1, valeurLancementDe2, valeurDeTotale;
 
     do{
-        if(indiceJoueur >= nbJoueurs, indiceJoueur < 0){
+        if(tabParametreJoueurs[indiceJoueur].doubleDe == 0){
+            indiceJoueur++;
+        }
+
+        if(indiceJoueur >= nbJoueurs && indiceJoueur < 0){
             indiceJoueur = 0;
         }
-        printf("C'est à %s de jouer", tabJoueur[tabordreJoueurs[indiceJoueur]].nomJoueur);
+        printf("C est a %s de jouer\n", tabJoueur[tabordreJoueurs[indiceJoueur]].nomJoueur);
+
+        printf("Taper 1 pour lancer le premier des : ");
+        scanf("%d", &lancerDe1);
+
+        valeurLancementDe1 = randomDe(nbJoueurs);
+
+        printf("Taper 1 pour lancer le deuxieme des : ");
+        scanf("%d", &lancerDe2);
+
+        valeurLancementDe2 = randomDe(nbJoueurs);
+
+        verifDoubleDe(valeurLancementDe1, valeurLancementDe2, tabordreJoueurs[indiceJoueur]);
+
+        valeurDeTotale = valeurLancementDe2 + valeurLancementDe1;
+        printf("%d\n", valeurDeTotale);
+
+        tabParametreJoueurs[indiceJoueur].numCase = (tabParametreJoueurs[indiceJoueur].numCase + valeurDeTotale)%32; // il y a 32 case donc on ne peut pas depasser 32
+        printf("%d\n", tabParametreJoueurs[indiceJoueur].numCase);
 
         if(joueursElimine == nbJoueurs - 1){ // condition de victoire
             winner = 1;
         }
 
-        printf("Taper 1 pour lancer les dés : ");
-        scanf("%d", &lancerDe);
-        valeurLancementDe1 = randomDe(nbJoueurs);
-        valeurLancementDe2 = randomDe(nbJoueurs);
-        verifDoubleDe(valeurLancementDe1, valeurLancementDe2, tabordreJoueurs[i]);
-
-        if(tabParametreJoueurs[indiceJoueur].doubleDe != 0){
-            indiceJoueur--;
-        }
-        else{
-            indiceJoueur++;
-        }
     } while(!winner);
 }
 
 
 int randomDe(int nbJoueurs){
     srand(time(NULL));
-    int de;
-    for(int i = 0; i < 15; i++){
-        de = rand() % nbJoueurs;
-    }
+    int de = 0;
+    do{
+        for(int i = 0; i < 10; i++){
+            de = rand() % 6 + 1;
+        }
+    }while(de == 0);
 
     return de;
 }
 
-/*
-int randomDe(){
-    srand(time(NULL));
-    int somme = 0, de1, de2, calcul = 0, resultat;
-    for (int i = 0; i < 2; i++) {
-        somme += (rand() % 6) + 1;
-        de1 = calcul;
-        calcul = somme;
+void affectationPion(int nbJoueurs){
+    int numJoueur;
+    for(int i = 0; i < nbJoueurs; i++){
+        tabParametreJoueurs[i].pion = i + 1;
     }
-    de2 = somme - de1;
-    printf("%d %d\n", de1, de2);
-    resultat = doubleDe(de1, de2);
-
-    return resultat;
+}
+/*
+int affichagePion(int* pion){
+    al_set_target_bitmap(pion);
+    al_draw_scaled_bitmap(pion, 0, 0, DIMENSION_PIONX, DIMENSION_PIONY, 0, 0, 0);
 }*/
 
+void initialisation(int nbJoueurs){
+    printf_center("Initialisation :\n");
+    for (int i = 0; i < nbJoueurs; i++) {
+        printf("Joueur %d\n", i + 1);
+        printf("Pseudo :%s\n", tabJoueur[tabordreJoueurs[i]].nomJoueur);
+        printf("Argent %d\n", tabJoueur[tabordreJoueurs[i]].argentJoueur);
+    }
+} // afficher dans la console les parametre des joueurs
 
 void verifDoubleDe(int de1, int de2, int indiceJoueur) {
     if(de1 == de2){
         tabParametreJoueurs[indiceJoueur].doubleDe += 1;
+    }
+
+    else{
+        tabParametreJoueurs[indiceJoueur].doubleDe = 0;
     }
 }

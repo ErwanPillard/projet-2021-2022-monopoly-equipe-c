@@ -24,11 +24,12 @@
 
 void erreur(const char *txt);
 void creerRectangle();
-void caseMenu();
 
 
 
 
+
+void erreur(const char *txt);
 int setWindow();
 
 #endif //PROJET_2021_2022_MONOPOLY_EQUIPE_C_FENETRE_H

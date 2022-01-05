@@ -16,7 +16,7 @@ Joueur ajouterJoueur(int i){
     Joueur parametreJ;
     printf("Entrez le pseudo du joueur %d: ", i + 1);
     scanf("%s", parametreJ.nomJoueur);
-    parametreJ.argentJoueur = 1500.0f; // argent initiale du joueur
+    parametreJ.argentJoueur = 1500; // argent initiale du joueur
     parametreJ.numJoueur = i; // on affecte le num 0 au joueur 1, ect...
     return parametreJ;
 }
@@ -37,7 +37,9 @@ void lancerNouvellePartie(){
     scanf("%d", &nombreJoueurs);
     ajouterJoueursTab(nombreJoueurs);
     randomJoueurs(nombreJoueurs, tabordreJoueurs);
+    fenetreNvPartie(nombreJoueurs);
     initialisation(nombreJoueurs);
+    mainPartie(nombreJoueurs);
     }
 
 void afficherRegle(){
@@ -88,15 +90,6 @@ void printf_center (const char* str)
     }
     printf("%s", str);
 } //fonction pour centrer du texte sur la console
-
-void initialisation(int nbJoueurs){
-    printf_center("Initialisation :\n");
-    for (int i = 0; i < nbJoueurs; i++) {
-        printf("Joueur %d\n", i + 1);
-        printf("Pseudo :%s\n", tabJoueur[tabordreJoueurs[i]].nomJoueur);
-        printf("Argent %f\n", tabJoueur[tabordreJoueurs[i]].argentJoueur);
-    }
-} // afficher dans la console les parametre des joueurs
 
 int quitter(){
     exit(EXIT_SUCCESS);
