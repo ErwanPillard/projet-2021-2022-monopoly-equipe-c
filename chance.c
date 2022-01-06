@@ -8,7 +8,7 @@ void initialiserCartes(){
 
 int cartechance (int indiceJoueur){
 
-    int carte = randomDe(16);
+    int carte = random(16);
 
     switch (carte) {
         case 1:{

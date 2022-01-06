@@ -41,7 +41,7 @@ unsigned char positionSourisButtonDe(int x, int y);
 
 int testSiMaison(int indiceJoueur);
 
-int randomDe(int nbJoueurs);
+int random(int nb);
 void affectationPion(int nbJoueurs);
 int affichagePion(int* pion);
 int fenetre();
