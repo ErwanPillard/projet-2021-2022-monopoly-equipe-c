@@ -5,12 +5,10 @@
 #include "chance.h"
 
 int main(){
-    cartechance(2);
-
     //fenetreNvPartie(6);
     //setWindow();
 
-   /* switch(menuPrincipale()){
+    switch(menuPrincipale()){
         case 1:
             lancerNouvellePartie();
             break;
@@ -24,7 +22,7 @@ int main(){
             quitter();
             break;
     }
-*/
+
 
     return 0;
 }

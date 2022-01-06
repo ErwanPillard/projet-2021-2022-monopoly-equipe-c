@@ -4,11 +4,12 @@
 #include "partieEnCours.h"
 #include "menu.h"
 #include <stdio.h>
+#include "string.h"
 #include <malloc.h>
 #include <time.h>
 #include <stdlib.h>
 
-#define NOMBRE_CARTES 16
+#define NOMBRE_CARTES 17
 
 typedef struct {
     char nomcarte[50];
