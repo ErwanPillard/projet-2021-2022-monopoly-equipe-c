@@ -15,29 +15,29 @@ void creerRectangleVide(int x1, int y1, int x2, int y2, int epaisseur) {
 }
 
 int positionSouris1(int x, int y) {
-    if (x >= 618 && x <= 931 && y >= 550 && y <= 582) {
-        return menuPrincipale();
+    if (x >= 618 && x <= 932 && y >= 550 && y <= 582) {
+        menuPrincipale();
     }
     return 0;
 }
 
-unsigned char positionSouris2(int x, int y) {
-    if (x >= 765 && x <= 1155 && y >= 745 && y <= 785) {
-        return 1;
+int positionSouris2(int x, int y) {
+    if (x >= 618 && x <= 932 && y >= 591 && y <= 620) {
+        afficherRegle();
     }
     return 0;
 }
 
-unsigned char positionSouris3(int x, int y) {
-    if (x >= 765 && x <= 1155 && y >= 795 && y <= 835) {
-        return 1;
+int positionSouris3(int x, int y) {
+    if (x >= 618 && x <= 932 && y >= 630 && y <= 661) {
+        afficherNomMembresProjet();
     }
     return 0;
 }
 
 int positionSouris4(int x, int y) {
-    if (x >= 765 && x <= 1155 && y >= 845 && y <= 885) {
-        return 1;
+    if (x >= 618 && x <= 932 && y >= 669 && y <= 700) {
+        quitter();
     }
     return 0;
 }
@@ -139,6 +139,12 @@ void setWindow() {
         al_get_mouse_state(&mouse_state);
 
         if ((mouse_state.buttons & 1) == 1 && positionSouris1(mouse_state.x, mouse_state.y)) {
+        }
+        if ((mouse_state.buttons & 1) == 1 && positionSouris2(mouse_state.x, mouse_state.y)) {
+        }
+        if ((mouse_state.buttons & 1) == 1 && positionSouris3(mouse_state.x, mouse_state.y)) {
+        }
+        if ((mouse_state.buttons & 1) == 1 && positionSouris4(mouse_state.x, mouse_state.y)) {
         }
 
     } while (!fin);

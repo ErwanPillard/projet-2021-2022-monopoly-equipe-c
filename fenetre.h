@@ -22,6 +22,13 @@
 
 void erreur(const char *txt);
 
+int positionSouris1(int x, int y);
+int positionSouris2(int x, int y);
+int positionSouris3(int x, int y);
+int positionSouris4(int x, int y);
+
+
+
 
 void creerRectangle(int x1, int y1, int x2, int y2);
 void creerRectangleVide(int x1, int y1, int x2, int y2, int epaisseur);
