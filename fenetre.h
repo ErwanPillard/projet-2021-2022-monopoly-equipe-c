@@ -22,10 +22,12 @@
 
 void erreur(const char *txt);
 void creerRectangle();
+
 unsigned char positionSouris1(int x, int y);
+unsigned char positionSouris2(int x, int y);
+unsigned char positionSouris3(int x, int y);
+unsigned char positionSouris4(int x, int y);
 
-
-void erreur(const char *txt);
-int setWindow();
+void setWindow();
 
 #endif //PROJET_2021_2022_MONOPOLY_EQUIPE_C_FENETRE_H
