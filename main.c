@@ -6,9 +6,9 @@
 
 int main(){
     //fenetreNvPartie(6);
-    setWindow();
+    //setWindow();
 
-    /*switch(menuPrincipale()){
+    switch(menuPrincipale()){
         case 1:
             lancerNouvellePartie();
             break;
@@ -21,7 +21,7 @@ int main(){
         case 4:
             quitter();
             break;
-    }*/
+    }
 
 
     return 0;

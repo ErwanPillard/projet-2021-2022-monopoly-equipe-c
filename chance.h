@@ -13,12 +13,16 @@
 
 typedef struct {
     char nomcarte[50];
-    int apayer;
 }carte;
 
 carte parametreCartes[NOMBRE_CARTES];
 
 int cartechance (int indiceJoueur, int nbJoueurs);
 void initialiserCartes();
+
+
+carte parametreCommu[NOMBRE_CARTES];
+void initialisercommu();
+int cartecommu(int indiceJoueur, int nbJoueurs);
 
 #endif //PROJET_2021_2022_MONOPOLY_EQUIPE_C_CHANCE_H
