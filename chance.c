@@ -3,73 +3,94 @@
 
 void initialiserCartes(){
     strcpy(parametreCartes[1].nomcarte, "aller en prison");
-
+    strcpy(parametreCartes[2].nomcarte, "aller avenue Henri-Martin");
+    strcpy(parametreCartes[3].nomcarte, "aller Boulevard de la villette");
+    strcpy(parametreCartes[4].nomcarte, "aller Rue de la paix");
+    strcpy(parametreCartes[5].nomcarte, "aller a la gare de lyon");
+    strcpy(parametreCartes[6].nomcarte, "aller a la case depart");
+    strcpy(parametreCartes[7].nomcarte, "Reculez de trois case");
+    strcpy(parametreCartes[8].nomcarte, "sortez de prison");
+    strcpy(parametreCartes[9].nomcarte, "payer 50 a la banque");
+    strcpy(parametreCartes[10].nomcarte, "Ressevez 100");
+    strcpy(parametreCartes[11].nomcarte, "payer 200");
+    strcpy(parametreCartes[12].nomcarte, "Ressevez 200");
+    strcpy(parametreCartes[13].nomcarte, "c'est votre anniversaire ressevez 20 de chaque joueur");
+    strcpy(parametreCartes[14].nomcarte, "payer 10 pour chaque maison et 20 pour chauque hotel");
+    strcpy(parametreCartes[15].nomcarte, "payer 50");
+    strcpy(parametreCartes[16].nomcarte, "ressevez 50");
 }
 
-int cartechance (int indiceJoueur){
+int cartechance (int indiceJoueur, int nbJoueurs){
 
     int carte = random(16);
 
     switch (carte) {
         case 1:{
-            printf("%s", parametreCartes[carte]);
+            printf("%s", parametreCartes[carte].nomcarte);
             tabParametreJoueurs[indiceJoueur].numCase = 8;
         }break;
         case 2:{
-            printf("aller avenue Henri-Martin");
+            printf("%s", parametreCartes[carte].nomcarte);
+            tabParametreJoueurs[indiceJoueur].numCase = 23;
         }break;
         case 3:{
-            printf("aller Boulevard de la villette");
+            printf("%s", parametreCartes[carte].nomcarte);
+            tabParametreJoueurs[indiceJoueur].numCase = 9;
         }break;
         case 4:{
-            printf("aller Rue de la paix");
+            printf("%s", parametreCartes[carte].nomcarte);
+            tabParametreJoueurs[indiceJoueur].numCase = 31;
         }break;
         case 5:{
-            printf("aller a la gare de lyon");
+            printf("%s", parametreCartes[carte].nomcarte);
+            tabParametreJoueurs[indiceJoueur].numCase = 15;
         }break;
         case 6:{
-            printf("aller a la case depart");
+            printf("%s", parametreCartes[carte].nomcarte);
+            tabParametreJoueurs[indiceJoueur].numCase = 0;
         }break;
         case 7:{
-            printf("Reculez de trois case");
+            printf("%s", parametreCartes[carte].nomcarte);
+            tabParametreJoueurs[indiceJoueur].numCase = tabParametreJoueurs[indiceJoueur].numCase - 3;
         }break;
         case 8:{
             printf("sortez de prison");
         }break;
         case 9:{
-            printf("payer 50");
-            Joueur parametreJ;
-            parametreJ.argentJoueur = parametreJ.argentJoueur - 50;
+            printf("%s", parametreCartes[carte].nomcarte);
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= 50;
         }break;
         case 10:{
-            printf("Ressevez 100");
-            Joueur parametreJ;
-            parametreJ.argentJoueur = parametreJ.argentJoueur + 100;
+            printf("%s", parametreCartes[carte].nomcarte);
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 100;
+
         }break;
         case 11:{
-            printf("payer 200");
-            Joueur parametreJ;
-            parametreJ.argentJoueur = parametreJ.argentJoueur - 200;
+            printf("%s", parametreCartes[carte].nomcarte);
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= 200;
         }break;
         case 12:{
-            printf("Ressevez 200");
-            Joueur parametreJ;
-            parametreJ.argentJoueur = parametreJ.argentJoueur + 200;
+            printf("%s", parametreCartes[carte].nomcarte);
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
         }break;
         case 13:{
-            printf("c'est votre anniversaire ressevez 20");
-            Joueur parametreJ;
-            parametreJ.argentJoueur = parametreJ.argentJoueur + 20;
+            printf("%s", parametreCartes[carte].nomcarte);
+            for (int i = 0; i < nbJoueurs - 1; ++i) {
+                tabJoueur[tabordreJoueurs[i]].argentJoueur -= 20;
+            }
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur = (nbJoueurs - 1)*20;
         }break;
         case 14:{
-            printf("payer 10 pour chaque maison et 20 pour chauque hotel");
+            printf("%s", parametreCartes[carte].nomcarte);
         }break;
         case 15:{
-            printf("payer 50 ");
-            parametreJ.argentJoueur =
+            printf("%s", parametreCartes[carte].nomcarte);
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= 50;
         }break;
         case 16:{
-            printf("ressevez 50");
+            printf("%s", parametreCartes[carte].nomcarte);
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 50;
+
         }break;
     }
 

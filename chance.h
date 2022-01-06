@@ -17,7 +17,7 @@ typedef struct {
 
 carte parametreCartes[NOMBRE_CARTES];
 
-int cartechance (int indiceJoueur);
+int cartechance (int indiceJoueur, int nbJoueurs);
 void initialiserCartes();
 
 #endif //PROJET_2021_2022_MONOPOLY_EQUIPE_C_CHANCE_H

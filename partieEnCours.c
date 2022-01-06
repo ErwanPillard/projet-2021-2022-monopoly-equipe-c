@@ -266,14 +266,14 @@ void mainPartie(int nbJoueurs){
     init_terrains(); // initialise les parametre des terrains
     initialiserCartes();
 
-    do {
+    do{
         initialisation(nbJoueurs);
 
-        if (tabParametreJoueurs[indiceJoueur].doubleDe == 0) {
+        if(tabParametreJoueurs[indiceJoueur].doubleDe == 0){
             indiceJoueur++;
         }
 
-        if (indiceJoueur >= nbJoueurs && indiceJoueur < 0) {
+        if(indiceJoueur >= nbJoueurs && indiceJoueur < 0){
             indiceJoueur = 0;
         }
 
@@ -297,36 +297,33 @@ void mainPartie(int nbJoueurs){
         verifDoubleDe(valeurLancementDe1, valeurLancementDe2, tabordreJoueurs[indiceJoueur]);
 
         valeurDeTotale = valeurLancementDe2 + valeurLancementDe1;
+        //printf("%d\n", valeurDeTotale);
 
-        tabParametreJoueurs[indiceJoueur].numCase = (tabParametreJoueurs[indiceJoueur].numCase + valeurDeTotale) %
-                                                    32; // il y a 32 case donc on ne peut pas depasser 32
+
+        tabParametreJoueurs[indiceJoueur].numCase = (tabParametreJoueurs[indiceJoueur].numCase + valeurDeTotale)%32; // il y a 32 case donc on ne peut pas depasser 32
         printf("%d\n", tabParametreJoueurs[indiceJoueur].numCase);
 
-        if (terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 0) {
+        if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 0){
             int choix;
 
-            printf("Voulez vous acheter %s (si oui tapez 1)",
-                   terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
+            printf("Voulez vous acheter %s (si oui tapez 1)", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
             scanf("%d", &choix);
 
 
-            if (choix == 1) {
+            if(choix == 1){
                 int numCase = tabParametreJoueurs[indiceJoueur].numCase;
                 terrain[numCase].vendu = 1;
                 tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[numCase].prix;
                 terrain[numCase].proprietaire = numJoueur;
             }
         }
-
-        else if (terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 0) {
+        else if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 0){
             // joueur doit payer le loyer
             int prixLoyer = testSiMaison(indiceJoueur);
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer;
             tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].argentJoueur += prixLoyer;
         }
-
-        else if (terrain[tabParametreJoueurs[indiceJoueur].numCase].taxe == 1) {
-            printf("%s", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
+        else if(terrain[tabParametreJoueurs[indiceJoueur].numCase].taxe == 1){
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[numJoueur].frais;
         }
 
@@ -348,14 +345,13 @@ void mainPartie(int nbJoueurs){
         }
 
         else if (terrain[tabParametreJoueurs[indiceJoueur].numCase].carteChance == 1){
-            cartechance(indiceJoueur);
+            cartechance(indiceJoueur, nbJoueurs);
         }
 
         if (joueursElimine == nbJoueurs - 1) { // condition de victoire
             winner = 1;
         }
-
-    } while (!winner);
+    } while(!winner);
 }
 
 int testSiMaison(int indiceJoueur){
@@ -393,7 +389,6 @@ void affectationPion(int nbJoueurs){
         tabParametreJoueurs[i].pion = i + 1;
     }
 }
-
 /*
 int affichagePion(int* pion){
     al_set_target_bitmap(pion);
@@ -406,7 +401,6 @@ void initialisation(int nbJoueurs){
         printf("Joueur %d\n", i + 1);
         printf("Pseudo :%s\n", tabJoueur[tabordreJoueurs[i]].nomJoueur);
         printf("Argent %d\n", tabJoueur[tabordreJoueurs[i]].argentJoueur);
-        printf("Case %d", tabParametreJoueurs[i].numCase);
     }
 } // afficher dans la console les parametre des joueurs
 
