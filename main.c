@@ -2,6 +2,7 @@
 #include "menu.h"
 #include "fenetre.h"
 #include "partieEnCours.h"
+#include "chance.h"
 
 int main(){
     //fenetreNvPartie(6);
