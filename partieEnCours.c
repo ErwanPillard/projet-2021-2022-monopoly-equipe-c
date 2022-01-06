@@ -327,7 +327,7 @@ void mainPartie(int nbJoueurs){
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[numJoueur].frais;
         }
 
-        if(joueursElimine == nbJoueurs - 1){ // condition de victoire
+            if(joueursElimine == nbJoueurs - 1){ // condition de victoire
             winner = 1;
         }
     } while(!winner);
