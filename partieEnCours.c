@@ -264,6 +264,7 @@ void mainPartie(int nbJoueurs){
     }
 
     init_terrains(); // initialise les parametre des terrains
+    initialiserCartes();
 
     do{
         initialisation(nbJoueurs);
@@ -325,6 +326,8 @@ void mainPartie(int nbJoueurs){
         else if(terrain[tabParametreJoueurs[indiceJoueur].numCase].taxe == 1){
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[numJoueur].frais;
         }
+
+        cartechance(indiceJoueur);
 
         if(joueursElimine == nbJoueurs - 1){ // condition de victoire
             winner = 1;
