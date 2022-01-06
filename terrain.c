@@ -13,7 +13,7 @@ void init_terrains(){
 
     terrain[1].prix = 60;
     terrain[1].achetable = 1;
-    strcpy(terrain[0].nomTerrain, "Boulevard de belleville");
+    strcpy(terrain[1].nomTerrain, "Boulevard de belleville");
 
     terrain[2].frais = -100;
     terrain[2].taxe = 1;

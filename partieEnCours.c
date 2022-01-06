@@ -316,16 +316,39 @@ void mainPartie(int nbJoueurs){
                 terrain[numCase].proprietaire = numJoueur;
             }
         }
-        else if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 0){
+        else if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 1){
             // joueur doit payer le loyer
             int prixLoyer = testSiMaison(indiceJoueur);
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer;
             tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].argentJoueur += prixLoyer;
         }
         else if(terrain[tabParametreJoueurs[indiceJoueur].numCase].taxe == 1){
+            printf("%s", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
+            
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[numJoueur].frais;
         }
 
+        else if(terrain[tabParametreJoueurs[indiceJoueur].numCase].teleportation == 1){
+            switch (tabParametreJoueurs[indiceJoueur].numCase) {
+                case 4:
+                    tabParametreJoueurs[indiceJoueur].numCase = 12;
+                    break;
+                case 12:
+                    tabParametreJoueurs[indiceJoueur].numCase = 20;
+                    break;
+                case 20:
+                    tabParametreJoueurs[indiceJoueur].numCase = 28;
+                    break;
+                case 28:
+                    tabParametreJoueurs[indiceJoueur].numCase = 4;
+                    break;
+
+            }
+        }
+        
+        
+        
+        
         if(joueursElimine == nbJoueurs - 1){ // condition de victoire
             winner = 1;
         }
