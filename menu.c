@@ -38,7 +38,6 @@ void lancerNouvellePartie(){
     ajouterJoueursTab(nombreJoueurs);
     randomJoueurs(nombreJoueurs, tabordreJoueurs);
     //fenetreNvPartie(nombreJoueurs);
-    initialisation(nombreJoueurs);
     mainPartie(nombreJoueurs);
     }
 

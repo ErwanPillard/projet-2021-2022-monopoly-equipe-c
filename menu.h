@@ -19,16 +19,6 @@ typedef struct{
     int argentJoueur;
 }Joueur;
 
-typedef struct{
-    int prixAchat;
-    char occupation;
-    char proprietaire;
-    int nbMaison;
-    int nbHotel;
-    char couleur;
-    float loyer;
-}Propriete;
-
 void printf_center (const char* str);
 
 Joueur tabJoueur[NOMBRE_MAX_JOUEURS];

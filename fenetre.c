@@ -6,16 +6,12 @@ void erreur(const char *txt) {
     exit(EXIT_FAILURE);
 }
 
-void creerRectangle() {
-    int x1 = 765;
-    int y1 = 695;
-    int x2 = 1155;
-    int y2 = 735;
-    for (int i = 0; i < 4; i++) {
-        al_draw_filled_rectangle(x1, y1, x2, y2, COULEURMONOP);
-        y1 += 50;
-        y2 += 50;
-    }
+void creerRectangle(int x1, int y1, int x2, int y2) {
+    al_draw_filled_rectangle(x1, y1, x2, y2, COULEURMONOP);
+}
+
+void creerRectangleVide(int x1, int y1, int x2, int y2, int epaisseur){
+    al_draw_rectangle(x1,y1,x2,y2, NOIR, epaisseur);
 }
 
 unsigned char positionSouris1(int x, int y) {
@@ -49,6 +45,11 @@ unsigned char positionSouris4(int x, int y) {
 int setWindow() {
 
     int fin = 0, wait = -1;
+    int x1 = 765;
+    int y1 = 695;
+    int x2 = 1155;
+    int y2 = 735;
+
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_BITMAP *imageAcceuil = NULL;
@@ -64,7 +65,7 @@ int setWindow() {
     if (!al_init_image_addon()) {
         printf("Erreur initialisation font addon\n");
     }
-    if (al_init_primitives_addon()) {
+    if (!al_init_primitives_addon()) {
         printf("Erreur initialisation primitive addon\n");
     }
     if (!al_install_mouse()) {
@@ -98,7 +99,12 @@ int setWindow() {
 
     al_draw_scaled_bitmap(imageAcceuil, 0, 0, 1300, 870, 0, 0, 1900, 1060, 0);
 
-    creerRectangle();
+    for (int i = 0; i < 4; i++) {
+        creerRectangle(x1,x2,y1,y2);
+        y1 += 50;
+        y2 += 50;
+    }
+
 // texte menuPrincipal
     ALLEGRO_FONT *menu1 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
     al_draw_text(menu1, BLANC, 810, 700, 0, "Lancer une nouvelle partie");

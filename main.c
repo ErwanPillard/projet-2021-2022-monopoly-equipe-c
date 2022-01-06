@@ -4,9 +4,10 @@
 #include "partieEnCours.h"
 
 int main(){
-    setWindow();
+    //fenetreNvPartie(6);
+    //setWindow();
 
-    /*switch(menuPrincipale()){
+    switch(menuPrincipale()){
         case 1:
             lancerNouvellePartie();
             break;
@@ -19,7 +20,7 @@ int main(){
         case 4:
             quitter();
             break;
-    }*/
+    }
 
 
     return 0;

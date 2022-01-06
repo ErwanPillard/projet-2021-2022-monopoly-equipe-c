@@ -21,10 +21,9 @@
 #define COULEURMONOP al_map_rgb(64, 64, 64)
 
 void erreur(const char *txt);
-void creerRectangle();
+void creerRectangle(int x1, int y1, int x2, int y2);
+void creerRectangleVide(int x1, int y1, int x2, int y2, int epaisseur);
 unsigned char positionSouris1(int x, int y);
-
-
 void erreur(const char *txt);
 int setWindow();
 
