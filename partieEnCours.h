@@ -36,6 +36,10 @@ typedef struct{
 
 parametreJoueur tabParametreJoueurs[NOMBRE_MAX_JOUEURS];
 
+unsigned char positionSourisButtonDe(int x, int y);
+
+int testSiMaison(int indiceJoueur);
+
 int randomDe(int nbJoueurs);
 void affectationPion(int nbJoueurs);
 int affichagePion(int* pion);

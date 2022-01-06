@@ -21,13 +21,10 @@
 #define COULEURMONOP al_map_rgb(64, 64, 64)
 
 void erreur(const char *txt);
-void creerRectangle();
-
+void creerRectangle(int x1, int y1, int x2, int y2);
+void creerRectangleVide(int x1, int y1, int x2, int y2, int epaisseur);
 unsigned char positionSouris1(int x, int y);
-unsigned char positionSouris2(int x, int y);
-unsigned char positionSouris3(int x, int y);
-unsigned char positionSouris4(int x, int y);
-
-void setWindow();
+void erreur(const char *txt);
+int setWindow();
 
 #endif //PROJET_2021_2022_MONOPOLY_EQUIPE_C_FENETRE_H

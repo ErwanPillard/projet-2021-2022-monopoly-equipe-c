@@ -10,6 +10,9 @@
 typedef struct{
     char nomTerrain[50];
     int prix;
+    int numMaison;
+    int carteChanceCommu;
+    int taxe;
     int loyer;
     int loyer1M;
     int loyer2M;
@@ -19,6 +22,7 @@ typedef struct{
     int prixMaison;
     int vendu;
     int achetable;
+    int proprietaire;
     int frais; // a payer ou à recevoir
 }T;
 
