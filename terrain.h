@@ -11,8 +11,7 @@ typedef struct{
     char nomTerrain[50];
     int prix;
     int numMaison;
-    int carteChance;
-    int carteCommunaute;
+    int carteChanceCommu;
     int teleportation;
     int taxe;
     int loyer;

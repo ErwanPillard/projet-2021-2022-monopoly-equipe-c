@@ -16,6 +16,7 @@
 #include "menu.h"
 #include "fenetre.h"
 #include "terrain.h"
+#include "chance.h"
 
 #define NOMBRE_MAX_JOUEURS 6
 
