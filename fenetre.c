@@ -15,28 +15,28 @@ void creerRectangleVide(int x1, int y1, int x2, int y2, int epaisseur) {
 }
 
 int positionSouris1(int x, int y) {
-    if (x >= 618 && x <= 932 && y >= 550 && y <= 582) {
+    if (x >= 442 && x <= 710 && y >= 430 && y <= 455) {
         lancerNouvellePartie();
     }
     return 0;
 }
 
 int positionSouris2(int x, int y) {
-    if (x >= 618 && x <= 932 && y >= 591 && y <= 620) {
+    if (x >= 442 && x <= 710 && y >= 470 && y <= 495) {
         afficherRegle();
     }
     return 0;
 }
 
 int positionSouris3(int x, int y) {
-    if (x >= 618 && x <= 932 && y >= 630 && y <= 661) {
+    if (x >= 442 && x <= 710 && y >= 510 && y <= 535) {
         afficherNomMembresProjet();
     }
     return 0;
 }
 
 int positionSouris4(int x, int y) {
-    if (x >= 618 && x <= 932 && y >= 669 && y <= 700) {
+    if (x >= 442 && x <= 710 && y >= 550 && y <= 575) {
         quitter();
     }
     return 0;
@@ -45,10 +45,10 @@ int positionSouris4(int x, int y) {
 void setWindow() {
 
     int fin = 0, wait = -1, oldx = 0, oldy = 0;
-    int x1 = 765;
-    int y1 = 695;
-    int x2 = 1155;
-    int y2 = 735;
+    int x1 = 442;
+    int y1 = 430;
+    int x2 = 710;
+    int y2 = 455;
 
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_DISPLAY *display = NULL;
@@ -100,26 +100,26 @@ void setWindow() {
     imageAcceuil = al_load_bitmap("../images/imageAcceuil.jpg");
 
 
-    al_draw_scaled_bitmap(imageAcceuil, 0, 0, 1300, 870, 0, 0, 1900, 1060, 0);
+    al_draw_scaled_bitmap(imageAcceuil, 0, 0, 1300, 870, 0, 0, 1150, 645, 0);
 
     for (int i = 0; i < 4; i++) {
         creerRectangle(x1, y1, x2, y2);
-        y1 += 50;
-        y2 += 50;
+        y1 += 40;
+        y2 += 40;
     }
 
 // texte menuPrincipal
-    ALLEGRO_FONT *menu1 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
-    al_draw_text(menu1, BLANC, 810, 700, 0, "Lancer une nouvelle partie");
+    ALLEGRO_FONT *menu1 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 15, 0);
+    al_draw_text(menu1, BLANC, 465, 430, 0, "Lancer une nouvelle partie");
 
-    ALLEGRO_FONT *menu2 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
-    al_draw_text(menu2, BLANC, 860, 750, 0, "Afficher les regles");
+    ALLEGRO_FONT *menu2 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 15, 0);
+    al_draw_text(menu2, BLANC, 495, 470, 0, "Afficher les regles");
 
-    ALLEGRO_FONT *menu3 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
-    al_draw_text(menu3, BLANC, 770, 800, 0, "Afficher nom des membres du projet");
+    ALLEGRO_FONT *menu3 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 15, 0);
+    al_draw_text(menu3, BLANC, 465, 512, 0, "Nom des membres du projet");
 
-    ALLEGRO_FONT *menu4 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
-    al_draw_text(menu4, BLANC, 840, 850, 0, "Quitter partie en cours");
+    ALLEGRO_FONT *menu4 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 15, 0);
+    al_draw_text(menu4, BLANC, 480, 552, 0, "Quitter partie en cours");
 
     al_flip_display();
 //Boucle d'évènement
@@ -138,11 +138,11 @@ void setWindow() {
         }
         al_get_mouse_state(&mouse_state);
 
-        if(oldx != mouse_state.x || oldy != mouse_state.y) {
+        /*if(oldx != mouse_state.x || oldy != mouse_state.y) {
             oldx = mouse_state.x;
             oldy = mouse_state.y;
             printf("coordonnees de la souris : %d-%d\n", mouse_state.x, mouse_state.y);
-        }
+        }*/
 
         if ((mouse_state.buttons & 1) == 1 && positionSouris1(mouse_state.x, mouse_state.y)) {
         }
