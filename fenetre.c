@@ -10,41 +10,41 @@ void creerRectangle(int x1, int y1, int x2, int y2) {
     al_draw_filled_rectangle(x1, y1, x2, y2, COULEURMONOP);
 }
 
-void creerRectangleVide(int x1, int y1, int x2, int y2, int epaisseur){
-    al_draw_rectangle(x1,y1,x2,y2, NOIR, epaisseur);
+void creerRectangleVide(int x1, int y1, int x2, int y2, int epaisseur) {
+    al_draw_rectangle(x1, y1, x2, y2, NOIR, epaisseur);
 }
 
-unsigned char positionSouris1(int x, int y) {
-    if (x >= 765 && x <= 1155 && y >= 695 && y <= 735) {
-        return 1;
+int positionSouris1(int x, int y) {
+    if (x >= 618 && x <= 932 && y >= 550 && y <= 582) {
+        menuPrincipale();
     }
     return 0;
 }
 
-unsigned char positionSouris2(int x, int y) {
-    if (x >= 765 && x <= 1155 && y >= 745 && y <= 785) {
-        return 1;
+int positionSouris2(int x, int y) {
+    if (x >= 618 && x <= 932 && y >= 591 && y <= 620) {
+        afficherRegle();
     }
     return 0;
 }
 
-unsigned char positionSouris3(int x, int y) {
-    if (x >= 765 && x <= 1155 && y >= 795 && y <= 835) {
-        return 1;
+int positionSouris3(int x, int y) {
+    if (x >= 618 && x <= 932 && y >= 630 && y <= 661) {
+        afficherNomMembresProjet();
     }
     return 0;
 }
 
-unsigned char positionSouris4(int x, int y) {
-    if (x >= 765 && x <= 1155 && y >= 845 && y <= 885) {
-        return 1;
+int positionSouris4(int x, int y) {
+    if (x >= 618 && x <= 932 && y >= 669 && y <= 700) {
+        quitter();
     }
     return 0;
 }
 
-int setWindow() {
+void setWindow() {
 
-    int fin = 0, wait = -1;
+    int fin = 0, wait = -1, oldx = 0, oldy = 0;
     int x1 = 765;
     int y1 = 695;
     int x2 = 1155;
@@ -53,6 +53,7 @@ int setWindow() {
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_BITMAP *imageAcceuil = NULL;
+    ALLEGRO_MOUSE_STATE mouse_state;
     ALLEGRO_EVENT event = {0};
 
 
@@ -91,6 +92,8 @@ int setWindow() {
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_mouse_event_source());
 
+    al_get_mouse_state(&mouse_state);
+
 
     al_set_target_backbuffer(display);
 
@@ -100,7 +103,7 @@ int setWindow() {
     al_draw_scaled_bitmap(imageAcceuil, 0, 0, 1300, 870, 0, 0, 1900, 1060, 0);
 
     for (int i = 0; i < 4; i++) {
-        creerRectangle(x1,x2,y1,y2);
+        creerRectangle(x1, y1, x2, y2);
         y1 += 50;
         y2 += 50;
     }
@@ -133,15 +136,17 @@ int setWindow() {
 
             }
         }
-        if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-            positionSouris1(event.mouse.x, event.mouse.y);
+        al_get_mouse_state(&mouse_state);
+
+        if ((mouse_state.buttons & 1) == 1 && positionSouris1(mouse_state.x, mouse_state.y)) {
         }
-        else if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-            if ((event.mouse.button & 1) == 1){
-                lancerNouvellePartie();
-            }
-            al_flip_display();
+        if ((mouse_state.buttons & 1) == 1 && positionSouris2(mouse_state.x, mouse_state.y)) {
         }
+        if ((mouse_state.buttons & 1) == 1 && positionSouris3(mouse_state.x, mouse_state.y)) {
+        }
+        if ((mouse_state.buttons & 1) == 1 && positionSouris4(mouse_state.x, mouse_state.y)) {
+        }
+
     } while (!fin);
 
     al_destroy_display(display);
