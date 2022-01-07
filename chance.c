@@ -1,7 +1,7 @@
 
 #include "chance.h"
 
-void initialiserCartes(){
+void initialiserCartes(int indiceJoueur){
     strcpy(parametreCartes[1].nomcarte, "aller en prison");
     strcpy(parametreCartes[2].nomcarte, "aller avenue Henri-Martin");
     strcpy(parametreCartes[3].nomcarte, "aller Boulevard de la villette");
@@ -18,12 +18,14 @@ void initialiserCartes(){
     strcpy(parametreCartes[14].nomcarte, "payer 10 pour chaque maison et 20 pour chauque hotel");
     strcpy(parametreCartes[15].nomcarte, "payer 50");
     strcpy(parametreCartes[16].nomcarte, "ressevez 50");
+    for (int i = 0 ; i <= indiceJoueur ; i++){
+        tabParametreJoueurs[i].cartePrison = 7;
+    }
 }
 
 int cartechance(int indiceJoueur, int nbJoueurs){
 
     int carte = random(16);
-
     switch (carte) {
         case 1:{
             printf("%s\n", parametreCartes[carte].nomcarte);

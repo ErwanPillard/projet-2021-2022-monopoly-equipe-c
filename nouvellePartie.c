@@ -357,7 +357,7 @@ void mainPartie(int nbJoueurs){
 
     init_terrains(); // initialise les parametre des terrains
 
-    void initialiserCartes();
+    initialiserCartes(indiceJoueur);
 
     do{
         initialisation(nbJoueurs);

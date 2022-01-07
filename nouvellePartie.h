@@ -35,7 +35,7 @@ int tabordreJoueurs[NOMBRE_MAX_JOUEURS];
 typedef struct{
     int pion;
     int doubleDe;
-    int cartePrison = {7};
+    int cartePrison;
     int numCase;
     int nbTourPrison;
     bool prison;//0 il peut jouer, 1 il ne peux pas
