@@ -15,12 +15,11 @@ typedef struct {
     char nomcarte[50];
 }carte;
 
+
 carte parametreCartes[NOMBRE_CARTES];
 
-int cartechance (int indiceJoueur, int nbJoueurs);
-void initialiserCartes();
-
-
+int cartechance(int indiceJoueur, int nbJoueurs);
+void initialiserCartes(int indiceJoueur);
 carte parametreCommu[NOMBRE_CARTES];
 void initialisercommu();
 int cartecommu(int indiceJoueur, int nbJoueurs);
