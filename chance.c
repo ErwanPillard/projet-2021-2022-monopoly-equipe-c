@@ -20,7 +20,7 @@ void initialiserCartes(){
     strcpy(parametreCartes[16].nomcarte, "ressevez 50");
 }
 
-int cartechance (int indiceJoueur, int nbJoueurs){
+int cartechance(int indiceJoueur, int nbJoueurs){
 
     int carte = random(16);
 

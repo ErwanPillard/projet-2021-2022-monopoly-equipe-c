@@ -17,10 +17,8 @@ typedef struct {
 
 carte parametreCartes[NOMBRE_CARTES];
 
-int cartechance (int indiceJoueur, int nbJoueurs);
+int cartechance(int indiceJoueur, int nbJoueurs);
 void initialiserCartes();
-
-
 carte parametreCommu[NOMBRE_CARTES];
 void initialisercommu();
 int cartecommu(int indiceJoueur, int nbJoueurs);
