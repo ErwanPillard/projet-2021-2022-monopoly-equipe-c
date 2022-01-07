@@ -11,7 +11,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
-#include "partieEnCours.h"
+#include "nouvellePartie.h"
 
 #define WIDTH 1920
 #define HEIGHT 1080

@@ -12,6 +12,7 @@ typedef struct{
     int prix;
     int numMaison;
     int carteChance;
+    int carteCommunaute;
     int teleportation;
     int taxe;
     int loyer;

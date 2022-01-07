@@ -15,7 +15,7 @@ void init_terrains(){
     terrain[1].achetable = 1;
     strcpy(terrain[1].nomTerrain, "Boulevard de belleville");
 
-    terrain[2].frais = -100;
+    terrain[2].frais = 100;
     terrain[2].taxe = 1;
     strcpy(terrain[2].nomTerrain, "Taxe d'habitation payez 100$");
 
@@ -44,10 +44,10 @@ void init_terrains(){
 
     terrain[9].prix = 140;
     terrain[9].achetable = 1;
-    strcpy(terrain[0].nomTerrain, "Boulevard de la Villette");
+    strcpy(terrain[9].nomTerrain, "Boulevard de la Villette");
 
-    terrain[10].frais = -100;
     terrain[10].taxe = 1;
+    terrain[10].frais = 100;
     strcpy(terrain[10].nomTerrain, "Impot sur la fortune payez 100$");
 
     terrain[11].prix = 140;
@@ -77,7 +77,7 @@ void init_terrains(){
     terrain[17].achetable = 1;
     strcpy(terrain[17].nomTerrain, "Boulevard Saint-Michel");
 
-    terrain[18].frais = -200;
+    terrain[18].frais = 200;
     terrain[18].taxe = 1;
     strcpy(terrain[18].nomTerrain, "Taxe sur les produits de luxe payez 200$");
 

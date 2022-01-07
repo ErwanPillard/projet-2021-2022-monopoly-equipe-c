@@ -1,4 +1,4 @@
-#include "partieEnCours.h"
+#include "nouvellePartie.h"
 
 unsigned char positionSourisButtonDe(int x, int y) {
     if (x >= 1800 && x <= 1830 && y >= 160 && y <= 190) {
@@ -7,11 +7,42 @@ unsigned char positionSourisButtonDe(int x, int y) {
     return 0;
 }
 
+void lancerNouvellePartie(){
+    int nombreJoueurs = 0;
+    char nomPartie[20];
+    printf("Nom de la partie (20 caractere max): ");
+    scanf("%s", nomPartie);
+    do{
+        printf("Entrez le nombre de joueurs (max 6): ");
+        scanf("%d", &nombreJoueurs);
+        fflush(stdout);
+    }while(nombreJoueurs > 6 || nombreJoueurs < 2);
+
+    ajouterJoueursTab(nombreJoueurs);
+    randomJoueurs(nombreJoueurs, tabordreJoueurs);
+    //fenetreNvPartie(nombreJoueurs);
+    mainPartie(nombreJoueurs);
+}
+
+void descriptionCartes(int numCase){
+    printf("Loyer $%d\n", terrain[numCase].loyer);
+    printf("Avec 1 Maison $%d\n", terrain[numCase].loyer1M);
+    printf("Avec 2 Maison $%d\n", terrain[numCase].loyer2M);
+    printf("Avec 3 Maison $%d\n", terrain[numCase].loyer3M);
+    printf("Avec 4 Maison $%d\n", terrain[numCase].loyer4M);
+    printf("Avec HOTEL $%d\n", terrain[numCase].loyer1H);
+    printf("Prix des maisons chacune $%d\n", terrain[numCase].prixMaison);
+    printf("Prix de un hotel $%d plus 4 maisons\n", terrain[numCase].prixMaison);
+    if(terrain[numCase].vendu == 1){
+        printf("Proprietaire: %s\n", tabJoueur[tabordreJoueurs[terrain[numCase].proprietaire]].nomJoueur);
+    } else if(terrain[numCase].vendu == 0){
+        printf("Proprietaire: Banque\n");
+    }
+}
+
 int fenetreNvPartie(int nbJoueurs){
 
-    int fin = 0, wait = -1;
-
-    int numCase = 2;
+    int wait = -1;
 
     ALLEGRO_DISPLAY* display;
     ALLEGRO_KEYBOARD_STATE keyboard_state;
@@ -253,8 +284,72 @@ int fenetreNvPartie(int nbJoueurs){
     al_destroy_font(valeurDe);
 }
 
+
+void ajouterJoueur(int i){
+    printf("Entrez le pseudo du joueur %d: ", i + 1);
+    scanf("%s", tabJoueur[i].nomJoueur);
+    tabJoueur[i].argentJoueur = 1500; // argent initiale du joueur
+    tabJoueur[i].numJoueur = i; // on affecte le num 0 au joueur 1, ect...
+}
+
+void  ajouterJoueursTab(int taille_logique){
+    Joueur parametreJ;
+    for(int i = 0; i < taille_logique; i++){
+        ajouterJoueur(i);
+    }
+}
+
+void afficherRegle(){
+// texte avec la mise en forme pour afficher les règles du monopoly
+}
+
+void afficherNomMembresProjet(){
+    printf("Membres du projet:\n"
+           "Erwan\n"
+           "Theo\n"
+           "Lucas\n"
+           "Constantin");
+}
+
+int randomJoueurs(int nbJoueurs, int tabordreJoueurs[NOMBRE_MAX_JOUEURS]){ //fonction pour melanger l'ordre des joueurs
+    int random;
+    for(int h = 0; h < NOMBRE_MAX_JOUEURS; h++){
+        tabordreJoueurs[h] = 7;
+    }
+    srand(time(NULL));
+    for (int i = 0; i < nbJoueurs; i++) {
+        int ok = 0;
+        int validation = 0;
+        do{
+            random = rand() % (nbJoueurs);
+            for (int j = 0; j < nbJoueurs; j++){
+                if(random != tabordreJoueurs[j]){
+                    validation += 1;
+                }
+            }
+            if(validation == nbJoueurs){
+                ok = 1;
+            }
+            else{
+                validation = 0;
+            }
+        } while(ok != 1);
+        tabordreJoueurs[i] = random;
+    }
+}
+
+void printf_center (const char* str)
+{
+    unsigned int n;
+    for (n = 0; n < (LARGEUR_CONSOLE-strlen(str)) / 2; n++)
+    {
+        putchar(' ');
+    }
+    printf("%s", str);
+} //fonction pour centrer du texte sur la console
+
 void mainPartie(int nbJoueurs){
-    int indiceJoueur = -1;
+    int indiceJoueur = 0;
     int winner = 0, joueursElimine = 0;
     int lancerDe1 = 0, lancerDe2 = 0, valeurLancementDe1, valeurLancementDe2, valeurDeTotale;
 
@@ -269,8 +364,13 @@ void mainPartie(int nbJoueurs){
     do{
         initialisation(nbJoueurs);
 
-        if(tabParametreJoueurs[indiceJoueur].doubleDe == 0){
-            indiceJoueur++;
+        if(tabParametreJoueurs[indiceJoueur].prison == 1){
+            indiceJoueur = (indiceJoueur + 1) % nbJoueurs;
+            tabParametreJoueurs[indiceJoueur].nbTourPrison++;
+            if(tabParametreJoueurs[indiceJoueur].nbTourPrison >= 3){
+                tabParametreJoueurs[indiceJoueur].nbTourPrison = 0;
+                tabParametreJoueurs[indiceJoueur].prison = 0;
+            }
         }
 
         if(indiceJoueur >= nbJoueurs && indiceJoueur < 0){
@@ -279,55 +379,76 @@ void mainPartie(int nbJoueurs){
 
         int numJoueur = tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur;
 
-        printf("C est a %s de jouer\n", tabJoueur[tabordreJoueurs[indiceJoueur]].nomJoueur);
+        printf("\nC est a %s de jouer\n", tabJoueur[tabordreJoueurs[indiceJoueur]].nomJoueur);
+        fflush(stdout);
 
+        printf("Si vous souhaitez acceder au menu tapez 0\n");
         printf("Taper 1 pour lancer le premier des : ");
         scanf("%d", &lancerDe1);
 
-        valeurLancementDe1 = random(7);
-        printf("%d\n", valeurLancementDe1);
+        if(lancerDe1 == 0){
+            menuPrincipale();
+        }
+        else {
+            valeurLancementDe1 = random(7);//618 550 931 582
+            printf("De 1: %d\n", valeurLancementDe1);
 
-        printf("Taper 1 pour lancer le deuxieme des : ");
-        scanf("%d", &lancerDe2);
+            printf("Taper 1 pour lancer le deuxieme des : ");
+            scanf("%d", &lancerDe2);
 
-        valeurLancementDe2 = random(7);
+            valeurLancementDe2 = random(7);
+            printf("De 2: %d\n", valeurLancementDe2);
 
-        printf("%d\n", valeurLancementDe2);
+        }
 
         verifDoubleDe(valeurLancementDe1, valeurLancementDe2, tabordreJoueurs[indiceJoueur]);
 
         valeurDeTotale = valeurLancementDe2 + valeurLancementDe1;
-        //printf("%d\n", valeurDeTotale);
 
+        printf("Nombre de: %d\n", valeurDeTotale );
 
-        tabParametreJoueurs[indiceJoueur].numCase = (tabParametreJoueurs[indiceJoueur].numCase + valeurDeTotale)%32; // il y a 32 case donc on ne peut pas depasser 32
-        printf("%d\n", tabParametreJoueurs[indiceJoueur].numCase);
+        if(tabParametreJoueurs[indiceJoueur].doubleDe == 3){
+            vaPrison(indiceJoueur);
+        }
+
+        tabParametreJoueurs[indiceJoueur].numCase += valeurDeTotale;
+
+        if(tabParametreJoueurs[indiceJoueur].numCase >= 32){
+            printf("Vous passez par la case depart recevez 200$\n");
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
+            tabParametreJoueurs[indiceJoueur].numCase %= 32; // il y a 32 case donc on ne peut pas depasser 32
+        }
+
+        printf("%s\n",terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
 
         if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 0){
+            descriptionCartes(tabParametreJoueurs[indiceJoueur].numCase);
             int choix;
-
             printf("Voulez vous acheter %s (si oui tapez 1)", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
             scanf("%d", &choix);
 
 
             if(choix == 1){
-                int numCase = tabParametreJoueurs[indiceJoueur].numCase;
-                terrain[numCase].vendu = 1;
-                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[numCase].prix;
-                terrain[numCase].proprietaire = numJoueur;
+                terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu = 1;
+                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[tabParametreJoueurs[indiceJoueur].numCase].prix;
+                terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire = numJoueur;
             }
         }
-        else if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 0){
+        if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 1){
             // joueur doit payer le loyer
+            printf("Vous devez payer un loyer a %s", tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].nomJoueur);
             int prixLoyer = testSiMaison(indiceJoueur);
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer;
             tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].argentJoueur += prixLoyer;
         }
-        else if(terrain[tabParametreJoueurs[indiceJoueur].numCase].taxe == 1){
-            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[numJoueur].frais;
+        if(terrain[tabParametreJoueurs[indiceJoueur].numCase].taxe == 1){
+            int choix;
+            printf("TAPEZ 1 POUR PAYER\n");
+            scanf("%d", &choix);
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[tabParametreJoueurs[indiceJoueur].numCase].frais;//marche pas
         }
 
-        else if (terrain[tabParametreJoueurs[indiceJoueur].numCase].teleportation == 1) {
+        if (terrain[tabParametreJoueurs[indiceJoueur].numCase].teleportation == 1) {
             switch (tabParametreJoueurs[indiceJoueur].numCase) {
                 case 4:
                     tabParametreJoueurs[indiceJoueur].numCase = 12;
@@ -338,20 +459,32 @@ void mainPartie(int nbJoueurs){
                 case 20:
                     tabParametreJoueurs[indiceJoueur].numCase = 28;
                     break;
+                case 24:
+                    tabParametreJoueurs[indiceJoueur].numCase = 8;
+                    break;
                 case 28:
                     tabParametreJoueurs[indiceJoueur].numCase = 4;
                     break;
             }
         }
 
-        else if (terrain[tabParametreJoueurs[indiceJoueur].numCase].carteChance == 1){
+        if (terrain[tabParametreJoueurs[indiceJoueur].numCase].carteChance == 1){
             cartechance(indiceJoueur, nbJoueurs);
+        }
+
+        if(tabParametreJoueurs[indiceJoueur].doubleDe == 0){
+            indiceJoueur = (indiceJoueur + 1) % nbJoueurs;
         }
 
         if (joueursElimine == nbJoueurs - 1) { // condition de victoire
             winner = 1;
         }
     } while(!winner);
+}
+
+void vaPrison(int indiceJoueur){
+    tabParametreJoueurs[indiceJoueur].prison = 1;
+    tabParametreJoueurs[indiceJoueur].numCase = 8;
 }
 
 int testSiMaison(int indiceJoueur){
@@ -398,9 +531,11 @@ int affichagePion(int* pion){
 void initialisation(int nbJoueurs){
     printf_center("Initialisation :\n");
     for (int i = 0; i < nbJoueurs; i++) {
-        printf("Joueur %d\n", i + 1);
-        printf("Pseudo :%s\n", tabJoueur[tabordreJoueurs[i]].nomJoueur);
-        printf("Argent %d\n", tabJoueur[tabordreJoueurs[i]].argentJoueur);
+        printf("Joueur: %d Pseudo: %s Argent: %d$ Case: %d\n",
+               i + 1,
+               tabJoueur[tabordreJoueurs[i]].nomJoueur,
+               tabJoueur[tabordreJoueurs[i]].argentJoueur,
+               tabParametreJoueurs[i].numCase + 1);
     }
 } // afficher dans la console les parametre des joueurs
 
@@ -412,4 +547,8 @@ void verifDoubleDe(int de1, int de2, int indiceJoueur) {
     else{
         tabParametreJoueurs[indiceJoueur].doubleDe = 0;
     }
+}
+
+int quitter(){
+    exit(EXIT_SUCCESS);
 }

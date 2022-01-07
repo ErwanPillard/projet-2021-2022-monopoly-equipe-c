@@ -26,71 +26,70 @@ int cartechance (int indiceJoueur, int nbJoueurs){
 
     switch (carte) {
         case 1:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
             tabParametreJoueurs[indiceJoueur].numCase = 8;
         }break;
         case 2:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
             tabParametreJoueurs[indiceJoueur].numCase = 23;
         }break;
         case 3:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
             tabParametreJoueurs[indiceJoueur].numCase = 9;
         }break;
         case 4:{
-            printf("%s", parametreCartes[carte].nomcarte);
-            tabParametreJoueurs[indiceJoueur].numCase = 31;
+            printf("%s\n", parametreCartes[carte].nomcarte);
+            tabParametreJoueurs[indiceJoueur].numCase = 30;
         }break;
         case 5:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
             tabParametreJoueurs[indiceJoueur].numCase = 15;
         }break;
         case 6:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
             tabParametreJoueurs[indiceJoueur].numCase = 0;
         }break;
         case 7:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
             tabParametreJoueurs[indiceJoueur].numCase = tabParametreJoueurs[indiceJoueur].numCase - 3;
         }break;
         case 8:{
-            printf("sortez de prison");
+            printf("sortez de prison\n");
         }break;
         case 9:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= 50;
         }break;
         case 10:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 100;
 
         }break;
         case 11:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= 200;
         }break;
         case 12:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
         }break;
         case 13:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
             for (int i = 0; i < nbJoueurs - 1; ++i) {
                 tabJoueur[tabordreJoueurs[i]].argentJoueur -= 20;
             }
-            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur = (nbJoueurs - 1)*20;
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += (nbJoueurs - 1)*20;
         }break;
         case 14:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
         }break;
         case 15:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= 50;
         }break;
         case 16:{
-            printf("%s", parametreCartes[carte].nomcarte);
+            printf("%s\n", parametreCartes[carte].nomcarte);
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 50;
-
         }break;
     }
 
