@@ -1,7 +1,7 @@
 
 #include "chance.h"
 
-void initialiserCartes(){
+void initialiserCartes(int indiceJoueur){
     strcpy(parametreCartes[1].nomcarte, "aller en prison");
     strcpy(parametreCartes[2].nomcarte, "aller avenue Henri-Martin");
     strcpy(parametreCartes[3].nomcarte, "aller Boulevard de la villette");
@@ -18,16 +18,18 @@ void initialiserCartes(){
     strcpy(parametreCartes[14].nomcarte, "payer 10 pour chaque maison et 20 pour chauque hotel");
     strcpy(parametreCartes[15].nomcarte, "payer 50");
     strcpy(parametreCartes[16].nomcarte, "ressevez 50");
+    for (int i = 0 ; i <= indiceJoueur ; i++){
+        tabParametreJoueurs[i].cartePrison = 7;
+    }
 }
 
 int cartechance(int indiceJoueur, int nbJoueurs){
 
     int carte = random(16);
-
     switch (carte) {
         case 1:{
             printf("%s\n", parametreCartes[carte].nomcarte);
-            tabParametreJoueurs[indiceJoueur].numCase = 8;
+            vaPrison(indiceJoueur);
         }break;
         case 2:{
             printf("%s\n", parametreCartes[carte].nomcarte);
@@ -54,7 +56,13 @@ int cartechance(int indiceJoueur, int nbJoueurs){
             tabParametreJoueurs[indiceJoueur].numCase = tabParametreJoueurs[indiceJoueur].numCase - 3;
         }break;
         case 8:{
-            printf("sortez de prison\n");
+        if (tabParametreJoueurs[indiceJoueur].cartePrison != 7) { // elle appartient pas a la banque donc indisponible
+            printf("carte indisponible");
+            cartechance(indiceJoueur, nbJoueurs);
+        }
+        if (tabParametreJoueurs[indiceJoueur].cartePrison == 7){ // elle appartient a la banque donc elle est disponible
+            tabParametreJoueurs[indiceJoueur].cartePrison = tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur ;
+        }
         }break;
         case 9:{
             printf("%s\n", parametreCartes[carte].nomcarte);
@@ -123,7 +131,8 @@ int cartecommu(int indiceJoueur, int nbJoueurs){
             tabParametreJoueurs[indiceJoueur].numCase = 1;
         }break;
         case 2:{
-            printf("aller en prison");
+            printf("%s", parametreCommu[commu].nomcarte);
+            vaPrison(indiceJoueur);
         }break;
         case 3:{
             printf("%s", parametreCommu[commu].nomcarte);
