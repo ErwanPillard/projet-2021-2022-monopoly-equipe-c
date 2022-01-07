@@ -208,10 +208,7 @@ int fenetreNvPartie(int nbJoueurs){
         while(!deLance){
             al_get_mouse_state(&mouse_state);
 
-            if(oldx != mouse_state.x || oldy != mouse_state.y) {
-                oldx = mouse_state.x;
-                oldy = mouse_state.y;
-            }
+
 
             if((mouse_state.buttons & 1) == 1) { // clic gauche (2^0 : 00000001)
                 if (positionSourisButtonDe(event.mouse.x, event.mouse.y)){
