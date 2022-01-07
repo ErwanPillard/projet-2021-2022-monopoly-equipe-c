@@ -27,7 +27,7 @@ int cartechance (int indiceJoueur, int nbJoueurs){
     switch (carte) {
         case 1:{
             printf("%s\n", parametreCartes[carte].nomcarte);
-            tabParametreJoueurs[indiceJoueur].numCase = 8;
+            vaPrison(indiceJoueur);
         }break;
         case 2:{
             printf("%s\n", parametreCartes[carte].nomcarte);
@@ -54,7 +54,13 @@ int cartechance (int indiceJoueur, int nbJoueurs){
             tabParametreJoueurs[indiceJoueur].numCase = tabParametreJoueurs[indiceJoueur].numCase - 3;
         }break;
         case 8:{
-            printf("sortez de prison\n");
+        if (tabParametreJoueurs[indiceJoueur].cartePrison != 7) { // elle appartient pas a la banque donc indisponible
+            printf("carte indisponible");
+            cartechance(indiceJoueur, nbJoueurs);
+        }
+        if (tabParametreJoueurs[indiceJoueur].cartePrison == 7){ // elle appartient a la banque donc elle est disponible
+            tabParametreJoueurs[indiceJoueur].cartePrison = tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur ;
+        }
         }break;
         case 9:{
             printf("%s\n", parametreCartes[carte].nomcarte);
@@ -116,14 +122,15 @@ void initialisercommu(){
 }
 
 int cartecommu(int indiceJoueur, int nbJoueurs){
-    int commu = randomDe(16);
+    int commu = random(16);
     switch (commu) {
         case 1:{
             printf("%s", parametreCommu[commu].nomcarte);
             tabParametreJoueurs[indiceJoueur].numCase = 1;
         }break;
         case 2:{
-            printf("aller en prison");
+            printf("%s", parametreCommu[commu].nomcarte);
+            vaPrison(indiceJoueur);
         }break;
         case 3:{
             printf("%s", parametreCommu[commu].nomcarte);

@@ -384,7 +384,7 @@ void mainPartie(int nbJoueurs){
         fflush(stdout);
 
         printf("Si vous souhaitez acceder au menu tapez 0\n");
-        printf("Taper 1 pour lancer le premier des : ");
+        printf("Taper 1 pour lancer le ptabJoueur[tabordreJoueurs[indiceJoueur]].numJoueurremier des : ");
         scanf("%d", &lancerDe1);
 
         if(lancerDe1 == 0){
@@ -473,6 +473,7 @@ void mainPartie(int nbJoueurs){
             cartechance(indiceJoueur, nbJoueurs);
         }
 
+
         if(tabParametreJoueurs[indiceJoueur].doubleDe == 0){
             indiceJoueur = (indiceJoueur + 1) % nbJoueurs;
         }
@@ -486,6 +487,19 @@ void mainPartie(int nbJoueurs){
 void vaPrison(int indiceJoueur){
     tabParametreJoueurs[indiceJoueur].prison = 1;
     tabParametreJoueurs[indiceJoueur].numCase = 8;
+    if (tabParametreJoueurs[indiceJoueur].cartePrison == tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur ){
+        int choix;
+        printf("voulez vous jouez votre carte sortior de prison (1 oui)");
+        scanf("%d",&choix);
+        if (choix == 0){
+            tabParametreJoueurs[indiceJoueur].prison = 1;
+        }
+        if (choix == 1){
+            tabParametreJoueurs[indiceJoueur].prison = 0;
+            tabParametreJoueurs[indiceJoueur].cartePrison = 7;
+        }
+    }
+
 }
 
 int testSiMaison(int indiceJoueur){
