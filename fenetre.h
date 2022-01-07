@@ -13,8 +13,8 @@
 #include <allegro5/allegro_font.h>
 #include "nouvellePartie.h"
 
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 1152
+#define HEIGHT 648
 
 #define NOIR al_map_rgb(0 , 0,  0)
 #define BLANC al_map_rgb(255 , 255,  255)
@@ -29,7 +29,7 @@ int positionSouris4(int x, int y);
 
 
 
-
+void creerRectangleBlanc(int x1, int y1, int x2, int y2);
 void creerRectangle(int x1, int y1, int x2, int y2);
 void creerRectangleVide(int x1, int y1, int x2, int y2, int epaisseur);
 

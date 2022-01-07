@@ -8,7 +8,7 @@ int main(){
     //cartechance(2);
 
     //fenetreNvPartie(6);
-    //setWindow();
-    menuPrincipale();
+    setWindow();
+    //menuPrincipale();
     return 0;
 }

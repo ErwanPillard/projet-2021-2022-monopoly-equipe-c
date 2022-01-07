@@ -116,7 +116,7 @@ void initialisercommu(){
 }
 
 int cartecommu(int indiceJoueur, int nbJoueurs){
-    int commu = randomDe(16);
+    int commu = random(16);
     switch (commu) {
         case 1:{
             printf("%s", parametreCommu[commu].nomcarte);

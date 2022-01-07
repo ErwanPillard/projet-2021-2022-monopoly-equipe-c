@@ -6,6 +6,11 @@ void erreur(const char *txt) {
     exit(EXIT_FAILURE);
 }
 
+
+void creerRectangleBlanc(int x1, int y1, int x2, int y2){
+    al_draw_filled_rectangle(x1, y1, x2, y2, BLANC);
+}
+
 void creerRectangle(int x1, int y1, int x2, int y2) {
     al_draw_filled_rectangle(x1, y1, x2, y2, COULEURMONOP);
 }
@@ -16,7 +21,7 @@ void creerRectangleVide(int x1, int y1, int x2, int y2, int epaisseur) {
 
 int positionSouris1(int x, int y) {
     if (x >= 618 && x <= 932 && y >= 550 && y <= 582) {
-        menuPrincipale();
+        lancerNouvellePartie();
     }
     return 0;
 }
@@ -100,7 +105,7 @@ void setWindow() {
     imageAcceuil = al_load_bitmap("../images/imageAcceuil.jpg");
 
 
-    al_draw_scaled_bitmap(imageAcceuil, 0, 0, 1300, 870, 0, 0, 1900, 1060, 0);
+    al_draw_scaled_bitmap(imageAcceuil, 0, 0, 1300, 870, 0, 0, 1150, 648, 0);
 
     for (int i = 0; i < 4; i++) {
         creerRectangle(x1, y1, x2, y2);
@@ -137,6 +142,13 @@ void setWindow() {
             }
         }
         al_get_mouse_state(&mouse_state);
+
+        if(oldx != mouse_state.x || oldy != mouse_state.y) {
+            oldx = mouse_state.x;
+            oldy = mouse_state.y;
+            printf("coordonnées de la souris : %d-%d\n", mouse_state.x, mouse_state.y);
+        }
+
 
         if ((mouse_state.buttons & 1) == 1 && positionSouris1(mouse_state.x, mouse_state.y)) {
         }

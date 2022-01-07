@@ -24,7 +24,7 @@
 
 typedef struct{
     int numJoueur;
-    char nomJoueur[10];
+    char nomJoueur[15];
     int argentJoueur;
 }Joueur;
 
@@ -38,7 +38,7 @@ typedef struct{
     int cartePrison;
     int numCase;
     int nbTourPrison;
-    bool prison;//0 il peut jouer, 1 il ne peux pas
+    bool prison;
 }parametreJoueur;
 
 typedef struct{
