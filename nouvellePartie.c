@@ -1,7 +1,21 @@
 #include "nouvellePartie.h"
 
-unsigned char positionSourisButtonDe(int x, int y) {
-    if (x >= 1800 && x <= 1830 && y >= 160 && y <= 190) {
+int positionSourisButtonDe(int x, int y) {
+    if (x >= 1240 && x <= 1260 && y >= 10 && y <= 30) {
+        return 1;
+        }
+    return 0;
+}
+
+int positionSourisButtonOui(int x, int y) {
+    if (x >= 1240 && x <= 1260 && y >= 40 && y <= 60) {
+        return 1;
+    }
+    return 0;
+}
+
+int positionSourisButtonNon(int x, int y) {
+    if (x >= 1240 && x <= 1260 && y >= 70 && y <= 90) {
         return 1;
     }
     return 0;
@@ -42,13 +56,16 @@ void descriptionCartes(int numCase){
 
 int fenetreNvPartie(int nbJoueurs) {
 
-    int wait = -1, deLance = 0;
+    int wait = -1, button = 0;
 
     ALLEGRO_DISPLAY *display;
     ALLEGRO_KEYBOARD_STATE keyboard_state;
     ALLEGRO_MOUSE_STATE mouse_state;
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_EVENT event;
+    ALLEGRO_TIMER *timer = NULL;
+
+    timer = al_create_timer(3);
 
     if (!al_init()) {
         printf("Erreur initialisation");
@@ -62,7 +79,7 @@ int fenetreNvPartie(int nbJoueurs) {
         erreur("Erreur installation souris");
     }
 
-    display = al_create_display(WIDTH, HEIGHT);
+    display = al_create_display(WIDTH_JEU, HEIGHT_JEU);
 
     if (!display) {
         printf("Erreur creation display");
@@ -79,6 +96,7 @@ int fenetreNvPartie(int nbJoueurs) {
     }
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_keyboard_event_source());
+    al_register_event_source(queue, al_get_mouse_event_source());
 
     al_set_target_backbuffer(display);
 
@@ -95,17 +113,14 @@ int fenetreNvPartie(int nbJoueurs) {
 
     ALLEGRO_FONT *aQuiJouer = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 25, 0);
     ALLEGRO_FONT *lancerDe = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 25, 0);
-    ALLEGRO_FONT *valeurDe = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    ALLEGRO_FONT *valeurDe = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 25, 0);
     ALLEGRO_FONT *info2 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
     ALLEGRO_FONT *info3 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
     ALLEGRO_FONT *info4 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    ALLEGRO_FONT *oui = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    ALLEGRO_FONT *non = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
 
 
-    creerRectangle(1840, 15, 1870, 45); // rectangle lancer dé
-
-    creerRectangleVide(10, 0, 380, 1050, 2);
-
-    creerRectangleVide(1480, 0, 1835, 1050, 2);
 
     ALLEGRO_BITMAP *plateau = NULL;
     plateau = al_load_bitmap("../images/plateau.jpg");
@@ -128,7 +143,7 @@ int fenetreNvPartie(int nbJoueurs) {
     ALLEGRO_BITMAP *case6 = NULL;
     case6 = al_load_bitmap("../images/case6.jpg");
 
-    ALLEGRO_BITMAP *case7 = NULL;
+    ALLEGRO_BITMAP *case7 = NULL; // meme que la 23
     case7 = al_load_bitmap("../images/case7_23.jpg");
 
     ALLEGRO_BITMAP *case8 = NULL;
@@ -152,7 +167,7 @@ int fenetreNvPartie(int nbJoueurs) {
     ALLEGRO_BITMAP *case14 = NULL;
     case14 = al_load_bitmap("../images/case14.jpg");
 
-    ALLEGRO_BITMAP *case15 = NULL;
+    ALLEGRO_BITMAP *case15 = NULL; //meme que la 31
     case15 = al_load_bitmap("../images/case15_31.jpg");
 
     ALLEGRO_BITMAP *case16 = NULL;
@@ -161,14 +176,50 @@ int fenetreNvPartie(int nbJoueurs) {
     ALLEGRO_BITMAP *case17 = NULL;
     case17 = al_load_bitmap("../images/case17.jpg");
 
+    ALLEGRO_BITMAP *case18 = NULL;
+    case18 = al_load_bitmap("../images/case18.jpg");
+
+    ALLEGRO_BITMAP *case19 = NULL;
+    case19 = al_load_bitmap("../images/case19.jpg");
+
+    ALLEGRO_BITMAP *case20 = NULL;
+    case20 = al_load_bitmap("../images/case20.jpg");
+
+    ALLEGRO_BITMAP *case21 = NULL;
+    case21 = al_load_bitmap("../images/case21.jpg");
+
+    ALLEGRO_BITMAP *case22 = NULL;
+    case22 = al_load_bitmap("../images/case22.jpg");
+
+    ALLEGRO_BITMAP *case24 = NULL;
+    case24 = al_load_bitmap("../images/case24.jpg");
+
+    ALLEGRO_BITMAP *case25 = NULL;
+    case25 = al_load_bitmap("../images/case25.jpg");
+
+    ALLEGRO_BITMAP *case26 = NULL;
+    case26 = al_load_bitmap("../images/case26.jpg");
+
+    ALLEGRO_BITMAP *case27 = NULL;
+    case27 = al_load_bitmap("../images/case27.jpg");
+
+    ALLEGRO_BITMAP *case28 = NULL;
+    case28 = al_load_bitmap("../images/case28.jpg");
+
+    ALLEGRO_BITMAP *case29 = NULL;
+    case29 = al_load_bitmap("../images/case29.jpg");
+
+    ALLEGRO_BITMAP *case30 = NULL;
+    case30 = al_load_bitmap("../images/case30.jpg");
+
+    ALLEGRO_BITMAP *case32 = NULL;
+    case32 = al_load_bitmap("../images/case32.jpg");
+
     ALLEGRO_BITMAP *pion1 = NULL;
     pion1 = al_load_bitmap("../images/pion.png");
 
     ALLEGRO_BITMAP *pion2 = NULL;
     pion2 = al_load_bitmap("../images/pion2.png");
-
-    al_draw_bitmap(plateau, 400,0,0);
-    al_flip_display();
 
     int indiceJoueur = 0;
     int winner = 0, joueursElimine = 0;
@@ -181,12 +232,27 @@ int fenetreNvPartie(int nbJoueurs) {
 
     init_terrains(); // initialise les parametre des terrains
 
-    initialiserCartes();
+    initialiserCartes(indiceJoueur);
+
     initialisercommu();
 
     do {
+        creerRectangle(1840, 15, 1870, 45); // rectangle lancer dé
+
+        creerRectangle(1840, 60, 1870, 90); // boutton oui
+        al_draw_text(oui, NOIR ,1840, 60, 0,"✔");
+        creerRectangle(1840, 105, 1870, 135); // boutton non
+        al_draw_text(non, NOIR ,1840, 105, 0,"X");
+        creerRectangleVide(10, 0, 380, 1050, 2);
+
+        creerRectangleVide(1480, 0, 1835, 1050, 2);
+
+        al_draw_bitmap(plateau, 400,0,0);
+        al_flip_display();
+
+
+        al_wait_for_event(queue, &event);
         int yP = 15, yA = 40, yC = 65;
-        creerRectangleBlanc(11, 11, 301, 381);
         //creerRectangleBlanc(11, 11, 301, 381);
 
         for (int i = 0; i < nbJoueurs; i++) {
@@ -207,76 +273,250 @@ int fenetreNvPartie(int nbJoueurs) {
             }
         }
 
-        if (indiceJoueur >= nbJoueurs && indiceJoueur < 0) {
-            indiceJoueur = 0;
-        }
-
         int numJoueur = tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur;
 
-        al_draw_textf(aQuiJouer, al_map_rgb(0, 0, 0), 1490, 10, 0,
-                      "%s a toi de jouer", tabJoueur[tabordreJoueurs[indiceJoueur]].nomJoueur);
-        al_draw_text(lancerDe, al_map_rgb(0, 0, 0), 1490, 45, 0,
-                     "Lancer le de");
-
+        al_draw_textf(aQuiJouer, NOIR, 1490, 10, 0,
+                      "%s à toi de jouer", tabJoueur[tabordreJoueurs[indiceJoueur]].nomJoueur);
+        al_draw_text(lancerDe, NOIR, 1490, 45, 0,
+                     "Lancer le dé 1");
         al_flip_display();
+
 
         int oldx = 0;
         int oldy = 0;
-
-        while (!deLance) {
+        while (button != 1) {
+            al_wait_for_event(queue, &event);
             al_get_mouse_state(&mouse_state);
 
-            if (oldx != mouse_state.x || oldy != mouse_state.y) {
-                oldx = mouse_state.x;
-                oldy = mouse_state.y;
-
-            }
-
-            if ((mouse_state.buttons & 1) == 1) { // clic gauche (2^0 : 00000001)
-                if (positionSourisButtonDe(event.mouse.x, event.mouse.y)) {
+            if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                if ((event.mouse.button & 1) && positionSourisButtonDe(mouse_state.x, mouse_state.y)){
                     valeurLancementDe1 = random(7);
-                    valeurLancementDe2 = random(7);
-                    deLance = 1;
+                    al_draw_textf(valeurDe, NOIR, 1800, 45, 0,
+                                  "%d", valeurLancementDe1);
+                    button = 1;
                     al_flip_display();
                 }
             }
-            /*
-            if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-                if (positionSouris1(event.mouse.x, event.mouse.y)) {
-                    if ((event.mouse.button & 1) == 1) {
-                        deLance = 1;
-                    }
-                }
-            }*/
         }
 
+        button = 0;
+        al_draw_text(lancerDe, NOIR, 1490, 75, 0,
+                     "Lancer le dé 2");
+        al_flip_display();
+        while (button != 1) {
+            al_wait_for_event(queue, &event);
+            al_get_mouse_state(&mouse_state);
+
+            if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                if ((event.mouse.button & 1) && positionSourisButtonDe(mouse_state.x, mouse_state.y)){
+                    valeurLancementDe2 = random(7);
+                    al_draw_textf(valeurDe, NOIR, 1800, 75, 0,
+                                  "%d", valeurLancementDe2);
+                    button = 1;
+                    al_flip_display();
+                }
+            }
+        }
+        button = 0;
         verifDoubleDe(valeurLancementDe1, valeurLancementDe2, tabordreJoueurs[indiceJoueur]);
 
         valeurDeTotale = valeurLancementDe2 + valeurLancementDe1;
 
-        al_draw_textf(valeurDe, al_map_rgb(0, 0, 0), 1090, 65, 0,
-                      "Dé %d", valeurDeTotale);
+        al_draw_textf(valeurDe, NOIR, 1490, 105, 0,
+                      "Avancez de Dé %d", valeurDeTotale);
         al_flip_display();
 
-        tabParametreJoueurs[indiceJoueur].numCase = (tabParametreJoueurs[indiceJoueur].numCase + valeurDeTotale) %
-                                                    32; // il y a 32 case donc on ne peut pas depasser 32
-        printf("num case %d\n", tabParametreJoueurs[indiceJoueur].numCase);
+        if(tabParametreJoueurs[indiceJoueur].doubleDe == 3){
+            vaPrison(indiceJoueur);
+            tabParametreJoueurs[indiceJoueur].doubleDe = 0;
+        }
 
-        if (terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 &&
-            terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 0) {
-            int choix = 0;
+        tabParametreJoueurs[indiceJoueur].numCase += valeurDeTotale; // il y a 32 case donc on ne peut pas depasser 32
 
-            printf("Voulez vous acheter %s (si oui tapez 1)",
-                   terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
-            scanf("%d", &choix);
+        if(tabParametreJoueurs[indiceJoueur].numCase >= 32){
+            al_draw_text(valeurDe, NOIR, 1490, 150, 0,"Vous passez par la case départ recevez 200$");
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
+            tabParametreJoueurs[indiceJoueur].numCase %= 32; // il y a 32 case donc on ne peut pas depasser 32
+        }
 
-            //al_draw_textf(acheter, al_map_rgb(0,0,0), 1090, 45, 0, "Voulez vous acheter %s (si oui tapez 1)", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
-            if (choix == 1) {
-                terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable = 0;
+        float X = 1500, Y = 200;
+        switch (tabParametreJoueurs[indiceJoueur].numCase) {
+            case 0:
+                al_draw_bitmap(case1, X, Y, 0);
+                break;
+            case 1:
+                al_draw_bitmap(case2, X, Y, 0);
+                break;
+            case 2:
+                al_draw_bitmap(case3, X, Y, 0);
+                break;
+            case 3:
+                al_draw_bitmap(case4, X, Y, 0);
+                break;
+            case 4:
+                al_draw_bitmap(case5, X, Y, 0);
+                break;
+            case 5:
+                al_draw_bitmap(case6, X, Y, 0);
+                break;
+            case 6:
+                al_draw_bitmap(case7, X, Y, 0);
+                break;
+            case 7:
+                al_draw_bitmap(case8, X, Y, 0);
+                break;
+            case 8:
+                al_draw_bitmap(case9, X, Y, 0);
+                break;
+            case 9:
+                al_draw_bitmap(case10, X, Y, 0);
+                break;
+            case 10:
+                al_draw_bitmap(case11, X, Y, 0);
+                break;
+            case 11:
+                al_draw_bitmap(case12, X, Y, 0);
+                break;
+            case 12:
+                al_draw_bitmap(case13, X, Y, 0);
+                break;
+            case 13:
+                al_draw_bitmap(case14, X, Y, 0);
+                break;
+            case 14:
+                al_draw_bitmap(case15, X, Y, 0);
+                break;
+            case 15:
+                al_draw_bitmap(case16, X, Y, 0);
+                break;
+            case 16:
+                al_draw_bitmap(case17, X, Y, 0);
+                break;
+            case 17:
+                al_draw_bitmap(case18, X, Y, 0);
+                break;
+            case 18:
+                al_draw_bitmap(case19, X, Y, 0);
+                break;
+            case 19:
+                al_draw_bitmap(case20, X, Y, 0);
+                break;
+            case 20:
+                al_draw_bitmap(case21, X, Y, 0);
+                break;
+            case 21:
+                al_draw_bitmap(case22, X, Y, 0);
+                break;
+            case 22:
+                al_draw_bitmap(case7, X, Y, 0);
+                break;
+            case 23:
+                al_draw_bitmap(case24, X, Y, 0);
+                break;
+            case 24:
+                al_draw_bitmap(case25, X, Y, 0);
+                break;
+            case 25:
+                al_draw_bitmap(case26, X, Y, 0);
+                break;
+            case 26:
+                al_draw_bitmap(case27, X, Y, 0);
+                break;
+            case 27:
+                al_draw_bitmap(case28, X, Y, 0);
+                break;
+            case 28:
+                al_draw_bitmap(case29, X, Y, 0);
+                break;
+            case 29:
+                al_draw_bitmap(case30, X, Y, 0);
+                break;
+            case 30:
+                al_draw_bitmap(case15, X, Y, 0);
+                break;
+            case 31:
+                al_draw_bitmap(case32, X, Y, 0);
+                break;
+        }
+        al_flip_display();
+
+        if (terrain[tabParametreJoueurs[indiceJoueur].numCase].carteChance == 1){
+            cartechance(indiceJoueur, nbJoueurs);
+        }
+
+        if (terrain[tabParametreJoueurs[indiceJoueur].numCase].carteCommunaute == 1){
+            cartecommu(indiceJoueur, nbJoueurs);
+        }
+
+        if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 0){
+        int choix = 0;
+            creerRectangleBlanc(680, 500, 1130, 550);
+            al_draw_textf(valeurDe, NOIR, 681, 500, 0,
+                          "Voulez vous acheter %s", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
+            al_flip_display();
+            while(!choix) {
+                al_wait_for_event(queue, &event);
+                al_get_mouse_state(&mouse_state);
+                if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                    if ((event.mouse.button & 1) && positionSourisButtonOui(mouse_state.x, mouse_state.y)){
+                        terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu = 1;
+                        tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[tabParametreJoueurs[indiceJoueur].numCase].prix;
+                        terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire = numJoueur;
+                        choix = 1;
+                    }
+                    if ((event.mouse.button & 1) && positionSourisButtonNon(mouse_state.x, mouse_state.y)){
+                        choix = 1;
+                    }
+                }
+            }
+        }
+        if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 1){
+            // joueur doit payer le loyer
+            int prixLoyer = testSiMaison(indiceJoueur);
+            printf("Vous devez payer un loyer a %s\n", tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].nomJoueur);
+            //si le propriétaire possede les 2 cartes loyer nu double
+            if(terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire == terrain[tabParametreJoueurs[indiceJoueur].numCase + 2].proprietaire || terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire == terrain[tabParametreJoueurs[indiceJoueur].numCase - 2].proprietaire && terrain[tabParametreJoueurs[indiceJoueur].numCase].numMaison == 0){
+                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer * 2;
+                tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].argentJoueur += prixLoyer * 2;
+            }
+            else{
+                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer;
+                tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].argentJoueur += prixLoyer;
+            }
+        }
+        if(terrain[tabParametreJoueurs[indiceJoueur].numCase].taxe == 1){
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[tabParametreJoueurs[indiceJoueur].numCase].frais;
+        }
+
+        if(tabParametreJoueurs[indiceJoueur].numCase == 26){
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += terrain[26].frais;
+        }
+
+        if (terrain[tabParametreJoueurs[indiceJoueur].numCase].teleportation == 1) {
+            switch (tabParametreJoueurs[indiceJoueur].numCase) {
+                case 4:
+                    tabParametreJoueurs[indiceJoueur].numCase = 12;
+                    break;
+                case 12:
+                    tabParametreJoueurs[indiceJoueur].numCase = 20;
+                    break;
+                case 20:
+                    tabParametreJoueurs[indiceJoueur].numCase = 28;
+                    break;
+                case 24:
+                    tabParametreJoueurs[indiceJoueur].numCase = 8;
+                    break;
+                case 28:
+                    tabParametreJoueurs[indiceJoueur].numCase = 4;
+                    break;
             }
         }
 
-        al_wait_for_event(queue, &event);
+        if(tabParametreJoueurs[indiceJoueur].doubleDe == 0){
+            indiceJoueur = (indiceJoueur + 1) % nbJoueurs;
+        }
+
+        creerRectangleBlanc(0,0,1920,1080);
 
         if (joueursElimine == nbJoueurs - 1) { // condition de victoire
             winner = 1;
@@ -294,6 +534,7 @@ int fenetreNvPartie(int nbJoueurs) {
 
     } while (!winner);
     al_destroy_bitmap(plateau);
+    al_destroy_event_queue(queue);
     al_destroy_display(display);
     al_destroy_font(aQuiJouer);
     al_destroy_font(lancerDe);
@@ -417,7 +658,7 @@ void mainPartie(int nbJoueurs){
 
     init_terrains(); // initialise les parametre des terrains
 
-    initialiserCartes();
+    initialiserCartes(indiceJoueur);
     initialisercommu();
 
     do{

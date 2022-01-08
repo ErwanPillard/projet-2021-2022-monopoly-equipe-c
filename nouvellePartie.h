@@ -18,6 +18,8 @@
 #include "chance.h"
 
 #define NOMBRE_MAX_JOUEURS 6
+#define WIDTH_JEU 1920
+#define HEIGHT_JEU 1080
 
 #define DIMENSION_PIONX 100
 #define DIMENSION_PIONY 142
@@ -48,7 +50,7 @@ typedef struct{
 
 parametreJoueur tabParametreJoueurs[NOMBRE_MAX_JOUEURS];
 
-unsigned char positionSourisButtonDe(int x, int y);
+int positionSourisButtonDe(int x, int y);
 
 void vaPrison(int indiceJoueur);
 
@@ -78,7 +80,7 @@ void ajouterJoueur(int i);
 
 int randomJoueurs(int nbJoueurs, int ordreJoueurs[NOMBRE_MAX_JOUEURS]);
 
-void  ajouterJoueursTab(int taille_logique);
+void ajouterJoueursTab(int taille_logique);
 
 void afficherRegle();
 

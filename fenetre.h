@@ -13,8 +13,8 @@
 #include <allegro5/allegro_font.h>
 #include "nouvellePartie.h"
 
-#define WIDTH 1152
-#define HEIGHT 648
+#define WIDTH_MENU 1152
+#define HEIGHT_MENU 648
 
 #define NOIR al_map_rgb(0 , 0,  0)
 #define BLANC al_map_rgb(255 , 255,  255)

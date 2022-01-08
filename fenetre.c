@@ -6,6 +6,10 @@ void erreur(const char *txt) {
     exit(EXIT_FAILURE);
 }
 
+void creerRectangleBlanc(int x1, int y1, int x2, int y2) {
+    al_draw_filled_rectangle(x1, y1, x2, y2, BLANC);
+}
+
 void creerRectangle(int x1, int y1, int x2, int y2) {
     al_draw_filled_rectangle(x1, y1, x2, y2, COULEURMONOP);
 }
@@ -76,7 +80,7 @@ void setWindow() {
     al_init_ttf_addon();
 
 
-    display = al_create_display(WIDTH, HEIGHT);
+    display = al_create_display(WIDTH_MENU, HEIGHT_MENU);
     if (!display) {
         erreur("Création de la fenêtre");
     }
@@ -93,7 +97,6 @@ void setWindow() {
     al_register_event_source(queue, al_get_mouse_event_source());
 
     al_get_mouse_state(&mouse_state);
-
 
     al_set_target_backbuffer(display);
 
