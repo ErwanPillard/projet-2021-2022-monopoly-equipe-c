@@ -102,8 +102,7 @@ void setWindow() {
 
     imageAcceuil = al_load_bitmap("../images/imageAcceuil.jpg");
 
-
-    al_draw_scaled_bitmap(imageAcceuil, 0, 0, 1300, 870, 0, 0, 1150, 645, 0);
+    al_draw_scaled_bitmap(imageAcceuil, 0, 0, 1300, 870, 0, 0, 1152, 648, 0);
 
     for (int i = 0; i < 4; i++) {
         creerRectangle(x1, y1, x2, y2);

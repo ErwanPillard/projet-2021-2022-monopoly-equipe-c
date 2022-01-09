@@ -21,6 +21,13 @@ int positionSourisButtonNon(int x, int y) {
     return 0;
 }
 
+int positionCaseDepart(int x, int y){
+    if (x >= 870 && x <= 990 && y >= 590 && y <= 660) {
+        return 1;
+    }
+    return 0;
+}
+
 void lancerNouvellePartie(){
     int nombreJoueurs = 0;
     char nomPartie[20];
@@ -56,7 +63,7 @@ void descriptionCartes(int numCase){
 
 int fenetreNvPartie(int nbJoueurs) {
 
-    int wait = -1, button = 0;
+    int wait = -1, button1 = 0, button2 = 0;
 
     ALLEGRO_DISPLAY *display;
     ALLEGRO_KEYBOARD_STATE keyboard_state;
@@ -119,7 +126,14 @@ int fenetreNvPartie(int nbJoueurs) {
     ALLEGRO_FONT *info4 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
     ALLEGRO_FONT *oui = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
     ALLEGRO_FONT *non = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
-
+    ALLEGRO_FONT *descriptionCartes1 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    ALLEGRO_FONT *descriptionCartes2 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    ALLEGRO_FONT *descriptionCartes3 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    ALLEGRO_FONT *descriptionCartes4 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    ALLEGRO_FONT *descriptionCartes5 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    ALLEGRO_FONT *descriptionCartes6 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    ALLEGRO_FONT *descriptionCartes7 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
+    ALLEGRO_FONT *descriptionCartes8 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
 
 
     ALLEGRO_BITMAP *plateau = NULL;
@@ -216,10 +230,22 @@ int fenetreNvPartie(int nbJoueurs) {
     case32 = al_load_bitmap("../images/case32.jpg");
 
     ALLEGRO_BITMAP *pion1 = NULL;
-    pion1 = al_load_bitmap("../images/pion.png");
+    pion1 = al_load_bitmap("../images/pion1.png");
 
     ALLEGRO_BITMAP *pion2 = NULL;
     pion2 = al_load_bitmap("../images/pion2.png");
+
+    ALLEGRO_BITMAP *pion3 = NULL;
+    pion3 = al_load_bitmap("../images/pion3.png");
+
+    ALLEGRO_BITMAP *pion4 = NULL;
+    pion4 = al_load_bitmap("../images/pion4.png");
+
+    ALLEGRO_BITMAP *pion5 = NULL;
+    pion5 = al_load_bitmap("../images/pion5.png");
+
+    ALLEGRO_BITMAP *pion6 = NULL;
+    pion6 = al_load_bitmap("../images/pion6.png");
 
     int indiceJoueur = 0;
     int winner = 0, joueursElimine = 0;
@@ -236,23 +262,86 @@ int fenetreNvPartie(int nbJoueurs) {
 
     initialisercommu();
 
+    tabParametreJoueurs[0].pion = 0;
+    tabParametreJoueurs[1].pion = 1;
+    tabParametreJoueurs[2].pion = 2;
+    tabParametreJoueurs[3].pion = 3;
+    tabParametreJoueurs[4].pion = 4;
+    tabParametreJoueurs[5].pion = 5;
+
+    tabParametreJoueurs[tabParametreJoueurs[0].pion].pionX = 1330;
+    tabParametreJoueurs[tabParametreJoueurs[0].pion].pionY = 915;
+
+    tabParametreJoueurs[tabParametreJoueurs[1].pion].pionX = 1380;
+    tabParametreJoueurs[tabParametreJoueurs[1].pion].pionY = 915;
+
+    tabParametreJoueurs[tabParametreJoueurs[2].pion].pionX = 1330;
+    tabParametreJoueurs[tabParametreJoueurs[2].pion].pionY = 943;
+
+    tabParametreJoueurs[tabParametreJoueurs[3].pion].pionX = 1380;
+    tabParametreJoueurs[tabParametreJoueurs[3].pion].pionY = 943;
+
+    tabParametreJoueurs[tabParametreJoueurs[4].pion].pionX = 1330;
+    tabParametreJoueurs[tabParametreJoueurs[4].pion].pionY = 971;
+
+    tabParametreJoueurs[tabParametreJoueurs[5].pion].pionX = 1380;
+    tabParametreJoueurs[tabParametreJoueurs[5].pion].pionY = 971;
+
+    creerRectangle(1840, 15, 1870, 45); // rectangle lancer dé
+
+    creerRectangle(1840, 60, 1870, 90); // boutton oui
+    al_draw_text(oui, NOIR ,1840, 60, 0,"OK");
+
+    creerRectangle(1840, 105, 1870, 135); // boutton non
+    al_draw_text(non, NOIR ,1840, 105, 0,"X");
+
+    creerRectangleVide(10, 0, 380, 1050, 2);
+
+    creerRectangleVide(1480, 0, 1835, 1050, 2);
+
+    al_draw_bitmap(plateau, 400,0,0);
+
+    switch (nbJoueurs) {
+        case 2:
+            al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+            al_flip_display();
+            break;
+        case 3:
+            al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion3, 0, 0, 300,425, tabParametreJoueurs[2].pionX, tabParametreJoueurs[2].pionY,30,42,0);
+            al_flip_display();
+            break;
+        case 4:
+            al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion3, 0, 0, 300,425, tabParametreJoueurs[2].pionX, tabParametreJoueurs[2].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion4, 0, 0, 300,425, tabParametreJoueurs[3].pionX, tabParametreJoueurs[3].pionY,30,42,0);
+            al_flip_display();
+            break;
+        case 5:
+            al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion3, 0, 0, 300,425, tabParametreJoueurs[2].pionX, tabParametreJoueurs[2].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion4, 0, 0, 300,425, tabParametreJoueurs[3].pionX, tabParametreJoueurs[3].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion5, 0, 0, 300,425, tabParametreJoueurs[4].pionX, tabParametreJoueurs[4].pionY,30,42,0);
+            al_flip_display();
+            break;
+        case 6:
+            al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion3, 0, 0, 300,425, tabParametreJoueurs[2].pionX, tabParametreJoueurs[2].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion4, 0, 0, 300,425, tabParametreJoueurs[3].pionX, tabParametreJoueurs[3].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion5, 0, 0, 300,425, tabParametreJoueurs[4].pionX, tabParametreJoueurs[4].pionY,30,42,0);
+            al_draw_scaled_bitmap(pion6, 0, 0, 300,425, tabParametreJoueurs[5].pionX, tabParametreJoueurs[5].pionY,30,42,0);
+            al_flip_display();
+            break;
+    }
+
     do {
-        creerRectangle(1840, 15, 1870, 45); // rectangle lancer dé
-
-        creerRectangle(1840, 60, 1870, 90); // boutton oui
-        al_draw_text(oui, NOIR ,1840, 60, 0,"✔");
-        creerRectangle(1840, 105, 1870, 135); // boutton non
-        al_draw_text(non, NOIR ,1840, 105, 0,"X");
-        creerRectangleVide(10, 0, 380, 1050, 2);
-
-        creerRectangleVide(1480, 0, 1835, 1050, 2);
-
-        al_draw_bitmap(plateau, 400,0,0);
-        al_flip_display();
-
-
         al_wait_for_event(queue, &event);
-        int yP = 15, yA = 40, yC = 65;
+        float yP = 15, yA = 40, yC = 65;
         //creerRectangleBlanc(11, 11, 301, 381);
 
         for (int i = 0; i < nbJoueurs; i++) {
@@ -260,17 +349,22 @@ int fenetreNvPartie(int nbJoueurs) {
             al_draw_textf(info3, NOIR, 15, yA, 0, "Argent: %d$", tabJoueur[tabordreJoueurs[i]].argentJoueur);
             al_draw_textf(info4, NOIR, 15, yC, 0, "Case: %d", tabParametreJoueurs[i].numCase + 1);
             yP += 85;
-            yA+= 85;
+            yA += 85;
             yC += 85;
         }
 
-        if(tabParametreJoueurs[indiceJoueur].prison == 1){
+        if (tabParametreJoueurs[indiceJoueur].prison == 1) {
             indiceJoueur = (indiceJoueur + 1) % nbJoueurs;
             tabParametreJoueurs[indiceJoueur].nbTourPrison++;
-            if(tabParametreJoueurs[indiceJoueur].nbTourPrison >= 3){
+            if (tabParametreJoueurs[indiceJoueur].nbTourPrison >= 3) {
                 tabParametreJoueurs[indiceJoueur].nbTourPrison = 0;
                 tabParametreJoueurs[indiceJoueur].prison = 0;
             }
+        }
+
+        if (tabParametreJoueurs[indiceJoueur].elimine == 1) {
+            indiceJoueur = (indiceJoueur + 1) % nbJoueurs;
+            joueursElimine++;
         }
 
         int numJoueur = tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur;
@@ -278,66 +372,239 @@ int fenetreNvPartie(int nbJoueurs) {
         al_draw_textf(aQuiJouer, NOIR, 1490, 10, 0,
                       "%s à toi de jouer", tabJoueur[tabordreJoueurs[indiceJoueur]].nomJoueur);
         al_draw_text(lancerDe, NOIR, 1490, 45, 0,
-                     "Lancer le dé 1");
+                     "Lance les dés");
         al_flip_display();
 
 
         int oldx = 0;
         int oldy = 0;
-        while (button != 1) {
+        while (button1 != 1 && button2 != 1) {
+            ALLEGRO_EVENT event;
             al_wait_for_event(queue, &event);
             al_get_mouse_state(&mouse_state);
 
-            if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-                if ((event.mouse.button & 1) && positionSourisButtonDe(mouse_state.x, mouse_state.y)){
+            if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+                if (positionCaseDepart(mouse_state.x, mouse_state.y)) {
+                    creerRectangleBlanc(25, 600, 377, 1000);
+                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                                  "Loyer $%d\n", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer);
+                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                                  "Avec 1 Maison $%d\n", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer1M);
+                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                                  "Avec 2 Maison $%d\n", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer2M);
+                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                                  "Avec 3 Maison $%d\n", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer3M);
+                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                                  "Avec 4 Maison $%d\n", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer4M);
+                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                                  "Avec HOTEL $%d\n", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer1H);
+                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                                  "Prix des maisons chacune $%d\n",
+                                  terrain[tabParametreJoueurs[indiceJoueur].numCase].prixMaison);
+                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                                  "Prix de un hotel $%d + 4M\n",
+                                  terrain[tabParametreJoueurs[indiceJoueur].numCase].prixMaison);
+                    al_flip_display();
+                }
+            }
+            /*
+            if(oldx != mouse_state.x || oldy != mouse_state.y) {
+                oldx = mouse_state.x;
+                oldy = mouse_state.y;
+                printf("coordonnees de la souris : %d-%d\n", mouse_state.x, mouse_state.y);
+            }*/
+            if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                if ((event.mouse.button & 1) && positionSourisButtonDe(mouse_state.x, mouse_state.y)) {
                     valeurLancementDe1 = random(7);
-                    al_draw_textf(valeurDe, NOIR, 1800, 45, 0,
-                                  "%d", valeurLancementDe1);
-                    button = 1;
+                    al_draw_textf(valeurDe, NOIR, 1490, 75, 0,
+                                  "Dé 1 %d", valeurLancementDe1);
+                    button1 = 1;
                     al_flip_display();
                 }
             }
-        }
 
-        button = 0;
-        al_draw_text(lancerDe, NOIR, 1490, 75, 0,
-                     "Lancer le dé 2");
-        al_flip_display();
-        while (button != 1) {
-            al_wait_for_event(queue, &event);
-            al_get_mouse_state(&mouse_state);
-
-            if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-                if ((event.mouse.button & 1) && positionSourisButtonDe(mouse_state.x, mouse_state.y)){
+            if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                if ((event.mouse.button & 1) && positionSourisButtonDe(mouse_state.x, mouse_state.y) && button1 == 1) {
                     valeurLancementDe2 = random(7);
-                    al_draw_textf(valeurDe, NOIR, 1800, 75, 0,
+                    al_draw_textf(valeurDe, NOIR, 1490, 105, 0,
                                   "%d", valeurLancementDe2);
-                    button = 1;
+                    button2 = 1;
                     al_flip_display();
                 }
             }
         }
-        button = 0;
         verifDoubleDe(valeurLancementDe1, valeurLancementDe2, tabordreJoueurs[indiceJoueur]);
-
-        valeurDeTotale = valeurLancementDe2 + valeurLancementDe1;
-
-        al_draw_textf(valeurDe, NOIR, 1490, 105, 0,
-                      "Avancez de Dé %d", valeurDeTotale);
-        al_flip_display();
 
         if(tabParametreJoueurs[indiceJoueur].doubleDe == 3){
             vaPrison(indiceJoueur);
             tabParametreJoueurs[indiceJoueur].doubleDe = 0;
         }
 
-        tabParametreJoueurs[indiceJoueur].numCase += valeurDeTotale; // il y a 32 case donc on ne peut pas depasser 32
+        //valeurDeTotale = valeurLancementDe2 + valeurLancementDe1;
 
-        if(tabParametreJoueurs[indiceJoueur].numCase >= 32){
+        valeurDeTotale = 1;
+
+        // int numCase = tabParametreJoueurs[indiceJoueur].numCase
+
+        al_draw_textf(valeurDe, NOIR, 1490, 105, 0,
+                      "Avancez de %d cases", valeurDeTotale);
+        al_flip_display();
+
+        /*
+         tabParametreJoueurs[indiceJoueur].numCase += valeurDeTotale;
+
+        if(tabParametreJoueurs[indiceJoueur].numCase == 32){
             al_draw_text(valeurDe, NOIR, 1490, 150, 0,"Vous passez par la case départ recevez 200$");
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
             tabParametreJoueurs[indiceJoueur].numCase %= 32; // il y a 32 case donc on ne peut pas depasser 32
         }
+
+        if (terrain[tabParametreJoueurs[indiceJoueur].numCase].teleportation == 1) {
+            switch (tabParametreJoueurs[indiceJoueur].numCase) {
+                case 4:
+                    tabParametreJoueurs[indiceJoueur].numCase = 12;
+                    valeurDeTotale += 7;
+                    break;
+                case 12:
+                    tabParametreJoueurs[indiceJoueur].numCase = 20;
+                    valeurDeTotale += 7;
+                    break;
+                case 20:
+                    tabParametreJoueurs[indiceJoueur].numCase = 28;
+                    valeurDeTotale += 7;
+                    break;
+                case 24:
+                    tabParametreJoueurs[indiceJoueur].numCase = 8;
+                    valeurDeTotale += 7;
+                    break;
+                case 28:
+                    tabParametreJoueurs[indiceJoueur].numCase = 4;
+                    valeurDeTotale += 7;
+                    tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
+                    break;
+            }
+
+            creerRectangleBlanc(680, 500, 1130, 550);
+            al_draw_textf(valeurDe, NOIR, 681, 500, 0,"%s", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
+            al_flip_display();
+            int choix = 0;
+            while(!choix) {
+                al_wait_for_event(queue, &event);
+                al_get_mouse_state(&mouse_state);
+                if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                    if ((event.mouse.button & 1) && positionSourisButtonOui(mouse_state.x, mouse_state.y)){
+                        choix = 1;
+                    }
+                }
+            }
+        }
+
+        for(int i = 0; i < valeurDeTotale; i++){
+
+            //if(tabParametreJoueurs[indiceJoueur].numCase == 4 || tabParametreJoueurs[indiceJoueur].numCase == 12 || tabParametreJoueurs[indiceJoueur].numCase == 20 || tabParametreJoueurs[indiceJoueur].numCase == 28 ){
+
+            //}
+
+            if(numCasePion == 0 || numCasePion == 7){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX -= 130;
+            }
+            if(numCasePion > 0 && numCasePion < 7){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX -= 104;
+            }
+            if(numCasePion == 8){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY -= 120;
+            }
+            if(numCasePion > 8 && numCasePion < 16){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY -= 120;
+            }
+            if(numCasePion == 16 || numCasePion == 23){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX += 130;
+            }
+            if(numCasePion > 16 && numCasePion < 23){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX += 105;
+            }
+            if(numCasePion == 24 && numCasePion == 31){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY += 40;
+            }
+            if(numCasePion > 24 && numCasePion < 31){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY += 30;
+            }
+
+            numCasePion += 1;
+
+            if(tabParametreJoueurs[indiceJoueur].numCase == 32){
+                al_draw_text(valeurDe, NOIR, 1490, 150, 0,"Vous passez par la case départ recevez 200$");
+                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
+                tabParametreJoueurs[indiceJoueur].numCase %= 32; // il y a 32 case donc on ne peut pas depasser 32
+            }
+        }
+        */
+
+        /*
+        for(int i = 0; i < valeurDeTotale; i++){
+
+            //if(tabParametreJoueurs[indiceJoueur].numCase == 4 || tabParametreJoueurs[indiceJoueur].numCase == 12 || tabParametreJoueurs[indiceJoueur].numCase == 20 || tabParametreJoueurs[indiceJoueur].numCase == 28 ){
+
+            //}
+
+            if(tabParametreJoueurs[indiceJoueur].numCase == 0 || tabParametreJoueurs[indiceJoueur].numCase == 7){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX -= 130;
+            }
+            if(tabParametreJoueurs[indiceJoueur].numCase > 0 && tabParametreJoueurs[indiceJoueur].numCase < 7){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX -= 104;
+            }
+            if(tabParametreJoueurs[indiceJoueur].numCase == 8){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY -= 110;
+            }
+            if(tabParametreJoueurs[indiceJoueur].numCase > 8 && tabParametreJoueurs[indiceJoueur].numCase < 16){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY -= 120;
+            }
+            if(tabParametreJoueurs[indiceJoueur].numCase == 16 || tabParametreJoueurs[indiceJoueur].numCase == 23){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX += 130;
+            }
+            if(tabParametreJoueurs[indiceJoueur].numCase > 16 && tabParametreJoueurs[indiceJoueur].numCase < 23){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX += 105;
+            }
+            if(tabParametreJoueurs[indiceJoueur].numCase == 24 && tabParametreJoueurs[indiceJoueur].numCase == 31){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY += 40;
+            }
+            if(tabParametreJoueurs[indiceJoueur].numCase > 24 && tabParametreJoueurs[indiceJoueur].numCase < 31){
+                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY += 30;
+            }
+
+            tabParametreJoueurs[indiceJoueur].numCase += 1;
+
+            if(tabParametreJoueurs[indiceJoueur].numCase == 32){
+                al_draw_text(valeurDe, NOIR, 1490, 150, 0,"Vous passez par la case départ recevez 200$");
+                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
+                tabParametreJoueurs[indiceJoueur].numCase %= 32; // il y a 32 case donc on ne peut pas depasser 32
+            }
+        }
+        */
+
+        tabParametreJoueurs[indiceJoueur].numCase += valeurDeTotale;
+
+        if(tabParametreJoueurs[indiceJoueur].numCase == 32){
+            al_draw_text(valeurDe, NOIR, 1490, 150, 0,"Vous passez par la case départ recevez 200$");
+            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
+            tabParametreJoueurs[indiceJoueur].numCase %= 32; // il y a 32 case donc on ne peut pas depasser 32
+        }
+
+        tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX = terrain[tabParametreJoueurs[indiceJoueur].numCase].positionX;
+        tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY = terrain[tabParametreJoueurs[indiceJoueur].numCase].positionY;
+
+        tabParametreJoueurs[tabParametreJoueurs[1].pion].pionX = terrain[tabParametreJoueurs[1].numCase].positionX + 50;
+
+        tabParametreJoueurs[tabParametreJoueurs[2].pion].pionY = terrain[tabParametreJoueurs[2].numCase].positionY + 28;
+
+        tabParametreJoueurs[tabParametreJoueurs[3].pion].pionX = terrain[tabParametreJoueurs[3].numCase].positionX + 50;
+        tabParametreJoueurs[tabParametreJoueurs[3].pion].pionY = terrain[tabParametreJoueurs[3].numCase].positionY + 28;
+
+        tabParametreJoueurs[tabParametreJoueurs[4].pion].pionY = terrain[tabParametreJoueurs[4].numCase].positionY + 56;
+
+        tabParametreJoueurs[tabParametreJoueurs[5].pion].pionX = terrain[tabParametreJoueurs[5].numCase].positionX + 50;
+        tabParametreJoueurs[tabParametreJoueurs[5].pion].pionY = terrain[tabParametreJoueurs[5].numCase].positionY + 56;
+
 
         float X = 1500, Y = 200;
         switch (tabParametreJoueurs[indiceJoueur].numCase) {
@@ -438,7 +705,46 @@ int fenetreNvPartie(int nbJoueurs) {
                 al_draw_bitmap(case32, X, Y, 0);
                 break;
         }
-        al_flip_display();
+
+        al_draw_bitmap(plateau, 400,0,0);
+
+        switch (nbJoueurs) {
+            case 2:
+                al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+                al_flip_display();
+                break;
+            case 3:
+                al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion3, 0, 0, 300,425, tabParametreJoueurs[2].pionX, tabParametreJoueurs[2].pionY,30,42,0);
+                al_flip_display();
+                break;
+            case 4:
+                al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion3, 0, 0, 300,425, tabParametreJoueurs[2].pionX, tabParametreJoueurs[2].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion4, 0, 0, 300,425, tabParametreJoueurs[3].pionX, tabParametreJoueurs[3].pionY,30,42,0);
+                al_flip_display();
+                break;
+            case 5:
+                al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion3, 0, 0, 300,425, tabParametreJoueurs[2].pionX, tabParametreJoueurs[2].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion4, 0, 0, 300,425, tabParametreJoueurs[3].pionX, tabParametreJoueurs[3].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion5, 0, 0, 300,425, tabParametreJoueurs[4].pionX, tabParametreJoueurs[4].pionY,30,42,0);
+                al_flip_display();
+                break;
+            case 6:
+                al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion3, 0, 0, 300,425, tabParametreJoueurs[2].pionX, tabParametreJoueurs[2].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion4, 0, 0, 300,425, tabParametreJoueurs[3].pionX, tabParametreJoueurs[3].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion5, 0, 0, 300,425, tabParametreJoueurs[4].pionX, tabParametreJoueurs[4].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion6, 0, 0, 300,425, tabParametreJoueurs[5].pionX, tabParametreJoueurs[5].pionY,30,42,0);
+                al_flip_display();
+                break;
+        }
 
         if (terrain[tabParametreJoueurs[indiceJoueur].numCase].carteChance == 1){
             cartechance(indiceJoueur, nbJoueurs);
@@ -448,8 +754,40 @@ int fenetreNvPartie(int nbJoueurs) {
             cartecommu(indiceJoueur, nbJoueurs);
         }
 
+        if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 1){
+            // joueur doit payer le loyer
+            int prixLoyer = testSiMaison(indiceJoueur);
+            creerRectangleBlanc(680, 500, 1130, 550);
+            al_draw_textf(valeurDe, NOIR, 681, 500, 0,
+                          "Vous devez payer un loyer a %s\n", tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].nomJoueur);
+            al_flip_display();
+            //si le propriétaire possede les 2 cartes loyer nu double
+            if(terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire == terrain[tabParametreJoueurs[indiceJoueur].numCase + 2].proprietaire || terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire == terrain[tabParametreJoueurs[indiceJoueur].numCase - 2].proprietaire && terrain[tabParametreJoueurs[indiceJoueur].numCase].numMaison == 0){
+                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer * 2;
+                tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].argentJoueur += prixLoyer * 2;
+            }
+            else{
+                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer;
+                tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].argentJoueur += prixLoyer;
+            }
+            int choix = 0;
+            while(!choix) {
+                al_wait_for_event(queue, &event);
+                al_get_mouse_state(&mouse_state);
+                if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                    if ((event.mouse.button & 1) && positionSourisButtonOui(mouse_state.x, mouse_state.y)){
+                        choix = 1;
+                    }
+                    if ((event.mouse.button & 1) && positionSourisButtonNon(mouse_state.x, mouse_state.y)){
+                        tabParametreJoueurs[indiceJoueur].elimine = 1;
+                        choix = 1;
+                    }
+                }
+            }
+        }
+
         if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 0){
-        int choix = 0;
+            int choix = 0;
             creerRectangleBlanc(680, 500, 1130, 550);
             al_draw_textf(valeurDe, NOIR, 681, 500, 0,
                           "Voulez vous acheter %s", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
@@ -470,26 +808,45 @@ int fenetreNvPartie(int nbJoueurs) {
                 }
             }
         }
-        if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 1){
-            // joueur doit payer le loyer
-            int prixLoyer = testSiMaison(indiceJoueur);
-            printf("Vous devez payer un loyer a %s\n", tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].nomJoueur);
-            //si le propriétaire possede les 2 cartes loyer nu double
-            if(terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire == terrain[tabParametreJoueurs[indiceJoueur].numCase + 2].proprietaire || terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire == terrain[tabParametreJoueurs[indiceJoueur].numCase - 2].proprietaire && terrain[tabParametreJoueurs[indiceJoueur].numCase].numMaison == 0){
-                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer * 2;
-                tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].argentJoueur += prixLoyer * 2;
-            }
-            else{
-                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer;
-                tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].argentJoueur += prixLoyer;
-            }
-        }
+
         if(terrain[tabParametreJoueurs[indiceJoueur].numCase].taxe == 1){
+            creerRectangleBlanc(680, 500, 1130, 550);
+            al_draw_textf(valeurDe, NOIR, 681, 500, 0,"%s", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
+            al_flip_display();
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[tabParametreJoueurs[indiceJoueur].numCase].frais;
+            int choix = 0;
+            while(!choix) {
+                al_wait_for_event(queue, &event);
+                al_get_mouse_state(&mouse_state);
+                if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                    if ((event.mouse.button & 1) && positionSourisButtonOui(mouse_state.x, mouse_state.y)){
+                        choix = 1;
+                    }
+                    if ((event.mouse.button & 1) && positionSourisButtonNon(mouse_state.x, mouse_state.y)){
+                        tabParametreJoueurs[indiceJoueur].elimine = 1;
+                    }
+                }
+            }
         }
 
         if(tabParametreJoueurs[indiceJoueur].numCase == 26){
+            creerRectangleBlanc(680, 500, 1130, 550);
+            al_draw_textf(valeurDe, NOIR, 681, 500, 0,"%s", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
+            al_flip_display();
             tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += terrain[26].frais;
+            int choix = 0;
+            while(!choix) {
+                al_wait_for_event(queue, &event);
+                al_get_mouse_state(&mouse_state);
+                if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                    if ((event.mouse.button & 1) && positionSourisButtonOui(mouse_state.x, mouse_state.y)){
+                        choix = 1;
+                    }
+                    if ((event.mouse.button & 1) && positionSourisButtonNon(mouse_state.x, mouse_state.y)){
+                        tabParametreJoueurs[indiceJoueur].elimine = 1;
+                    }
+                }
+            }
         }
 
         if (terrain[tabParametreJoueurs[indiceJoueur].numCase].teleportation == 1) {
@@ -508,7 +865,22 @@ int fenetreNvPartie(int nbJoueurs) {
                     break;
                 case 28:
                     tabParametreJoueurs[indiceJoueur].numCase = 4;
+                    tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
                     break;
+            }
+
+            creerRectangleBlanc(680, 500, 1130, 550);
+            al_draw_textf(valeurDe, NOIR, 681, 500, 0,"%s", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
+            al_flip_display();
+            int choix = 0;
+            while(!choix) {
+                al_wait_for_event(queue, &event);
+                al_get_mouse_state(&mouse_state);
+                if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                    if ((event.mouse.button & 1) && positionSourisButtonOui(mouse_state.x, mouse_state.y)){
+                        choix = 1;
+                    }
+                }
             }
         }
 
@@ -517,6 +889,58 @@ int fenetreNvPartie(int nbJoueurs) {
         }
 
         creerRectangleBlanc(0,0,1920,1080);
+
+        creerRectangle(1840, 15, 1870, 45); // rectangle lancer dé
+
+        creerRectangle(1840, 60, 1870, 90); // boutton oui
+        al_draw_text(oui, NOIR ,1840, 60, 0,"OK");
+
+        creerRectangle(1840, 105, 1870, 135); // boutton non
+        al_draw_text(non, NOIR ,1840, 105, 0,"X");
+
+        creerRectangleVide(10, 0, 380, 1050, 2);
+
+        creerRectangleVide(1480, 0, 1835, 1050, 2);
+
+        al_draw_bitmap(plateau, 400,0,0);
+
+        switch (nbJoueurs) {
+            case 2:
+                al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+                al_flip_display();
+                break;
+            case 3:
+                al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion3, 0, 0, 300,425, tabParametreJoueurs[2].pionX, tabParametreJoueurs[2].pionY,30,42,0);
+                al_flip_display();
+                break;
+            case 4:
+                al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion3, 0, 0, 300,425, tabParametreJoueurs[2].pionX, tabParametreJoueurs[2].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion4, 0, 0, 300,425, tabParametreJoueurs[3].pionX, tabParametreJoueurs[3].pionY,30,42,0);
+                al_flip_display();
+                break;
+            case 5:
+                al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion3, 0, 0, 300,425, tabParametreJoueurs[2].pionX, tabParametreJoueurs[2].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion4, 0, 0, 300,425, tabParametreJoueurs[3].pionX, tabParametreJoueurs[3].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion5, 0, 0, 300,425, tabParametreJoueurs[4].pionX, tabParametreJoueurs[4].pionY,30,42,0);
+                al_flip_display();
+                break;
+            case 6:
+                al_draw_scaled_bitmap(pion1, 0, 0, 300,425, tabParametreJoueurs[0].pionX, tabParametreJoueurs[0].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion2, 0, 0, 300,425, tabParametreJoueurs[1].pionX, tabParametreJoueurs[1].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion3, 0, 0, 300,425, tabParametreJoueurs[2].pionX, tabParametreJoueurs[2].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion4, 0, 0, 300,425, tabParametreJoueurs[3].pionX, tabParametreJoueurs[3].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion5, 0, 0, 300,425, tabParametreJoueurs[4].pionX, tabParametreJoueurs[4].pionY,30,42,0);
+                al_draw_scaled_bitmap(pion6, 0, 0, 300,425, tabParametreJoueurs[5].pionX, tabParametreJoueurs[5].pionY,30,42,0);
+                al_flip_display();
+                break;
+        }
 
         if (joueursElimine == nbJoueurs - 1) { // condition de victoire
             winner = 1;
@@ -538,9 +962,17 @@ int fenetreNvPartie(int nbJoueurs) {
     al_destroy_display(display);
     al_destroy_font(aQuiJouer);
     al_destroy_font(lancerDe);
-
+    al_destroy_font(descriptionCartes1);
+    al_destroy_font(descriptionCartes2);
+    al_destroy_font(descriptionCartes3);
+    al_destroy_font(descriptionCartes4);
+    al_destroy_font(descriptionCartes5);
+    al_destroy_font(descriptionCartes6);
+    al_destroy_font(descriptionCartes7);
+    al_destroy_font(descriptionCartes8);
     al_destroy_font(valeurDe);
 }
+
 
 void ajouterJoueur(int i){
     printf("Entrez le pseudo du joueur %d:\n ", i + 1);
@@ -566,6 +998,7 @@ void afficherRegle(){
            "-\tSi un joueur passe par cette case avec le lancer de de et qu’il atterrit sur une case carte lui ordonnant d’aller à une autre case et qu’il repasse par la case depart, alors il reçoit  deux fois 200 € de la part de la banque\n"
            "-\tObjectif est que tous les autres joueurs soient faillite \n"
            "De :\n"
+           "-\tSi vous faites un double-double, avancer du nombre case et relancer les des\n"
            "-\tSi vous faites un double-double, avancer du nombre case et relancer les des\n"
            "-\tOr si cela arrive 3 fois d’affilé, vous allez directement en prison\n"
            "Entree de Prison :\n"
@@ -831,18 +1264,6 @@ int random(int nb){
     return numRand;
 }
 
-void affectationPion(int nbJoueurs){
-    int numJoueur;
-    for(int i = 0; i < nbJoueurs; i++){
-        tabParametreJoueurs[i].pion = i + 1;
-    }
-}
-/*
-int affichagePion(int* pion){
-    al_set_target_bitmap(pion);
-    al_draw_scaled_bitmap(pion, 0, 0, DIMENSION_PIONX, DIMENSION_PIONY, 0, 0, 0);
-}*/
-
 void initialisation(int nbJoueurs){
     printf("------------------------------------------------Initialisation-----------------------------------------\n");
     for (int i = 0; i < nbJoueurs; i++) {
@@ -856,10 +1277,11 @@ void initialisation(int nbJoueurs){
 
 void verifDoubleDe(int de1, int de2, int indiceJoueur) {
     if(de1 == de2){
-        tabParametreJoueurs[indiceJoueur].doubleDe += 1;
+        tabParametreJoueurs[indiceJoueur].doubleDe++;
+        printf("double\n");
     }
 
-    else{
+    else if(de1 != de2){
         tabParametreJoueurs[indiceJoueur].doubleDe = 0;
     }
 }

@@ -26,9 +26,13 @@ typedef struct{
     int achetable;
     int proprietaire;
     int frais; // a payer ou à recevoir
+    float positionX;
+    float positionY;
 }T;
 
 void init_terrains();
+
+void init_casePion();
 
 T terrain[33];// terrain commence a la case 1
 

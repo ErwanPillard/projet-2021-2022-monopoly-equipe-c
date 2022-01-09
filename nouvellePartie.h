@@ -36,21 +36,25 @@ int tabordreJoueurs[NOMBRE_MAX_JOUEURS];
 
 typedef struct{
     int pion;
+    float pionX;
+    float pionY;
     int doubleDe;
     int cartePrison;
     int numCase;
     int nbTourPrison;
-    bool prison;
+    int prison;
+    int elimine;
 }parametreJoueur;
-
-typedef struct{
-    int positionX;
-    int positionY;
-}position;
 
 parametreJoueur tabParametreJoueurs[NOMBRE_MAX_JOUEURS];
 
 int positionSourisButtonDe(int x, int y);
+
+int positionCaseDepart(int x, int y);
+
+int positionSourisButtonOui(int x, int y);
+
+int positionSourisButtonNon(int x, int y);
 
 void vaPrison(int indiceJoueur);
 
@@ -59,12 +63,6 @@ int testSiMaison(int indiceJoueur);
 void lancerNouvellePartie();
 
 int random(int nb);
-
-void affectationPion(int nbJoueurs);
-
-int affichagePion(int* pion);
-
-int partieEnCours();
 
 void verifDoubleDe(int de1, int de2, int indiceJoueur);
 
