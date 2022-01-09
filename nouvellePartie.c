@@ -69,6 +69,10 @@ int fenetreNvPartie(int nbJoueurs) {
     ALLEGRO_KEYBOARD_STATE keyboard_state;
     ALLEGRO_MOUSE_STATE mouse_state;
     ALLEGRO_EVENT_QUEUE *queue = NULL;
+    ALLEGRO_BITMAP *de = NULL;
+    ALLEGRO_BITMAP *valide = NULL;
+    ALLEGRO_BITMAP *refuse = NULL;
+
     ALLEGRO_EVENT event;
     ALLEGRO_TIMER *timer = NULL;
 
@@ -106,6 +110,11 @@ int fenetreNvPartie(int nbJoueurs) {
     al_register_event_source(queue, al_get_mouse_event_source());
 
     al_set_target_backbuffer(display);
+
+    de = al_load_bitmap("../images/Dé.png");
+    valide = al_load_bitmap("../images/Accepté.png");
+    refuse = al_load_bitmap("../images/refusé.png");
+
 
     if (!al_init_primitives_addon()) {
         printf("Erreur initialisation primitive addon\n");
@@ -289,15 +298,17 @@ int fenetreNvPartie(int nbJoueurs) {
 
     creerRectangle(1840, 15, 1870, 45); // rectangle lancer dé
 
-    creerRectangle(1840, 60, 1870, 90); // boutton oui
-    al_draw_text(oui, NOIR ,1840, 60, 0,"OK");
-
-    creerRectangle(1840, 105, 1870, 135); // boutton non
-    al_draw_text(non, NOIR ,1840, 105, 0,"X");
-
-    creerRectangleVide(10, 0, 380, 1050, 2);
+        creerRectangle(1840, 60, 1870, 90); // boutton oui
+        al_draw_text(oui, NOIR ,1840, 60, 0,"✔");
+        creerRectangle(1840, 105, 1870, 135); // boutton non
+        al_draw_text(non, NOIR ,1840, 105, 0,"X");
+        creerRectangleVide(10, 0, 380, 1050, 2);
 
     creerRectangleVide(1480, 0, 1835, 1050, 2);
+
+    al_draw_scaled_bitmap(de, 0, 0, 212, 212, 1840, 15, 25, 25, 0);
+    al_draw_scaled_bitmap(valide, 0, 0, 138, 138, 1840, 60, 25, 25, 0);
+    al_draw_scaled_bitmap(refuse, 0, 0, 147, 142, 1840, 105, 25, 25, 0);
 
     al_draw_bitmap(plateau, 400,0,0);
 
@@ -372,7 +383,7 @@ int fenetreNvPartie(int nbJoueurs) {
         al_draw_textf(aQuiJouer, NOIR, 1490, 10, 0,
                       "%s à toi de jouer", tabJoueur[tabordreJoueurs[indiceJoueur]].nomJoueur);
         al_draw_text(lancerDe, NOIR, 1490, 45, 0,
-                     "Lance les dés");
+                     "Lancer les dés");
         al_flip_display();
 
 
@@ -998,7 +1009,6 @@ void afficherRegle(){
            "-\tSi un joueur passe par cette case avec le lancer de de et qu’il atterrit sur une case carte lui ordonnant d’aller à une autre case et qu’il repasse par la case depart, alors il reçoit  deux fois 200 € de la part de la banque\n"
            "-\tObjectif est que tous les autres joueurs soient faillite \n"
            "De :\n"
-           "-\tSi vous faites un double-double, avancer du nombre case et relancer les des\n"
            "-\tSi vous faites un double-double, avancer du nombre case et relancer les des\n"
            "-\tOr si cela arrive 3 fois d’affilé, vous allez directement en prison\n"
            "Entree de Prison :\n"
