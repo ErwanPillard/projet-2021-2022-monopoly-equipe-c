@@ -29,7 +29,6 @@ typedef struct{
     int frais; // a payer ou à recevoir
     float positionX;
     float positionY;
-    int doublon;
 }T;
 
 void init_terrains();
