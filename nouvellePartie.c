@@ -934,7 +934,7 @@ int fenetreNvPartie(int nbJoueurs) {
             } else if (event.type == ALLEGRO_EVENT_KEY_UP && wait == -1) {
                 switch (event.keyboard.keycode) {
                     case ALLEGRO_KEY_ESCAPE:
-                        quitter();
+                        setWindow();
                         break;
                 }
             }
@@ -1350,7 +1350,7 @@ int fenetreNvPartie(int nbJoueurs) {
             } else if (event.type == ALLEGRO_EVENT_KEY_UP && wait == -1) {
                 switch (event.keyboard.keycode) {
                     case ALLEGRO_KEY_ESCAPE:
-                        quitter();
+                        setWindow();
                         break;
                 }
             }
@@ -1373,137 +1373,6 @@ int fenetreNvPartie(int nbJoueurs) {
                       "Avancez de %d cases", valeurDeTotale);
         al_flip_display();
 
-        /*
-         tabParametreJoueurs[indiceJoueur].numCase += valeurDeTotale;
-
-        if(tabParametreJoueurs[indiceJoueur].numCase == 32){
-            al_draw_text(valeurDe, NOIR, 1490, 150, 0,"Vous passez par la case départ recevez 200$");
-            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
-            tabParametreJoueurs[indiceJoueur].numCase %= 32; // il y a 32 case donc on ne peut pas depasser 32
-        }
-
-        if (terrain[tabParametreJoueurs[indiceJoueur].numCase].teleportation == 1) {
-            switch (tabParametreJoueurs[indiceJoueur].numCase) {
-                case 4:
-                    tabParametreJoueurs[indiceJoueur].numCase = 12;
-                    valeurDeTotale += 7;
-                    break;
-                case 12:
-                    tabParametreJoueurs[indiceJoueur].numCase = 20;
-                    valeurDeTotale += 7;
-                    break;
-                case 20:
-                    tabParametreJoueurs[indiceJoueur].numCase = 28;
-                    valeurDeTotale += 7;
-                    break;
-                case 24:
-                    tabParametreJoueurs[indiceJoueur].numCase = 8;
-                    valeurDeTotale += 7;
-                    break;
-                case 28:
-                    tabParametreJoueurs[indiceJoueur].numCase = 4;
-                    valeurDeTotale += 7;
-                    tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
-                    break;
-            }
-
-            creerRectangleBlanc(680, 500, 1130, 550);
-            al_draw_textf(valeurDe, NOIR, 681, 500, 0,"%s", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
-            al_flip_display();
-            int choix = 0;
-            while(!choix) {
-                al_wait_for_event(queue, &event);
-                al_get_mouse_state(&mouse_state);
-                if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-                    if ((event.mouse.button & 1) && positionSourisButtonOui(mouse_state.x, mouse_state.y)){
-                        choix = 1;
-                    }
-                }
-            }
-        }
-
-        for(int i = 0; i < valeurDeTotale; i++){
-
-            //if(tabParametreJoueurs[indiceJoueur].numCase == 4 || tabParametreJoueurs[indiceJoueur].numCase == 12 || tabParametreJoueurs[indiceJoueur].numCase == 20 || tabParametreJoueurs[indiceJoueur].numCase == 28 ){
-
-            //}
-
-            if(numCasePion == 0 || numCasePion == 7){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX -= 130;
-            }
-            if(numCasePion > 0 && numCasePion < 7){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX -= 104;
-            }
-            if(numCasePion == 8){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY -= 120;
-            }
-            if(numCasePion > 8 && numCasePion < 16){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY -= 120;
-            }
-            if(numCasePion == 16 || numCasePion == 23){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX += 130;
-            }
-            if(numCasePion > 16 && numCasePion < 23){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX += 105;
-            }
-            if(numCasePion == 24 && numCasePion == 31){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY += 40;
-            }
-            if(numCasePion > 24 && numCasePion < 31){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY += 30;
-            }
-
-            numCasePion += 1;
-
-            if(tabParametreJoueurs[indiceJoueur].numCase == 32){
-                al_draw_text(valeurDe, NOIR, 1490, 150, 0,"Vous passez par la case départ recevez 200$");
-                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
-                tabParametreJoueurs[indiceJoueur].numCase %= 32; // il y a 32 case donc on ne peut pas depasser 32
-            }
-        }
-        */
-
-        /*
-        for(int i = 0; i < valeurDeTotale; i++){
-
-            //if(tabParametreJoueurs[indiceJoueur].numCase == 4 || tabParametreJoueurs[indiceJoueur].numCase == 12 || tabParametreJoueurs[indiceJoueur].numCase == 20 || tabParametreJoueurs[indiceJoueur].numCase == 28 ){
-
-            //}
-
-            if(tabParametreJoueurs[indiceJoueur].numCase == 0 || tabParametreJoueurs[indiceJoueur].numCase == 7){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX -= 130;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase > 0 && tabParametreJoueurs[indiceJoueur].numCase < 7){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX -= 104;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase == 8){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY -= 110;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase > 8 && tabParametreJoueurs[indiceJoueur].numCase < 16){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY -= 120;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase == 16 || tabParametreJoueurs[indiceJoueur].numCase == 23){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX += 130;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase > 16 && tabParametreJoueurs[indiceJoueur].numCase < 23){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX += 105;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase == 24 && tabParametreJoueurs[indiceJoueur].numCase == 31){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY += 40;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase > 24 && tabParametreJoueurs[indiceJoueur].numCase < 31){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY += 30;
-            }
-
-            tabParametreJoueurs[indiceJoueur].numCase += 1;
-
-            if(tabParametreJoueurs[indiceJoueur].numCase == 32){
-                al_draw_text(valeurDe, NOIR, 1490, 150, 0,"Vous passez par la case départ recevez 200$");
-                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
-                tabParametreJoueurs[indiceJoueur].numCase %= 32; // il y a 32 case donc on ne peut pas depasser 32
-            }
-        }
-        */
 
         tabParametreJoueurs[indiceJoueur].numCase += valeurDeTotale;
 
@@ -2128,7 +1997,7 @@ int fenetreNvPartie(int nbJoueurs) {
                 } else if (event.type == ALLEGRO_EVENT_KEY_UP && wait == -1) {
                     switch (event.keyboard.keycode) {
                         case ALLEGRO_KEY_ESCAPE:
-                            quitter();
+                            setWindow();
                             break;
                     }
                 }
@@ -2552,7 +2421,7 @@ int fenetreNvPartie(int nbJoueurs) {
                 } else if (event.type == ALLEGRO_EVENT_KEY_UP && wait == -1) {
                     switch (event.keyboard.keycode) {
                         case ALLEGRO_KEY_ESCAPE:
-                            quitter();
+                            setWindow();
                             break;
                     }
                 }
@@ -2984,13 +2853,12 @@ int fenetreNvPartie(int nbJoueurs) {
                         tabParametreJoueurs[indiceJoueur].elimine = 1;
                         choix = 1;
                     }
-                }
-                if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+                }if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
                     quitter();
                 } else if (event.type == ALLEGRO_EVENT_KEY_UP && wait == -1) {
                     switch (event.keyboard.keycode) {
                         case ALLEGRO_KEY_ESCAPE:
-                            quitter();
+                            setWindow();
                             break;
                     }
                 }
@@ -3417,7 +3285,7 @@ int fenetreNvPartie(int nbJoueurs) {
                 } else if (event.type == ALLEGRO_EVENT_KEY_UP && wait == -1) {
                     switch (event.keyboard.keycode) {
                         case ALLEGRO_KEY_ESCAPE:
-                            quitter();
+                            setWindow();
                             break;
                     }
                 }
@@ -3840,7 +3708,7 @@ int fenetreNvPartie(int nbJoueurs) {
                 } else if (event.type == ALLEGRO_EVENT_KEY_UP && wait == -1) {
                     switch (event.keyboard.keycode) {
                         case ALLEGRO_KEY_ESCAPE:
-                            quitter();
+                            setWindow();
                             break;
                     }
                 }
@@ -3978,16 +3846,16 @@ void afficherRegle() {
            "\n"
            "Debut :\n"
            "-\tChaque joueur dispose de 1500 € chacun \n"
-           "-\tLa banque à un fond illimite et elle fera toutes les transactions autres qu’entre les joueurs comme avec les cartes ou l’achat de terrain\n"
-           "-\tChaque fois qu’un joueur passe par la case depart, il reçoit 200 €\n"
-           "-\tSi un joueur passe par cette case avec le lancer de de et qu’il atterrit sur une case carte lui ordonnant d’aller à une autre case et qu’il repasse par la case depart, alors il reçoit  deux fois 200 € de la part de la banque\n"
+           "-\tLa banque à un fond illimite et elle fera toutes les transactions autres quentre les joueurs comme avec les cartes ou lachat de terrain\n"
+           "-\tChaque fois qu un joueur passe par la case depart, il reçoit 200 €\n"
+           "-\tSi un joueur passe par cette case avec le lancer de de et qu il atterrit sur une case carte lui ordonnant d aller à une autre case et qu il repasse par la case depart, alors il reçoit  deux fois 200 € de la part de la banque\n"
            "-\tObjectif est que tous les autres joueurs soient faillite \n"
            "De :\n"
            "-\tSi vous faites un double-double, avancer du nombre case et relancer les des\n"
-           "-\tOr si cela arrive 3 fois d’affilé, vous allez directement en prison\n"
+           "-\tOr si cela arrive 3 fois d affilé, vous allez directement en prison\n"
            "Entree de Prison :\n"
-           "-\tPeu importe où il se trouve, il ne recevra pas les 200 € de la case depart\n"
-           "-\tSi vous faites 3 doubles-doubles d’affiles\n"
+           "-\tPeu importe ou il se trouve, il ne recevra pas les 200 € de la case depart\n"
+           "-\tSi vous faites 3 doubles-doubles d affiles\n"
            "-\tSi vous piochez une carte « Aller en prison »\n"
            "-\tSi vous arrivez sur la case 25 (case 9 = visite de la prison)\n"
            "Sortir de Prison :\n"
@@ -3997,25 +3865,25 @@ void afficherRegle() {
            "-\tPayez 50 € à la banque\n"
            "-\tPayez 50 € si après les 3 tours tentant de faire un double-double, cela est un echec\n"
            "Propriete :\n"
-           "-\tLorsque vous arrivez sur une case avec une propriete, des informations affichent avec son prix d’achat mais aussi le prix de loyer\n"
-           "-\tVous pouvez acheter la propriété si elle n’est pas acheter au prix indique\n"
-           "-\tSi elle est déjà prise par un autre joueur, alors vous devez lui donner le montant indique. Attention, si de l’immobilier est dessus alors le loyer devient plus couteux\n"
-           "-\tOn peut revendre sa propriété à la banque à la moitié de son prix acheté\n"
-           "Immobiliers (maisons et hôtels) :\n"
-           "-\tVous pouvez acheter des maisons et des hôtels lorsque vous le voulez lors de la partie\n"
-           "-\tLorsque le propriétaire à 4 maisons sur une même propriété, il peut le remplacer par un hôtel. Attention toutefois, on peut mettre qu’un hôtel sur une même propriété\n"
-           "Hypothèque :\n"
-           "-\tUn joueur peut hypothéquer une propriété à la banque si elle n’est pas améliorer c’est-à-dire sans bien immobilier dessus. S’il y a des bâtiments, il faut donc les revendre à moitié prix avant d’hypothéquer\n"
-           "-\tAucun loyer ne peut être perçu si la propriété est hypothéquée\n"
-           "-\tUn autre joueur peut acheter ce bien hypothéqué mais il le récupère avec son hypothèque. Ainsi, il y a 3 possibilités : \n"
-           "1.\til lève tout de suite l’hypothèque en ajoutant 10 % en plus\n"
-           "2.\ts’il ne la lève pas directement, il doit payer un intérêt de 10 % à la banque\n"
-           "3.\ts’il la lève plus tard, il doit payer l’intérêt et additionner avec le prix de l’hypothèque\n"
-           "Faillites d’un joueur :\n"
-           "-\tUn joueur est en faillite lorsqu’il ne peut plus payer certaines contraintes comme la pioche d’une carte lui demandant de payer à la banque des frais\n"
-           "-\tIl doit revendre tous ses biens immobiliers à moitié prix \n"
-           "-\tAinsi le jeu est terminé pour ce joueur qui sort du jeu\n"
-           "-\tLorsqu’il ne reste plus qu’un joueur qui n’a pas fait faillite, il est alors le gagnant de la partie");
+           "-\tLorsque vous arrivez sur une case avec une propriete, des informations affichent avec son prix d achat mais aussi le prix de loyer\n"
+           "-\tVous pouvez acheter la propriete si elle n’est pas acheter au prix indique\n"
+           "-\tSi elle est déjà prise par un autre joueur, alors vous devez lui donner le montant indique. Attention, si de l immobilier est dessus alors le loyer devient plus couteux\n"
+           "-\tOn peut revendre sa propriete à la banque à la moitie de son prix achete\n"
+           "Immobiliers (maisons et hotels) :\n"
+           "-\tVous pouvez acheter des maisons et des hotels lorsque vous le voulez lors de la partie\n"
+           "-\tLorsque le propriétaire à 4 maisons sur une même propriété, il peut le remplacer par un hotel. Attention toutefois, on peut mettre qu un hotel sur une meme propriete\n"
+           "Hypotheque :\n"
+           "-\tUn joueur peut hypothéquer une propriete à la banque si elle n est pas ameliorer c’est-à-dire sans bien immobilier dessus. S il y a des batiments, il faut donc les revendre à moitie prix avant d’hypothequer\n"
+           "-\tAucun loyer ne peut etre perçu si la propriete est hypothequee\n"
+           "-\tUn autre joueur peut acheter ce bien hypothéqué mais il le recupere avec son hypotheque. Ainsi, il y a 3 possibilies : \n"
+           "1.\til leve tout de suite l hypothèque en ajoutant 10 % en plus\n"
+           "2.\ts il ne la leve pas directement, il doit payer un interet de 10 % à la banque\n"
+           "3.\ts il la leve plus tard, il doit payer l interet et additionner avec le prix de l’hypotheque\n"
+           "Faillites d un joueur :\n"
+           "-\tUn joueur est en faillite lorsqu il ne peut plus payer certaines contraintes comme la pioche d une carte lui demandant de payer a la banque des frais\n"
+           "-\tIl doit revendre tous ses biens immobiliers à moitie prix \n"
+           "-\tAinsi le jeu est termine pour ce joueur qui sort du jeu\n"
+           "-\tLorsqu il ne reste plus qu’un joueur qui n a pas fait faillite, il est alors le gagnant de la partie");
 }
 
 void afficherNomMembresProjet() {
