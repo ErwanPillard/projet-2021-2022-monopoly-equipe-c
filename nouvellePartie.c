@@ -22,7 +22,7 @@ int positionSourisButtonNon(int x, int y) {
 }
 
 int positionSourisButtonMaison(int x, int y) {
-    if (x >= 1240 && x <= 1260 && y >= 70 && y <= 90) {
+    if (x >= 1240 && x <= 1260 && y >= 100 && y <= 120) {
         return 1;
     }
     return 0;
@@ -225,6 +225,7 @@ int fenetreNvPartie(int nbJoueurs) {
     de = al_load_bitmap("../images/Dé.png");
     valide = al_load_bitmap("../images/Accepté.png");
     refuse = al_load_bitmap("../images/refusé.png");
+    maison = al_load_bitmap("../images/maison.png");
 
 
     if (!al_init_primitives_addon()) {
@@ -374,6 +375,12 @@ int fenetreNvPartie(int nbJoueurs) {
     for(int i = 0; i < nbJoueurs; i++){
         tabParametreJoueurs[i].numCase = 0;
     }
+/*
+    for(int i = 1; i <= 31; i += 2){
+        strcpy(tabJoueur[tabordreJoueurs[6]].nomJoueur, "Banque");
+        terrain[i].proprietaire = 6;
+
+    }*/
 
     init_terrains(); // initialise les parametre des terrains
 
@@ -578,6 +585,8 @@ int fenetreNvPartie(int nbJoueurs) {
                     al_draw_textf(descriptionCartes8, GRIS, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[5].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, GRIS, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[5].proprietaire]].nomJoueur);
                     al_flip_display();
                 }
                 if (positionCase7(mouse_state.x, mouse_state.y)) {
@@ -913,9 +922,11 @@ int fenetreNvPartie(int nbJoueurs) {
                         scanf("%d", &nbMaison);
                         printf("Sur quelle case voulez vous poser des maisons / hotels");
                         scanf("%d", &casePropriete);
-                        if (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur !=
-                            tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur) {
+                        if (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur != tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur) {
                             printf("Ce n'est pas votre propriete");
+                        }
+                        else if(tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur != tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur){
+                            terrain[casePropriete].numMaison = nbMaison;
                         }
                     } while (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur != tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur);
                 }
@@ -934,7 +945,7 @@ int fenetreNvPartie(int nbJoueurs) {
             al_wait_for_event(queue, &event);
             al_get_mouse_state(&mouse_state);
 
-            if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+            if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
                 if (positionCase1(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
                     al_draw_textf(descriptionCartes1, MARRON, 25, 600, 0,
@@ -971,322 +982,356 @@ int fenetreNvPartie(int nbJoueurs) {
                                   "Avec 3 Maison $%d", terrain[3].loyer3M);
                     al_draw_textf(descriptionCartes5, MARRON, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[3].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, MARRON, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[3].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, MARRON, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[3].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, MARRON, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[3].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, MARRON, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[3].proprietaire]].nomJoueur);
+
                     al_flip_display();
                 }
                 if (positionCase5(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, GRIS, 25, 600, 0,
                                   "Loyer $%d", terrain[5].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, GRIS, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[5].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, GRIS, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[5].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, GRIS, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[5].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, GRIS, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[5].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, GRIS, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[5].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, GRIS, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[5].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, GRIS, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[5].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, GRIS, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[5].proprietaire]].nomJoueur);
                     al_flip_display();
                 }
                 if (positionCase7(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, GRIS, 25, 600, 0,
                                   "Loyer $%d", terrain[7].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, GRIS, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[7].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, GRIS, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[7].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, GRIS, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[7].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, GRIS, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[7].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, GRIS, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[7].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, GRIS, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[7].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, GRIS, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[7].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, GRIS, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[7].proprietaire]].nomJoueur);
                     al_flip_display();
                 }
                 if (positionCase9(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, VIOLET, 25, 600, 0,
                                   "Loyer $%d", terrain[9].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, VIOLET, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[9].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, VIOLET, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[9].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, VIOLET, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[9].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, VIOLET, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[9].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, VIOLET, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[9].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, VIOLET, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[9].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, VIOLET, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[9].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, VIOLET, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[9].proprietaire]].nomJoueur);
                     al_flip_display();
                 }
                 if (positionCase11(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, VIOLET, 25, 600, 0,
                                   "Loyer $%d", terrain[11].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, VIOLET, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[11].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, VIOLET, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[11].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, VIOLET, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[11].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, VIOLET, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[11].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, VIOLET, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[11].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, VIOLET, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[11].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, VIOLET, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[11].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, VIOLET, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[11].proprietaire]].nomJoueur);
                     al_flip_display();
                 }
                 if (positionCase13(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, ORANGE, 25, 600, 0,
                                   "Loyer $%d", terrain[13].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, ORANGE, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[13].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, ORANGE, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[13].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, ORANGE, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[13].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, ORANGE, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[13].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, ORANGE, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[13].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, ORANGE, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[13].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, ORANGE, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[13].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, ORANGE, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[13].proprietaire]].nomJoueur);
+
                     al_flip_display();
                 }
                 if (positionCase15(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, ORANGE, 25, 600, 0,
                                   "Loyer $%d", terrain[15].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, ORANGE, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[15].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, ORANGE, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[15].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, ORANGE, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[15].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, ORANGE, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[15].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, ORANGE, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[15].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, ORANGE, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[15].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, ORANGE, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[15].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, ORANGE, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[15].proprietaire]].nomJoueur);
                     al_flip_display();
                 }
                 if (positionCase17(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, ROUGE, 25, 600, 0,
                                   "Loyer $%d", terrain[17].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, ROUGE, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[17].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, ROUGE, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[17].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, ROUGE, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[17].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, ROUGE, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[17].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, ROUGE, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[17].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, ROUGE, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[17].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, ROUGE, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[17].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, ROUGE, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[17].proprietaire]].nomJoueur);
                     al_flip_display();
                 }
                 if (positionCase19(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, ROUGE, 25, 600, 0,
                                   "Loyer $%d", terrain[19].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, ROUGE, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[19].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, ROUGE, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[19].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, ROUGE, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[19].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, ROUGE, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[19].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, ROUGE, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[19].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, ROUGE, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[19].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, ROUGE, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[19].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, ROUGE, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[19].proprietaire]].nomJoueur);
+
                     al_flip_display();
                 }
                 if (positionCase21(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, JAUNE, 25, 600, 0,
                                   "Loyer $%d", terrain[21].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, JAUNE, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[21].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, JAUNE, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[21].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, JAUNE, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[21].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, JAUNE, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[21].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, JAUNE, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[21].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, JAUNE, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[21].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, JAUNE, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[21].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, JAUNE, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[21].proprietaire]].nomJoueur);
+
                     al_flip_display();
                 }
                 if (positionCase23(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, JAUNE, 25, 600, 0,
                                   "Loyer $%d", terrain[23].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, JAUNE, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[23].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, JAUNE, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[23].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, JAUNE, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[23].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, JAUNE, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[23].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, JAUNE, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[23].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, JAUNE, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[23].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, JAUNE, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[23].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, JAUNE, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[23].proprietaire]].nomJoueur);
                     al_flip_display();
                 }
                 if (positionCase25(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, VERT, 25, 600, 0,
                                   "Loyer $%d", terrain[25].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, VERT, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[25].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, VERT, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[25].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, VERT, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[25].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, VERT, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[25].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, VERT, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[25].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, VERT, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[25].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, VERT, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[25].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, VERT, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[25].proprietaire]].nomJoueur);
                     al_flip_display();
                 }
                 if (positionCase27(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, VERT, 25, 600, 0,
                                   "Loyer $%d", terrain[27].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, VERT, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[27].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, VERT, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[27].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, VERT, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[27].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, VERT, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[27].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, VERT, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[27].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, VERT, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[27].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, VERT, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[27].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, VERT, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[27].proprietaire]].nomJoueur);
                     al_flip_display();
                 }
                 if (positionCase29(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, BLEU, 25, 600, 0,
                                   "Loyer $%d", terrain[29].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, BLEU, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[29].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, BLEU, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[29].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, BLEU, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[29].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, BLEU, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[29].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, BLEU, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[29].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, BLEU, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[29].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, BLEU, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[29].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, BLEU, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[29].proprietaire]].nomJoueur);
                     al_flip_display();
                 }
                 if (positionCase31(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
-                    al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                    al_draw_textf(descriptionCartes1, BLEU, 25, 600, 0,
                                   "Loyer $%d", terrain[31].loyer);
-                    al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                    al_draw_textf(descriptionCartes2, BLEU, 25, 630, 0,
                                   "Avec 1 Maison $%d", terrain[31].loyer1M);
-                    al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                    al_draw_textf(descriptionCartes3, BLEU, 25, 660, 0,
                                   "Avec 2 Maison $%d", terrain[31].loyer2M);
-                    al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                    al_draw_textf(descriptionCartes4, BLEU, 25, 690, 0,
                                   "Avec 3 Maison $%d", terrain[31].loyer3M);
-                    al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                    al_draw_textf(descriptionCartes5, BLEU, 25, 720, 0,
                                   "Avec 4 Maison $%d", terrain[31].loyer4M);
-                    al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                    al_draw_textf(descriptionCartes6, BLEU, 25, 750, 0,
                                   "Avec HOTEL $%d", terrain[31].loyer1H);
-                    al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                    al_draw_textf(descriptionCartes7, BLEU, 25, 780, 0,
                                   "Prix des maisons chacune $%d",
                                   terrain[31].prixMaison);
-                    al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                    al_draw_textf(descriptionCartes8, BLEU, 25, 810, 0,
                                   "Prix de un hotel $%d",
                                   terrain[31].prixMaison * 5);
+                    al_draw_textf(descriptionCartes9, BLEU, 25, 840, 0, "Propriétaire: %s",
+                                  tabJoueur[tabordreJoueurs[terrain[31].proprietaire]].nomJoueur);
                     al_flip_display();
                 }
             }
@@ -1334,10 +1379,6 @@ int fenetreNvPartie(int nbJoueurs) {
         }
 
         valeurDeTotale = valeurLancementDe2 + valeurLancementDe1;
-
-        //valeurDeTotale = 2;
-
-        // int numCase = tabParametreJoueurs[indiceJoueur].numCase
 
         al_draw_textf(valeurDe, NOIR, 1490, 135, 0,
                       "Avancez de %d cases", valeurDeTotale);
@@ -1518,10 +1559,10 @@ int fenetreNvPartie(int nbJoueurs) {
         if (terrain[tabParametreJoueurs[indiceJoueur].numCase].teleportation == 1) {
             switch (tabParametreJoueurs[indiceJoueur].numCase) {
                 case 4:
-                    //tabParametreJoueurs[indiceJoueur].numCase = 12;
+                    tabParametreJoueurs[indiceJoueur].numCase = 12;
                     break;
                 case 12:
-                    //tabParametreJoueurs[indiceJoueur].numCase = 20;
+                    tabParametreJoueurs[indiceJoueur].numCase = 20;
                     break;
                 case 20:
                     tabParametreJoueurs[indiceJoueur].numCase = 28;
@@ -1542,6 +1583,397 @@ int fenetreNvPartie(int nbJoueurs) {
             while(!choix) {
                 al_wait_for_event(queue, &event);
                 al_get_mouse_state(&mouse_state);
+
+                if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+                    if (positionCase1(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, MARRON, 25, 600, 0,
+                                      "Loyer $%d", terrain[1].loyer);
+                        al_draw_textf(descriptionCartes2, MARRON, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[1].loyer1M);
+                        al_draw_textf(descriptionCartes3, MARRON, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[1].loyer2M);
+                        al_draw_textf(descriptionCartes4, MARRON, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[1].loyer3M);
+                        al_draw_textf(descriptionCartes5, MARRON, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[1].loyer4M);
+                        al_draw_textf(descriptionCartes6, MARRON, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[1].loyer1H);
+                        al_draw_textf(descriptionCartes7, MARRON, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[1].prixMaison);
+                        al_draw_textf(descriptionCartes8, MARRON, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[1].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, MARRON, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[1].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase3(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, MARRON, 25, 600, 0,
+                                      "Loyer $%d", terrain[3].loyer);
+                        al_draw_textf(descriptionCartes2, MARRON, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[3].loyer1M);
+                        al_draw_textf(descriptionCartes3, MARRON, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[3].loyer2M);
+                        al_draw_textf(descriptionCartes4, MARRON, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[3].loyer3M);
+                        al_draw_textf(descriptionCartes5, MARRON, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[3].loyer4M);
+                        al_draw_textf(descriptionCartes6, MARRON, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[3].loyer1H);
+                        al_draw_textf(descriptionCartes7, MARRON, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[3].prixMaison);
+                        al_draw_textf(descriptionCartes8, MARRON, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[3].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, MARRON, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[3].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase5(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, GRIS, 25, 600, 0,
+                                      "Loyer $%d", terrain[5].loyer);
+                        al_draw_textf(descriptionCartes2, GRIS, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[5].loyer1M);
+                        al_draw_textf(descriptionCartes3, GRIS, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[5].loyer2M);
+                        al_draw_textf(descriptionCartes4, GRIS, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[5].loyer3M);
+                        al_draw_textf(descriptionCartes5, GRIS, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[5].loyer4M);
+                        al_draw_textf(descriptionCartes6, GRIS, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[5].loyer1H);
+                        al_draw_textf(descriptionCartes7, GRIS, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[5].prixMaison);
+                        al_draw_textf(descriptionCartes8, GRIS, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[5].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, GRIS, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[5].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase7(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, GRIS, 25, 600, 0,
+                                      "Loyer $%d", terrain[7].loyer);
+                        al_draw_textf(descriptionCartes2, GRIS, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[7].loyer1M);
+                        al_draw_textf(descriptionCartes3, GRIS, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[7].loyer2M);
+                        al_draw_textf(descriptionCartes4, GRIS, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[7].loyer3M);
+                        al_draw_textf(descriptionCartes5, GRIS, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[7].loyer4M);
+                        al_draw_textf(descriptionCartes6, GRIS, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[7].loyer1H);
+                        al_draw_textf(descriptionCartes7, GRIS, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[7].prixMaison);
+                        al_draw_textf(descriptionCartes8, GRIS, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[7].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, GRIS, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[7].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase9(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VIOLET, 25, 600, 0,
+                                      "Loyer $%d", terrain[9].loyer);
+                        al_draw_textf(descriptionCartes2, VIOLET, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[9].loyer1M);
+                        al_draw_textf(descriptionCartes3, VIOLET, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[9].loyer2M);
+                        al_draw_textf(descriptionCartes4, VIOLET, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[9].loyer3M);
+                        al_draw_textf(descriptionCartes5, VIOLET, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[9].loyer4M);
+                        al_draw_textf(descriptionCartes6, VIOLET, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[9].loyer1H);
+                        al_draw_textf(descriptionCartes7, VIOLET, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[9].prixMaison);
+                        al_draw_textf(descriptionCartes8, VIOLET, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[9].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VIOLET, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[9].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase11(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VIOLET, 25, 600, 0,
+                                      "Loyer $%d", terrain[11].loyer);
+                        al_draw_textf(descriptionCartes2, VIOLET, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[11].loyer1M);
+                        al_draw_textf(descriptionCartes3, VIOLET, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[11].loyer2M);
+                        al_draw_textf(descriptionCartes4, VIOLET, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[11].loyer3M);
+                        al_draw_textf(descriptionCartes5, VIOLET, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[11].loyer4M);
+                        al_draw_textf(descriptionCartes6, VIOLET, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[11].loyer1H);
+                        al_draw_textf(descriptionCartes7, VIOLET, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[11].prixMaison);
+                        al_draw_textf(descriptionCartes8, VIOLET, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[11].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VIOLET, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[11].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase13(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ORANGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[13].loyer);
+                        al_draw_textf(descriptionCartes2, ORANGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[13].loyer1M);
+                        al_draw_textf(descriptionCartes3, ORANGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[13].loyer2M);
+                        al_draw_textf(descriptionCartes4, ORANGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[13].loyer3M);
+                        al_draw_textf(descriptionCartes5, ORANGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[13].loyer4M);
+                        al_draw_textf(descriptionCartes6, ORANGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[13].loyer1H);
+                        al_draw_textf(descriptionCartes7, ORANGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[13].prixMaison);
+                        al_draw_textf(descriptionCartes8, ORANGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[13].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ORANGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[13].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase15(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ORANGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[15].loyer);
+                        al_draw_textf(descriptionCartes2, ORANGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[15].loyer1M);
+                        al_draw_textf(descriptionCartes3, ORANGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[15].loyer2M);
+                        al_draw_textf(descriptionCartes4, ORANGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[15].loyer3M);
+                        al_draw_textf(descriptionCartes5, ORANGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[15].loyer4M);
+                        al_draw_textf(descriptionCartes6, ORANGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[15].loyer1H);
+                        al_draw_textf(descriptionCartes7, ORANGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[15].prixMaison);
+                        al_draw_textf(descriptionCartes8, ORANGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[15].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ORANGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[15].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase17(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ROUGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[17].loyer);
+                        al_draw_textf(descriptionCartes2, ROUGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[17].loyer1M);
+                        al_draw_textf(descriptionCartes3, ROUGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[17].loyer2M);
+                        al_draw_textf(descriptionCartes4, ROUGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[17].loyer3M);
+                        al_draw_textf(descriptionCartes5, ROUGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[17].loyer4M);
+                        al_draw_textf(descriptionCartes6, ROUGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[17].loyer1H);
+                        al_draw_textf(descriptionCartes7, ROUGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[17].prixMaison);
+                        al_draw_textf(descriptionCartes8, ROUGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[17].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ROUGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[17].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase19(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ROUGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[19].loyer);
+                        al_draw_textf(descriptionCartes2, ROUGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[19].loyer1M);
+                        al_draw_textf(descriptionCartes3, ROUGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[19].loyer2M);
+                        al_draw_textf(descriptionCartes4, ROUGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[19].loyer3M);
+                        al_draw_textf(descriptionCartes5, ROUGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[19].loyer4M);
+                        al_draw_textf(descriptionCartes6, ROUGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[19].loyer1H);
+                        al_draw_textf(descriptionCartes7, ROUGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[19].prixMaison);
+                        al_draw_textf(descriptionCartes8, ROUGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[19].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ROUGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[19].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase21(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, JAUNE, 25, 600, 0,
+                                      "Loyer $%d", terrain[21].loyer);
+                        al_draw_textf(descriptionCartes2, JAUNE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[21].loyer1M);
+                        al_draw_textf(descriptionCartes3, JAUNE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[21].loyer2M);
+                        al_draw_textf(descriptionCartes4, JAUNE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[21].loyer3M);
+                        al_draw_textf(descriptionCartes5, JAUNE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[21].loyer4M);
+                        al_draw_textf(descriptionCartes6, JAUNE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[21].loyer1H);
+                        al_draw_textf(descriptionCartes7, JAUNE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[21].prixMaison);
+                        al_draw_textf(descriptionCartes8, JAUNE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[21].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, JAUNE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[21].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase23(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, JAUNE, 25, 600, 0,
+                                      "Loyer $%d", terrain[23].loyer);
+                        al_draw_textf(descriptionCartes2, JAUNE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[23].loyer1M);
+                        al_draw_textf(descriptionCartes3, JAUNE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[23].loyer2M);
+                        al_draw_textf(descriptionCartes4, JAUNE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[23].loyer3M);
+                        al_draw_textf(descriptionCartes5, JAUNE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[23].loyer4M);
+                        al_draw_textf(descriptionCartes6, JAUNE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[23].loyer1H);
+                        al_draw_textf(descriptionCartes7, JAUNE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[23].prixMaison);
+                        al_draw_textf(descriptionCartes8, JAUNE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[23].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, JAUNE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[23].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase25(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VERT, 25, 600, 0,
+                                      "Loyer $%d", terrain[25].loyer);
+                        al_draw_textf(descriptionCartes2, VERT, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[25].loyer1M);
+                        al_draw_textf(descriptionCartes3, VERT, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[25].loyer2M);
+                        al_draw_textf(descriptionCartes4, VERT, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[25].loyer3M);
+                        al_draw_textf(descriptionCartes5, VERT, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[25].loyer4M);
+                        al_draw_textf(descriptionCartes6, VERT, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[25].loyer1H);
+                        al_draw_textf(descriptionCartes7, VERT, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[25].prixMaison);
+                        al_draw_textf(descriptionCartes8, VERT, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[25].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VERT, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[25].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase27(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VERT, 25, 600, 0,
+                                      "Loyer $%d", terrain[27].loyer);
+                        al_draw_textf(descriptionCartes2, VERT, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[27].loyer1M);
+                        al_draw_textf(descriptionCartes3, VERT, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[27].loyer2M);
+                        al_draw_textf(descriptionCartes4, VERT, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[27].loyer3M);
+                        al_draw_textf(descriptionCartes5, VERT, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[27].loyer4M);
+                        al_draw_textf(descriptionCartes6, VERT, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[27].loyer1H);
+                        al_draw_textf(descriptionCartes7, VERT, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[27].prixMaison);
+                        al_draw_textf(descriptionCartes8, VERT, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[27].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VERT, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[27].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase29(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, BLEU, 25, 600, 0,
+                                      "Loyer $%d", terrain[29].loyer);
+                        al_draw_textf(descriptionCartes2, BLEU, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[29].loyer1M);
+                        al_draw_textf(descriptionCartes3, BLEU, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[29].loyer2M);
+                        al_draw_textf(descriptionCartes4, BLEU, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[29].loyer3M);
+                        al_draw_textf(descriptionCartes5, BLEU, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[29].loyer4M);
+                        al_draw_textf(descriptionCartes6, BLEU, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[29].loyer1H);
+                        al_draw_textf(descriptionCartes7, BLEU, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[29].prixMaison);
+                        al_draw_textf(descriptionCartes8, BLEU, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[29].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, BLEU, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[29].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase31(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, BLEU, 25, 600, 0,
+                                      "Loyer $%d", terrain[31].loyer);
+                        al_draw_textf(descriptionCartes2, BLEU, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[31].loyer1M);
+                        al_draw_textf(descriptionCartes3, BLEU, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[31].loyer2M);
+                        al_draw_textf(descriptionCartes4, BLEU, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[31].loyer3M);
+                        al_draw_textf(descriptionCartes5, BLEU, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[31].loyer4M);
+                        al_draw_textf(descriptionCartes6, BLEU, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[31].loyer1H);
+                        al_draw_textf(descriptionCartes7, BLEU, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[31].prixMaison);
+                        al_draw_textf(descriptionCartes8, BLEU, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[31].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, BLEU, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[31].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                }
 
                 if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
                     if ((event.mouse.button & 1) && positionSourisButtonOui(mouse_state.x, mouse_state.y)){
@@ -1582,6 +2014,397 @@ int fenetreNvPartie(int nbJoueurs) {
             while(!choix) {
                 al_wait_for_event(queue, &event);
                 al_get_mouse_state(&mouse_state);
+
+                if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+                    if (positionCase1(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, MARRON, 25, 600, 0,
+                                      "Loyer $%d", terrain[1].loyer);
+                        al_draw_textf(descriptionCartes2, MARRON, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[1].loyer1M);
+                        al_draw_textf(descriptionCartes3, MARRON, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[1].loyer2M);
+                        al_draw_textf(descriptionCartes4, MARRON, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[1].loyer3M);
+                        al_draw_textf(descriptionCartes5, MARRON, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[1].loyer4M);
+                        al_draw_textf(descriptionCartes6, MARRON, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[1].loyer1H);
+                        al_draw_textf(descriptionCartes7, MARRON, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[1].prixMaison);
+                        al_draw_textf(descriptionCartes8, MARRON, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[1].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, MARRON, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[1].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase3(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, MARRON, 25, 600, 0,
+                                      "Loyer $%d", terrain[3].loyer);
+                        al_draw_textf(descriptionCartes2, MARRON, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[3].loyer1M);
+                        al_draw_textf(descriptionCartes3, MARRON, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[3].loyer2M);
+                        al_draw_textf(descriptionCartes4, MARRON, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[3].loyer3M);
+                        al_draw_textf(descriptionCartes5, MARRON, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[3].loyer4M);
+                        al_draw_textf(descriptionCartes6, MARRON, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[3].loyer1H);
+                        al_draw_textf(descriptionCartes7, MARRON, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[3].prixMaison);
+                        al_draw_textf(descriptionCartes8, MARRON, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[3].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, MARRON, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[3].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase5(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, GRIS, 25, 600, 0,
+                                      "Loyer $%d", terrain[5].loyer);
+                        al_draw_textf(descriptionCartes2, GRIS, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[5].loyer1M);
+                        al_draw_textf(descriptionCartes3, GRIS, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[5].loyer2M);
+                        al_draw_textf(descriptionCartes4, GRIS, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[5].loyer3M);
+                        al_draw_textf(descriptionCartes5, GRIS, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[5].loyer4M);
+                        al_draw_textf(descriptionCartes6, GRIS, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[5].loyer1H);
+                        al_draw_textf(descriptionCartes7, GRIS, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[5].prixMaison);
+                        al_draw_textf(descriptionCartes8, GRIS, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[5].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, GRIS, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[5].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase7(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, GRIS, 25, 600, 0,
+                                      "Loyer $%d", terrain[7].loyer);
+                        al_draw_textf(descriptionCartes2, GRIS, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[7].loyer1M);
+                        al_draw_textf(descriptionCartes3, GRIS, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[7].loyer2M);
+                        al_draw_textf(descriptionCartes4, GRIS, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[7].loyer3M);
+                        al_draw_textf(descriptionCartes5, GRIS, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[7].loyer4M);
+                        al_draw_textf(descriptionCartes6, GRIS, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[7].loyer1H);
+                        al_draw_textf(descriptionCartes7, GRIS, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[7].prixMaison);
+                        al_draw_textf(descriptionCartes8, GRIS, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[7].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, GRIS, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[7].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase9(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VIOLET, 25, 600, 0,
+                                      "Loyer $%d", terrain[9].loyer);
+                        al_draw_textf(descriptionCartes2, VIOLET, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[9].loyer1M);
+                        al_draw_textf(descriptionCartes3, VIOLET, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[9].loyer2M);
+                        al_draw_textf(descriptionCartes4, VIOLET, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[9].loyer3M);
+                        al_draw_textf(descriptionCartes5, VIOLET, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[9].loyer4M);
+                        al_draw_textf(descriptionCartes6, VIOLET, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[9].loyer1H);
+                        al_draw_textf(descriptionCartes7, VIOLET, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[9].prixMaison);
+                        al_draw_textf(descriptionCartes8, VIOLET, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[9].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VIOLET, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[9].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase11(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VIOLET, 25, 600, 0,
+                                      "Loyer $%d", terrain[11].loyer);
+                        al_draw_textf(descriptionCartes2, VIOLET, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[11].loyer1M);
+                        al_draw_textf(descriptionCartes3, VIOLET, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[11].loyer2M);
+                        al_draw_textf(descriptionCartes4, VIOLET, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[11].loyer3M);
+                        al_draw_textf(descriptionCartes5, VIOLET, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[11].loyer4M);
+                        al_draw_textf(descriptionCartes6, VIOLET, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[11].loyer1H);
+                        al_draw_textf(descriptionCartes7, VIOLET, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[11].prixMaison);
+                        al_draw_textf(descriptionCartes8, VIOLET, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[11].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VIOLET, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[11].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase13(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ORANGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[13].loyer);
+                        al_draw_textf(descriptionCartes2, ORANGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[13].loyer1M);
+                        al_draw_textf(descriptionCartes3, ORANGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[13].loyer2M);
+                        al_draw_textf(descriptionCartes4, ORANGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[13].loyer3M);
+                        al_draw_textf(descriptionCartes5, ORANGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[13].loyer4M);
+                        al_draw_textf(descriptionCartes6, ORANGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[13].loyer1H);
+                        al_draw_textf(descriptionCartes7, ORANGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[13].prixMaison);
+                        al_draw_textf(descriptionCartes8, ORANGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[13].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ORANGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[13].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase15(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ORANGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[15].loyer);
+                        al_draw_textf(descriptionCartes2, ORANGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[15].loyer1M);
+                        al_draw_textf(descriptionCartes3, ORANGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[15].loyer2M);
+                        al_draw_textf(descriptionCartes4, ORANGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[15].loyer3M);
+                        al_draw_textf(descriptionCartes5, ORANGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[15].loyer4M);
+                        al_draw_textf(descriptionCartes6, ORANGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[15].loyer1H);
+                        al_draw_textf(descriptionCartes7, ORANGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[15].prixMaison);
+                        al_draw_textf(descriptionCartes8, ORANGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[15].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ORANGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[15].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase17(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ROUGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[17].loyer);
+                        al_draw_textf(descriptionCartes2, ROUGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[17].loyer1M);
+                        al_draw_textf(descriptionCartes3, ROUGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[17].loyer2M);
+                        al_draw_textf(descriptionCartes4, ROUGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[17].loyer3M);
+                        al_draw_textf(descriptionCartes5, ROUGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[17].loyer4M);
+                        al_draw_textf(descriptionCartes6, ROUGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[17].loyer1H);
+                        al_draw_textf(descriptionCartes7, ROUGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[17].prixMaison);
+                        al_draw_textf(descriptionCartes8, ROUGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[17].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ROUGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[17].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase19(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ROUGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[19].loyer);
+                        al_draw_textf(descriptionCartes2, ROUGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[19].loyer1M);
+                        al_draw_textf(descriptionCartes3, ROUGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[19].loyer2M);
+                        al_draw_textf(descriptionCartes4, ROUGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[19].loyer3M);
+                        al_draw_textf(descriptionCartes5, ROUGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[19].loyer4M);
+                        al_draw_textf(descriptionCartes6, ROUGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[19].loyer1H);
+                        al_draw_textf(descriptionCartes7, ROUGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[19].prixMaison);
+                        al_draw_textf(descriptionCartes8, ROUGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[19].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ROUGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[19].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase21(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, JAUNE, 25, 600, 0,
+                                      "Loyer $%d", terrain[21].loyer);
+                        al_draw_textf(descriptionCartes2, JAUNE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[21].loyer1M);
+                        al_draw_textf(descriptionCartes3, JAUNE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[21].loyer2M);
+                        al_draw_textf(descriptionCartes4, JAUNE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[21].loyer3M);
+                        al_draw_textf(descriptionCartes5, JAUNE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[21].loyer4M);
+                        al_draw_textf(descriptionCartes6, JAUNE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[21].loyer1H);
+                        al_draw_textf(descriptionCartes7, JAUNE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[21].prixMaison);
+                        al_draw_textf(descriptionCartes8, JAUNE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[21].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, JAUNE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[21].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase23(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, JAUNE, 25, 600, 0,
+                                      "Loyer $%d", terrain[23].loyer);
+                        al_draw_textf(descriptionCartes2, JAUNE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[23].loyer1M);
+                        al_draw_textf(descriptionCartes3, JAUNE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[23].loyer2M);
+                        al_draw_textf(descriptionCartes4, JAUNE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[23].loyer3M);
+                        al_draw_textf(descriptionCartes5, JAUNE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[23].loyer4M);
+                        al_draw_textf(descriptionCartes6, JAUNE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[23].loyer1H);
+                        al_draw_textf(descriptionCartes7, JAUNE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[23].prixMaison);
+                        al_draw_textf(descriptionCartes8, JAUNE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[23].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, JAUNE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[23].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase25(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VERT, 25, 600, 0,
+                                      "Loyer $%d", terrain[25].loyer);
+                        al_draw_textf(descriptionCartes2, VERT, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[25].loyer1M);
+                        al_draw_textf(descriptionCartes3, VERT, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[25].loyer2M);
+                        al_draw_textf(descriptionCartes4, VERT, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[25].loyer3M);
+                        al_draw_textf(descriptionCartes5, VERT, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[25].loyer4M);
+                        al_draw_textf(descriptionCartes6, VERT, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[25].loyer1H);
+                        al_draw_textf(descriptionCartes7, VERT, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[25].prixMaison);
+                        al_draw_textf(descriptionCartes8, VERT, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[25].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VERT, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[25].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase27(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VERT, 25, 600, 0,
+                                      "Loyer $%d", terrain[27].loyer);
+                        al_draw_textf(descriptionCartes2, VERT, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[27].loyer1M);
+                        al_draw_textf(descriptionCartes3, VERT, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[27].loyer2M);
+                        al_draw_textf(descriptionCartes4, VERT, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[27].loyer3M);
+                        al_draw_textf(descriptionCartes5, VERT, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[27].loyer4M);
+                        al_draw_textf(descriptionCartes6, VERT, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[27].loyer1H);
+                        al_draw_textf(descriptionCartes7, VERT, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[27].prixMaison);
+                        al_draw_textf(descriptionCartes8, VERT, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[27].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VERT, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[27].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase29(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, BLEU, 25, 600, 0,
+                                      "Loyer $%d", terrain[29].loyer);
+                        al_draw_textf(descriptionCartes2, BLEU, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[29].loyer1M);
+                        al_draw_textf(descriptionCartes3, BLEU, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[29].loyer2M);
+                        al_draw_textf(descriptionCartes4, BLEU, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[29].loyer3M);
+                        al_draw_textf(descriptionCartes5, BLEU, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[29].loyer4M);
+                        al_draw_textf(descriptionCartes6, BLEU, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[29].loyer1H);
+                        al_draw_textf(descriptionCartes7, BLEU, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[29].prixMaison);
+                        al_draw_textf(descriptionCartes8, BLEU, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[29].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, BLEU, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[29].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase31(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, BLEU, 25, 600, 0,
+                                      "Loyer $%d", terrain[31].loyer);
+                        al_draw_textf(descriptionCartes2, BLEU, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[31].loyer1M);
+                        al_draw_textf(descriptionCartes3, BLEU, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[31].loyer2M);
+                        al_draw_textf(descriptionCartes4, BLEU, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[31].loyer3M);
+                        al_draw_textf(descriptionCartes5, BLEU, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[31].loyer4M);
+                        al_draw_textf(descriptionCartes6, BLEU, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[31].loyer1H);
+                        al_draw_textf(descriptionCartes7, BLEU, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[31].prixMaison);
+                        al_draw_textf(descriptionCartes8, BLEU, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[31].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, BLEU, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[31].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                }
 
                 if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
                     if ((event.mouse.button & 1) && positionSourisButtonOui(mouse_state.x, mouse_state.y)){
@@ -1642,354 +2465,390 @@ int fenetreNvPartie(int nbJoueurs) {
                 if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
                     if (positionCase1(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, MARRON, 25, 600, 0,
                                       "Loyer $%d", terrain[1].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, MARRON, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[1].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, MARRON, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[1].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, MARRON, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[1].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, MARRON, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[1].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, MARRON, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[1].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, MARRON, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[1].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, MARRON, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[1].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, MARRON, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[1].proprietaire]].nomJoueur);
                         al_flip_display();
                     }
                     if (positionCase3(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, MARRON, 25, 600, 0,
                                       "Loyer $%d", terrain[3].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, MARRON, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[3].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, MARRON, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[3].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, MARRON, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[3].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, MARRON, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[3].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, MARRON, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[3].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, MARRON, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[3].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, MARRON, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[3].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, MARRON, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[3].proprietaire]].nomJoueur);
+
                         al_flip_display();
                     }
                     if (positionCase5(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, GRIS, 25, 600, 0,
                                       "Loyer $%d", terrain[5].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, GRIS, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[5].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, GRIS, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[5].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, GRIS, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[5].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, GRIS, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[5].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, GRIS, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[5].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, GRIS, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[5].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, GRIS, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[5].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, GRIS, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[5].proprietaire]].nomJoueur);
                         al_flip_display();
                     }
                     if (positionCase7(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, GRIS, 25, 600, 0,
                                       "Loyer $%d", terrain[7].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, GRIS, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[7].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, GRIS, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[7].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, GRIS, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[7].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, GRIS, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[7].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, GRIS, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[7].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, GRIS, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[7].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, GRIS, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[7].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, GRIS, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[7].proprietaire]].nomJoueur);
                         al_flip_display();
                     }
                     if (positionCase9(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, VIOLET, 25, 600, 0,
                                       "Loyer $%d", terrain[9].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, VIOLET, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[9].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, VIOLET, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[9].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, VIOLET, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[9].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, VIOLET, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[9].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, VIOLET, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[9].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, VIOLET, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[9].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, VIOLET, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[9].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VIOLET, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[9].proprietaire]].nomJoueur);
                         al_flip_display();
                     }
                     if (positionCase11(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, VIOLET, 25, 600, 0,
                                       "Loyer $%d", terrain[11].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, VIOLET, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[11].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, VIOLET, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[11].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, VIOLET, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[11].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, VIOLET, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[11].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, VIOLET, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[11].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, VIOLET, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[11].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, VIOLET, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[11].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VIOLET, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[11].proprietaire]].nomJoueur);
                         al_flip_display();
                     }
                     if (positionCase13(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, ORANGE, 25, 600, 0,
                                       "Loyer $%d", terrain[13].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, ORANGE, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[13].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, ORANGE, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[13].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, ORANGE, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[13].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, ORANGE, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[13].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, ORANGE, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[13].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, ORANGE, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[13].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, ORANGE, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[13].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ORANGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[13].proprietaire]].nomJoueur);
+
                         al_flip_display();
                     }
                     if (positionCase15(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, ORANGE, 25, 600, 0,
                                       "Loyer $%d", terrain[15].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, ORANGE, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[15].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, ORANGE, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[15].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, ORANGE, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[15].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, ORANGE, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[15].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, ORANGE, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[15].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, ORANGE, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[15].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, ORANGE, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[15].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ORANGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[15].proprietaire]].nomJoueur);
                         al_flip_display();
                     }
                     if (positionCase17(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, ROUGE, 25, 600, 0,
                                       "Loyer $%d", terrain[17].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, ROUGE, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[17].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, ROUGE, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[17].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, ROUGE, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[17].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, ROUGE, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[17].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, ROUGE, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[17].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, ROUGE, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[17].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, ROUGE, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[17].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ROUGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[17].proprietaire]].nomJoueur);
                         al_flip_display();
                     }
                     if (positionCase19(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, ROUGE, 25, 600, 0,
                                       "Loyer $%d", terrain[19].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, ROUGE, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[19].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, ROUGE, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[19].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, ROUGE, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[19].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, ROUGE, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[19].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, ROUGE, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[19].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, ROUGE, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[19].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, ROUGE, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[19].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ROUGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[19].proprietaire]].nomJoueur);
+
                         al_flip_display();
                     }
                     if (positionCase21(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, JAUNE, 25, 600, 0,
                                       "Loyer $%d", terrain[21].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, JAUNE, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[21].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, JAUNE, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[21].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, JAUNE, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[21].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, JAUNE, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[21].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, JAUNE, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[21].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, JAUNE, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[21].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, JAUNE, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[21].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, JAUNE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[21].proprietaire]].nomJoueur);
+
                         al_flip_display();
                     }
                     if (positionCase23(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, JAUNE, 25, 600, 0,
                                       "Loyer $%d", terrain[23].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, JAUNE, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[23].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, JAUNE, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[23].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, JAUNE, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[23].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, JAUNE, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[23].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, JAUNE, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[23].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, JAUNE, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[23].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, JAUNE, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[23].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, JAUNE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[23].proprietaire]].nomJoueur);
                         al_flip_display();
                     }
                     if (positionCase25(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, VERT, 25, 600, 0,
                                       "Loyer $%d", terrain[25].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, VERT, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[25].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, VERT, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[25].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, VERT, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[25].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, VERT, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[25].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, VERT, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[25].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, VERT, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[25].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, VERT, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[25].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VERT, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[25].proprietaire]].nomJoueur);
                         al_flip_display();
                     }
                     if (positionCase27(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, VERT, 25, 600, 0,
                                       "Loyer $%d", terrain[27].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, VERT, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[27].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, VERT, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[27].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, VERT, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[27].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, VERT, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[27].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, VERT, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[27].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, VERT, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[27].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, VERT, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[27].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VERT, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[27].proprietaire]].nomJoueur);
                         al_flip_display();
                     }
                     if (positionCase29(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, BLEU, 25, 600, 0,
                                       "Loyer $%d", terrain[29].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, BLEU, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[29].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, BLEU, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[29].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, BLEU, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[29].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, BLEU, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[29].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, BLEU, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[29].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, BLEU, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[29].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, BLEU, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[29].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, BLEU, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[29].proprietaire]].nomJoueur);
                         al_flip_display();
                     }
                     if (positionCase31(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
-                        al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
+                        al_draw_textf(descriptionCartes1, BLEU, 25, 600, 0,
                                       "Loyer $%d", terrain[31].loyer);
-                        al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
+                        al_draw_textf(descriptionCartes2, BLEU, 25, 630, 0,
                                       "Avec 1 Maison $%d", terrain[31].loyer1M);
-                        al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
+                        al_draw_textf(descriptionCartes3, BLEU, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[31].loyer2M);
-                        al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
+                        al_draw_textf(descriptionCartes4, BLEU, 25, 690, 0,
                                       "Avec 3 Maison $%d", terrain[31].loyer3M);
-                        al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
+                        al_draw_textf(descriptionCartes5, BLEU, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[31].loyer4M);
-                        al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
+                        al_draw_textf(descriptionCartes6, BLEU, 25, 750, 0,
                                       "Avec HOTEL $%d", terrain[31].loyer1H);
-                        al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
+                        al_draw_textf(descriptionCartes7, BLEU, 25, 780, 0,
                                       "Prix des maisons chacune $%d",
                                       terrain[31].prixMaison);
-                        al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
+                        al_draw_textf(descriptionCartes8, BLEU, 25, 810, 0,
                                       "Prix de un hotel $%d",
                                       terrain[31].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, BLEU, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[31].proprietaire]].nomJoueur);
                         al_flip_display();
                     }
                 }
@@ -2038,6 +2897,397 @@ int fenetreNvPartie(int nbJoueurs) {
                 al_wait_for_event(queue, &event);
                 al_get_mouse_state(&mouse_state);
 
+                if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+                    if (positionCase1(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, MARRON, 25, 600, 0,
+                                      "Loyer $%d", terrain[1].loyer);
+                        al_draw_textf(descriptionCartes2, MARRON, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[1].loyer1M);
+                        al_draw_textf(descriptionCartes3, MARRON, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[1].loyer2M);
+                        al_draw_textf(descriptionCartes4, MARRON, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[1].loyer3M);
+                        al_draw_textf(descriptionCartes5, MARRON, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[1].loyer4M);
+                        al_draw_textf(descriptionCartes6, MARRON, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[1].loyer1H);
+                        al_draw_textf(descriptionCartes7, MARRON, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[1].prixMaison);
+                        al_draw_textf(descriptionCartes8, MARRON, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[1].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, MARRON, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[1].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase3(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, MARRON, 25, 600, 0,
+                                      "Loyer $%d", terrain[3].loyer);
+                        al_draw_textf(descriptionCartes2, MARRON, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[3].loyer1M);
+                        al_draw_textf(descriptionCartes3, MARRON, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[3].loyer2M);
+                        al_draw_textf(descriptionCartes4, MARRON, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[3].loyer3M);
+                        al_draw_textf(descriptionCartes5, MARRON, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[3].loyer4M);
+                        al_draw_textf(descriptionCartes6, MARRON, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[3].loyer1H);
+                        al_draw_textf(descriptionCartes7, MARRON, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[3].prixMaison);
+                        al_draw_textf(descriptionCartes8, MARRON, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[3].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, MARRON, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[3].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase5(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, GRIS, 25, 600, 0,
+                                      "Loyer $%d", terrain[5].loyer);
+                        al_draw_textf(descriptionCartes2, GRIS, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[5].loyer1M);
+                        al_draw_textf(descriptionCartes3, GRIS, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[5].loyer2M);
+                        al_draw_textf(descriptionCartes4, GRIS, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[5].loyer3M);
+                        al_draw_textf(descriptionCartes5, GRIS, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[5].loyer4M);
+                        al_draw_textf(descriptionCartes6, GRIS, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[5].loyer1H);
+                        al_draw_textf(descriptionCartes7, GRIS, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[5].prixMaison);
+                        al_draw_textf(descriptionCartes8, GRIS, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[5].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, GRIS, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[5].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase7(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, GRIS, 25, 600, 0,
+                                      "Loyer $%d", terrain[7].loyer);
+                        al_draw_textf(descriptionCartes2, GRIS, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[7].loyer1M);
+                        al_draw_textf(descriptionCartes3, GRIS, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[7].loyer2M);
+                        al_draw_textf(descriptionCartes4, GRIS, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[7].loyer3M);
+                        al_draw_textf(descriptionCartes5, GRIS, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[7].loyer4M);
+                        al_draw_textf(descriptionCartes6, GRIS, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[7].loyer1H);
+                        al_draw_textf(descriptionCartes7, GRIS, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[7].prixMaison);
+                        al_draw_textf(descriptionCartes8, GRIS, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[7].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, GRIS, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[7].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase9(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VIOLET, 25, 600, 0,
+                                      "Loyer $%d", terrain[9].loyer);
+                        al_draw_textf(descriptionCartes2, VIOLET, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[9].loyer1M);
+                        al_draw_textf(descriptionCartes3, VIOLET, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[9].loyer2M);
+                        al_draw_textf(descriptionCartes4, VIOLET, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[9].loyer3M);
+                        al_draw_textf(descriptionCartes5, VIOLET, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[9].loyer4M);
+                        al_draw_textf(descriptionCartes6, VIOLET, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[9].loyer1H);
+                        al_draw_textf(descriptionCartes7, VIOLET, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[9].prixMaison);
+                        al_draw_textf(descriptionCartes8, VIOLET, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[9].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VIOLET, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[9].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase11(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VIOLET, 25, 600, 0,
+                                      "Loyer $%d", terrain[11].loyer);
+                        al_draw_textf(descriptionCartes2, VIOLET, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[11].loyer1M);
+                        al_draw_textf(descriptionCartes3, VIOLET, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[11].loyer2M);
+                        al_draw_textf(descriptionCartes4, VIOLET, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[11].loyer3M);
+                        al_draw_textf(descriptionCartes5, VIOLET, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[11].loyer4M);
+                        al_draw_textf(descriptionCartes6, VIOLET, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[11].loyer1H);
+                        al_draw_textf(descriptionCartes7, VIOLET, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[11].prixMaison);
+                        al_draw_textf(descriptionCartes8, VIOLET, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[11].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VIOLET, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[11].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase13(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ORANGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[13].loyer);
+                        al_draw_textf(descriptionCartes2, ORANGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[13].loyer1M);
+                        al_draw_textf(descriptionCartes3, ORANGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[13].loyer2M);
+                        al_draw_textf(descriptionCartes4, ORANGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[13].loyer3M);
+                        al_draw_textf(descriptionCartes5, ORANGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[13].loyer4M);
+                        al_draw_textf(descriptionCartes6, ORANGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[13].loyer1H);
+                        al_draw_textf(descriptionCartes7, ORANGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[13].prixMaison);
+                        al_draw_textf(descriptionCartes8, ORANGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[13].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ORANGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[13].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase15(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ORANGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[15].loyer);
+                        al_draw_textf(descriptionCartes2, ORANGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[15].loyer1M);
+                        al_draw_textf(descriptionCartes3, ORANGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[15].loyer2M);
+                        al_draw_textf(descriptionCartes4, ORANGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[15].loyer3M);
+                        al_draw_textf(descriptionCartes5, ORANGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[15].loyer4M);
+                        al_draw_textf(descriptionCartes6, ORANGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[15].loyer1H);
+                        al_draw_textf(descriptionCartes7, ORANGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[15].prixMaison);
+                        al_draw_textf(descriptionCartes8, ORANGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[15].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ORANGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[15].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase17(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ROUGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[17].loyer);
+                        al_draw_textf(descriptionCartes2, ROUGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[17].loyer1M);
+                        al_draw_textf(descriptionCartes3, ROUGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[17].loyer2M);
+                        al_draw_textf(descriptionCartes4, ROUGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[17].loyer3M);
+                        al_draw_textf(descriptionCartes5, ROUGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[17].loyer4M);
+                        al_draw_textf(descriptionCartes6, ROUGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[17].loyer1H);
+                        al_draw_textf(descriptionCartes7, ROUGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[17].prixMaison);
+                        al_draw_textf(descriptionCartes8, ROUGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[17].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ROUGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[17].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase19(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ROUGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[19].loyer);
+                        al_draw_textf(descriptionCartes2, ROUGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[19].loyer1M);
+                        al_draw_textf(descriptionCartes3, ROUGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[19].loyer2M);
+                        al_draw_textf(descriptionCartes4, ROUGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[19].loyer3M);
+                        al_draw_textf(descriptionCartes5, ROUGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[19].loyer4M);
+                        al_draw_textf(descriptionCartes6, ROUGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[19].loyer1H);
+                        al_draw_textf(descriptionCartes7, ROUGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[19].prixMaison);
+                        al_draw_textf(descriptionCartes8, ROUGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[19].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ROUGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[19].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase21(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, JAUNE, 25, 600, 0,
+                                      "Loyer $%d", terrain[21].loyer);
+                        al_draw_textf(descriptionCartes2, JAUNE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[21].loyer1M);
+                        al_draw_textf(descriptionCartes3, JAUNE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[21].loyer2M);
+                        al_draw_textf(descriptionCartes4, JAUNE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[21].loyer3M);
+                        al_draw_textf(descriptionCartes5, JAUNE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[21].loyer4M);
+                        al_draw_textf(descriptionCartes6, JAUNE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[21].loyer1H);
+                        al_draw_textf(descriptionCartes7, JAUNE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[21].prixMaison);
+                        al_draw_textf(descriptionCartes8, JAUNE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[21].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, JAUNE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[21].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase23(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, JAUNE, 25, 600, 0,
+                                      "Loyer $%d", terrain[23].loyer);
+                        al_draw_textf(descriptionCartes2, JAUNE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[23].loyer1M);
+                        al_draw_textf(descriptionCartes3, JAUNE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[23].loyer2M);
+                        al_draw_textf(descriptionCartes4, JAUNE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[23].loyer3M);
+                        al_draw_textf(descriptionCartes5, JAUNE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[23].loyer4M);
+                        al_draw_textf(descriptionCartes6, JAUNE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[23].loyer1H);
+                        al_draw_textf(descriptionCartes7, JAUNE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[23].prixMaison);
+                        al_draw_textf(descriptionCartes8, JAUNE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[23].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, JAUNE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[23].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase25(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VERT, 25, 600, 0,
+                                      "Loyer $%d", terrain[25].loyer);
+                        al_draw_textf(descriptionCartes2, VERT, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[25].loyer1M);
+                        al_draw_textf(descriptionCartes3, VERT, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[25].loyer2M);
+                        al_draw_textf(descriptionCartes4, VERT, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[25].loyer3M);
+                        al_draw_textf(descriptionCartes5, VERT, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[25].loyer4M);
+                        al_draw_textf(descriptionCartes6, VERT, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[25].loyer1H);
+                        al_draw_textf(descriptionCartes7, VERT, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[25].prixMaison);
+                        al_draw_textf(descriptionCartes8, VERT, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[25].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VERT, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[25].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase27(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VERT, 25, 600, 0,
+                                      "Loyer $%d", terrain[27].loyer);
+                        al_draw_textf(descriptionCartes2, VERT, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[27].loyer1M);
+                        al_draw_textf(descriptionCartes3, VERT, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[27].loyer2M);
+                        al_draw_textf(descriptionCartes4, VERT, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[27].loyer3M);
+                        al_draw_textf(descriptionCartes5, VERT, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[27].loyer4M);
+                        al_draw_textf(descriptionCartes6, VERT, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[27].loyer1H);
+                        al_draw_textf(descriptionCartes7, VERT, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[27].prixMaison);
+                        al_draw_textf(descriptionCartes8, VERT, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[27].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VERT, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[27].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase29(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, BLEU, 25, 600, 0,
+                                      "Loyer $%d", terrain[29].loyer);
+                        al_draw_textf(descriptionCartes2, BLEU, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[29].loyer1M);
+                        al_draw_textf(descriptionCartes3, BLEU, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[29].loyer2M);
+                        al_draw_textf(descriptionCartes4, BLEU, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[29].loyer3M);
+                        al_draw_textf(descriptionCartes5, BLEU, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[29].loyer4M);
+                        al_draw_textf(descriptionCartes6, BLEU, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[29].loyer1H);
+                        al_draw_textf(descriptionCartes7, BLEU, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[29].prixMaison);
+                        al_draw_textf(descriptionCartes8, BLEU, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[29].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, BLEU, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[29].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase31(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, BLEU, 25, 600, 0,
+                                      "Loyer $%d", terrain[31].loyer);
+                        al_draw_textf(descriptionCartes2, BLEU, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[31].loyer1M);
+                        al_draw_textf(descriptionCartes3, BLEU, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[31].loyer2M);
+                        al_draw_textf(descriptionCartes4, BLEU, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[31].loyer3M);
+                        al_draw_textf(descriptionCartes5, BLEU, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[31].loyer4M);
+                        al_draw_textf(descriptionCartes6, BLEU, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[31].loyer1H);
+                        al_draw_textf(descriptionCartes7, BLEU, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[31].prixMaison);
+                        al_draw_textf(descriptionCartes8, BLEU, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[31].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, BLEU, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[31].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                }
+
                 if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
                     if ((event.mouse.button & 1) && positionSourisButtonOui(mouse_state.x, mouse_state.y)){
                         terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu = 1;
@@ -2084,6 +3334,398 @@ int fenetreNvPartie(int nbJoueurs) {
             while(!choix) {
                 al_wait_for_event(queue, &event);
                 al_get_mouse_state(&mouse_state);
+
+                if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+                    if (positionCase1(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, MARRON, 25, 600, 0,
+                                      "Loyer $%d", terrain[1].loyer);
+                        al_draw_textf(descriptionCartes2, MARRON, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[1].loyer1M);
+                        al_draw_textf(descriptionCartes3, MARRON, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[1].loyer2M);
+                        al_draw_textf(descriptionCartes4, MARRON, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[1].loyer3M);
+                        al_draw_textf(descriptionCartes5, MARRON, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[1].loyer4M);
+                        al_draw_textf(descriptionCartes6, MARRON, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[1].loyer1H);
+                        al_draw_textf(descriptionCartes7, MARRON, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[1].prixMaison);
+                        al_draw_textf(descriptionCartes8, MARRON, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[1].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, MARRON, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[1].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase3(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, MARRON, 25, 600, 0,
+                                      "Loyer $%d", terrain[3].loyer);
+                        al_draw_textf(descriptionCartes2, MARRON, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[3].loyer1M);
+                        al_draw_textf(descriptionCartes3, MARRON, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[3].loyer2M);
+                        al_draw_textf(descriptionCartes4, MARRON, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[3].loyer3M);
+                        al_draw_textf(descriptionCartes5, MARRON, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[3].loyer4M);
+                        al_draw_textf(descriptionCartes6, MARRON, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[3].loyer1H);
+                        al_draw_textf(descriptionCartes7, MARRON, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[3].prixMaison);
+                        al_draw_textf(descriptionCartes8, MARRON, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[3].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, MARRON, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[3].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase5(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, GRIS, 25, 600, 0,
+                                      "Loyer $%d", terrain[5].loyer);
+                        al_draw_textf(descriptionCartes2, GRIS, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[5].loyer1M);
+                        al_draw_textf(descriptionCartes3, GRIS, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[5].loyer2M);
+                        al_draw_textf(descriptionCartes4, GRIS, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[5].loyer3M);
+                        al_draw_textf(descriptionCartes5, GRIS, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[5].loyer4M);
+                        al_draw_textf(descriptionCartes6, GRIS, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[5].loyer1H);
+                        al_draw_textf(descriptionCartes7, GRIS, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[5].prixMaison);
+                        al_draw_textf(descriptionCartes8, GRIS, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[5].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, GRIS, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[5].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase7(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, GRIS, 25, 600, 0,
+                                      "Loyer $%d", terrain[7].loyer);
+                        al_draw_textf(descriptionCartes2, GRIS, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[7].loyer1M);
+                        al_draw_textf(descriptionCartes3, GRIS, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[7].loyer2M);
+                        al_draw_textf(descriptionCartes4, GRIS, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[7].loyer3M);
+                        al_draw_textf(descriptionCartes5, GRIS, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[7].loyer4M);
+                        al_draw_textf(descriptionCartes6, GRIS, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[7].loyer1H);
+                        al_draw_textf(descriptionCartes7, GRIS, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[7].prixMaison);
+                        al_draw_textf(descriptionCartes8, GRIS, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[7].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, GRIS, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[7].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase9(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VIOLET, 25, 600, 0,
+                                      "Loyer $%d", terrain[9].loyer);
+                        al_draw_textf(descriptionCartes2, VIOLET, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[9].loyer1M);
+                        al_draw_textf(descriptionCartes3, VIOLET, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[9].loyer2M);
+                        al_draw_textf(descriptionCartes4, VIOLET, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[9].loyer3M);
+                        al_draw_textf(descriptionCartes5, VIOLET, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[9].loyer4M);
+                        al_draw_textf(descriptionCartes6, VIOLET, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[9].loyer1H);
+                        al_draw_textf(descriptionCartes7, VIOLET, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[9].prixMaison);
+                        al_draw_textf(descriptionCartes8, VIOLET, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[9].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VIOLET, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[9].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase11(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VIOLET, 25, 600, 0,
+                                      "Loyer $%d", terrain[11].loyer);
+                        al_draw_textf(descriptionCartes2, VIOLET, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[11].loyer1M);
+                        al_draw_textf(descriptionCartes3, VIOLET, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[11].loyer2M);
+                        al_draw_textf(descriptionCartes4, VIOLET, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[11].loyer3M);
+                        al_draw_textf(descriptionCartes5, VIOLET, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[11].loyer4M);
+                        al_draw_textf(descriptionCartes6, VIOLET, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[11].loyer1H);
+                        al_draw_textf(descriptionCartes7, VIOLET, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[11].prixMaison);
+                        al_draw_textf(descriptionCartes8, VIOLET, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[11].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VIOLET, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[11].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase13(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ORANGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[13].loyer);
+                        al_draw_textf(descriptionCartes2, ORANGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[13].loyer1M);
+                        al_draw_textf(descriptionCartes3, ORANGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[13].loyer2M);
+                        al_draw_textf(descriptionCartes4, ORANGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[13].loyer3M);
+                        al_draw_textf(descriptionCartes5, ORANGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[13].loyer4M);
+                        al_draw_textf(descriptionCartes6, ORANGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[13].loyer1H);
+                        al_draw_textf(descriptionCartes7, ORANGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[13].prixMaison);
+                        al_draw_textf(descriptionCartes8, ORANGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[13].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ORANGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[13].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase15(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ORANGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[15].loyer);
+                        al_draw_textf(descriptionCartes2, ORANGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[15].loyer1M);
+                        al_draw_textf(descriptionCartes3, ORANGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[15].loyer2M);
+                        al_draw_textf(descriptionCartes4, ORANGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[15].loyer3M);
+                        al_draw_textf(descriptionCartes5, ORANGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[15].loyer4M);
+                        al_draw_textf(descriptionCartes6, ORANGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[15].loyer1H);
+                        al_draw_textf(descriptionCartes7, ORANGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[15].prixMaison);
+                        al_draw_textf(descriptionCartes8, ORANGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[15].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ORANGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[15].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase17(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ROUGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[17].loyer);
+                        al_draw_textf(descriptionCartes2, ROUGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[17].loyer1M);
+                        al_draw_textf(descriptionCartes3, ROUGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[17].loyer2M);
+                        al_draw_textf(descriptionCartes4, ROUGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[17].loyer3M);
+                        al_draw_textf(descriptionCartes5, ROUGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[17].loyer4M);
+                        al_draw_textf(descriptionCartes6, ROUGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[17].loyer1H);
+                        al_draw_textf(descriptionCartes7, ROUGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[17].prixMaison);
+                        al_draw_textf(descriptionCartes8, ROUGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[17].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ROUGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[17].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase19(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, ROUGE, 25, 600, 0,
+                                      "Loyer $%d", terrain[19].loyer);
+                        al_draw_textf(descriptionCartes2, ROUGE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[19].loyer1M);
+                        al_draw_textf(descriptionCartes3, ROUGE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[19].loyer2M);
+                        al_draw_textf(descriptionCartes4, ROUGE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[19].loyer3M);
+                        al_draw_textf(descriptionCartes5, ROUGE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[19].loyer4M);
+                        al_draw_textf(descriptionCartes6, ROUGE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[19].loyer1H);
+                        al_draw_textf(descriptionCartes7, ROUGE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[19].prixMaison);
+                        al_draw_textf(descriptionCartes8, ROUGE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[19].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, ROUGE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[19].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase21(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, JAUNE, 25, 600, 0,
+                                      "Loyer $%d", terrain[21].loyer);
+                        al_draw_textf(descriptionCartes2, JAUNE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[21].loyer1M);
+                        al_draw_textf(descriptionCartes3, JAUNE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[21].loyer2M);
+                        al_draw_textf(descriptionCartes4, JAUNE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[21].loyer3M);
+                        al_draw_textf(descriptionCartes5, JAUNE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[21].loyer4M);
+                        al_draw_textf(descriptionCartes6, JAUNE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[21].loyer1H);
+                        al_draw_textf(descriptionCartes7, JAUNE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[21].prixMaison);
+                        al_draw_textf(descriptionCartes8, JAUNE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[21].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, JAUNE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[21].proprietaire]].nomJoueur);
+
+                        al_flip_display();
+                    }
+                    if (positionCase23(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, JAUNE, 25, 600, 0,
+                                      "Loyer $%d", terrain[23].loyer);
+                        al_draw_textf(descriptionCartes2, JAUNE, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[23].loyer1M);
+                        al_draw_textf(descriptionCartes3, JAUNE, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[23].loyer2M);
+                        al_draw_textf(descriptionCartes4, JAUNE, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[23].loyer3M);
+                        al_draw_textf(descriptionCartes5, JAUNE, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[23].loyer4M);
+                        al_draw_textf(descriptionCartes6, JAUNE, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[23].loyer1H);
+                        al_draw_textf(descriptionCartes7, JAUNE, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[23].prixMaison);
+                        al_draw_textf(descriptionCartes8, JAUNE, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[23].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, JAUNE, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[23].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase25(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VERT, 25, 600, 0,
+                                      "Loyer $%d", terrain[25].loyer);
+                        al_draw_textf(descriptionCartes2, VERT, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[25].loyer1M);
+                        al_draw_textf(descriptionCartes3, VERT, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[25].loyer2M);
+                        al_draw_textf(descriptionCartes4, VERT, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[25].loyer3M);
+                        al_draw_textf(descriptionCartes5, VERT, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[25].loyer4M);
+                        al_draw_textf(descriptionCartes6, VERT, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[25].loyer1H);
+                        al_draw_textf(descriptionCartes7, VERT, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[25].prixMaison);
+                        al_draw_textf(descriptionCartes8, VERT, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[25].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VERT, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[25].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase27(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, VERT, 25, 600, 0,
+                                      "Loyer $%d", terrain[27].loyer);
+                        al_draw_textf(descriptionCartes2, VERT, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[27].loyer1M);
+                        al_draw_textf(descriptionCartes3, VERT, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[27].loyer2M);
+                        al_draw_textf(descriptionCartes4, VERT, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[27].loyer3M);
+                        al_draw_textf(descriptionCartes5, VERT, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[27].loyer4M);
+                        al_draw_textf(descriptionCartes6, VERT, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[27].loyer1H);
+                        al_draw_textf(descriptionCartes7, VERT, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[27].prixMaison);
+                        al_draw_textf(descriptionCartes8, VERT, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[27].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, VERT, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[27].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase29(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, BLEU, 25, 600, 0,
+                                      "Loyer $%d", terrain[29].loyer);
+                        al_draw_textf(descriptionCartes2, BLEU, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[29].loyer1M);
+                        al_draw_textf(descriptionCartes3, BLEU, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[29].loyer2M);
+                        al_draw_textf(descriptionCartes4, BLEU, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[29].loyer3M);
+                        al_draw_textf(descriptionCartes5, BLEU, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[29].loyer4M);
+                        al_draw_textf(descriptionCartes6, BLEU, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[29].loyer1H);
+                        al_draw_textf(descriptionCartes7, BLEU, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[29].prixMaison);
+                        al_draw_textf(descriptionCartes8, BLEU, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[29].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, BLEU, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[29].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                    if (positionCase31(mouse_state.x, mouse_state.y)) {
+                        creerRectangleBlanc(25, 600, 377, 1000);
+                        al_draw_textf(descriptionCartes1, BLEU, 25, 600, 0,
+                                      "Loyer $%d", terrain[31].loyer);
+                        al_draw_textf(descriptionCartes2, BLEU, 25, 630, 0,
+                                      "Avec 1 Maison $%d", terrain[31].loyer1M);
+                        al_draw_textf(descriptionCartes3, BLEU, 25, 660, 0,
+                                      "Avec 2 Maison $%d", terrain[31].loyer2M);
+                        al_draw_textf(descriptionCartes4, BLEU, 25, 690, 0,
+                                      "Avec 3 Maison $%d", terrain[31].loyer3M);
+                        al_draw_textf(descriptionCartes5, BLEU, 25, 720, 0,
+                                      "Avec 4 Maison $%d", terrain[31].loyer4M);
+                        al_draw_textf(descriptionCartes6, BLEU, 25, 750, 0,
+                                      "Avec HOTEL $%d", terrain[31].loyer1H);
+                        al_draw_textf(descriptionCartes7, BLEU, 25, 780, 0,
+                                      "Prix des maisons chacune $%d",
+                                      terrain[31].prixMaison);
+                        al_draw_textf(descriptionCartes8, BLEU, 25, 810, 0,
+                                      "Prix de un hotel $%d",
+                                      terrain[31].prixMaison * 5);
+                        al_draw_textf(descriptionCartes9, BLEU, 25, 840, 0, "Propriétaire: %s",
+                                      tabJoueur[tabordreJoueurs[terrain[31].proprietaire]].nomJoueur);
+                        al_flip_display();
+                    }
+                }
+
                 if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
                     if ((event.mouse.button & 1) && positionSourisButtonOui(mouse_state.x, mouse_state.y)){
                         choix = 1;
@@ -2304,167 +3946,6 @@ int randomJoueurs(int nbJoueurs, int tabordreJoueurs[NOMBRE_MAX_JOUEURS]){ //fon
     }
 }
 
-void printf_center (const char* str)
-{
-    unsigned int n;
-    for (n = 0; n < (LARGEUR_CONSOLE-strlen(str)) / 2; n++)
-    {
-        putchar(' ');
-    }
-    printf("%s", str);
-} //fonction pour centrer du texte sur la console
-
-void mainPartie(int nbJoueurs){
-    int indiceJoueur = 0;
-    int winner = 0, joueursElimine = 0;
-    int lancerDe1 = 0, lancerDe2 = 0, valeurLancementDe1, valeurLancementDe2, valeurDeTotale;
-
-    //initialisation tout les joueurs sur la case 0
-    for(int i = 0; i < nbJoueurs; i++){
-        tabParametreJoueurs[i].numCase = 0;
-    }
-
-    init_terrains(); // initialise les parametre des terrains
-
-    initialiserCartes(indiceJoueur);
-    initialisercommu();
-
-    do{
-        initialisation(nbJoueurs);
-
-        if(tabParametreJoueurs[indiceJoueur].prison == 1){
-            indiceJoueur = (indiceJoueur + 1) % nbJoueurs;
-            tabParametreJoueurs[indiceJoueur].nbTourPrison++;
-            if(tabParametreJoueurs[indiceJoueur].nbTourPrison >= 3){
-                tabParametreJoueurs[indiceJoueur].nbTourPrison = 0;
-                tabParametreJoueurs[indiceJoueur].prison = 0;
-            }
-        }
-
-        if(indiceJoueur >= nbJoueurs && indiceJoueur < 0){
-            indiceJoueur = 0;
-        }
-
-        int numJoueur = tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur;
-
-        printf("\nC est a %s de jouer\n", tabJoueur[tabordreJoueurs[indiceJoueur]].nomJoueur);
-
-        printf("Si vous souhaitez acceder au menu tapez 0\n");
-        printf("Taper 1 pour lancer le premier des : ");
-        scanf("%d", &lancerDe1);
-
-        if(lancerDe1 == 0){
-            menuPrincipale();
-        }
-        else {
-            valeurLancementDe1 = random(7);//618 550 931 582
-            printf("De 1: %d\n", valeurLancementDe1);
-
-            printf("Taper 1 pour lancer le deuxieme des : ");
-            scanf("%d", &lancerDe2);
-
-            valeurLancementDe2 = random(7);
-            printf("De 2: %d\n", valeurLancementDe2);
-
-        }
-
-        verifDoubleDe(valeurLancementDe1, valeurLancementDe2, indiceJoueur);
-
-        valeurDeTotale = valeurLancementDe2 + valeurLancementDe1;
-
-        printf("Nombre de: %d\n", valeurDeTotale );
-
-        if(tabParametreJoueurs[indiceJoueur].doubleDe == 3){
-            vaPrison(indiceJoueur);
-            tabParametreJoueurs[indiceJoueur].doubleDe = 0;
-        }
-
-        tabParametreJoueurs[indiceJoueur].numCase += valeurDeTotale;
-
-        if(tabParametreJoueurs[indiceJoueur].numCase >= 32){
-            printf("Vous passez par la case depart recevez 200$\n");
-            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
-            tabParametreJoueurs[indiceJoueur].numCase %= 32; // il y a 32 case donc on ne peut pas depasser 32
-        }
-
-        printf("\n%s\n",terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
-
-        if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 0){
-            descriptionCartes(tabParametreJoueurs[indiceJoueur].numCase);
-            int choix;
-            printf("Voulez vous acheter %s (si oui tapez 1)", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
-            scanf("%d", &choix);
-
-
-            if(choix == 1){
-                terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu = 1;
-                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[tabParametreJoueurs[indiceJoueur].numCase].prix;
-                terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire = numJoueur;
-            }
-        }
-        if(terrain[tabParametreJoueurs[indiceJoueur].numCase].achetable == 1 && terrain[tabParametreJoueurs[indiceJoueur].numCase].vendu == 1){
-            // joueur doit payer le loyer
-            int prixLoyer = testSiMaison(indiceJoueur);
-            printf("Vous devez payer un loyer a %s\n", tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].nomJoueur);
-            //si le propriétaire pocède les 2 cartes loyer nu double
-            if(terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire == terrain[tabParametreJoueurs[indiceJoueur].numCase + 2].proprietaire || terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire == terrain[tabParametreJoueurs[indiceJoueur].numCase - 2].proprietaire && terrain[tabParametreJoueurs[indiceJoueur].numCase].numMaison == 0){
-                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer * 2;
-                tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].argentJoueur += prixLoyer * 2;
-            }
-            else{
-                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer;
-                tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].argentJoueur += prixLoyer;
-            }
-        }
-        if(terrain[tabParametreJoueurs[indiceJoueur].numCase].taxe == 1){
-            int choix;
-            printf("TAPEZ 1 POUR PAYER\n");
-            scanf("%d", &choix);
-            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= terrain[tabParametreJoueurs[indiceJoueur].numCase].frais;
-        }
-
-        if(tabParametreJoueurs[indiceJoueur].numCase == 26){
-            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += terrain[26].frais;
-        }
-
-        if (terrain[tabParametreJoueurs[indiceJoueur].numCase].teleportation == 1) {
-            switch (tabParametreJoueurs[indiceJoueur].numCase) {
-                case 4:
-                    tabParametreJoueurs[indiceJoueur].numCase = 12;
-                    break;
-                case 12:
-                    tabParametreJoueurs[indiceJoueur].numCase = 20;
-                    break;
-                case 20:
-                    tabParametreJoueurs[indiceJoueur].numCase = 28;
-                    break;
-                case 24:
-                    tabParametreJoueurs[indiceJoueur].numCase = 8;
-                    break;
-                case 28:
-                    tabParametreJoueurs[indiceJoueur].numCase = 4;
-                    break;
-            }
-        }
-
-        if (terrain[tabParametreJoueurs[indiceJoueur].numCase].carteChance == 1){
-            cartechance(indiceJoueur, nbJoueurs);
-        }
-
-        if (terrain[tabParametreJoueurs[indiceJoueur].numCase].carteCommunaute == 1){
-            cartecommu(indiceJoueur, nbJoueurs);
-        }
-
-        if(tabParametreJoueurs[indiceJoueur].doubleDe == 0){
-            indiceJoueur = (indiceJoueur + 1) % nbJoueurs;
-        }
-
-        if (joueursElimine == nbJoueurs - 1) { // condition de victoire
-            winner = 1;
-        }
-    } while(!winner);
-}
-
 void vaPrison(int indiceJoueur){
     tabParametreJoueurs[indiceJoueur].prison = 1;
     tabParametreJoueurs[indiceJoueur].numCase = 8;
@@ -2498,17 +3979,6 @@ int random(int nb){
 
     return numRand;
 }
-
-void initialisation(int nbJoueurs){
-    printf("------------------------------------------------Initialisation-----------------------------------------\n");
-    for (int i = 0; i < nbJoueurs; i++) {
-        printf("Joueur: %d Pseudo: %s Argent: %d$ Case: %d\n",
-               i + 1,
-               tabJoueur[tabordreJoueurs[i]].nomJoueur,
-               tabJoueur[tabordreJoueurs[i]].argentJoueur,
-               tabParametreJoueurs[i].numCase + 1);
-    }
-} // afficher dans la console les parametre des joueurs
 
 void verifDoubleDe(int de1, int de2, int indiceJoueur) {
     if(de1 == de2){
