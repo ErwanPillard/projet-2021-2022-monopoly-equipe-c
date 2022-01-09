@@ -50,11 +50,27 @@ parametreJoueur tabParametreJoueurs[NOMBRE_MAX_JOUEURS];
 
 int positionSourisButtonDe(int x, int y);
 
-int positionCaseDepart(int x, int y);
-
 int positionSourisButtonOui(int x, int y);
 
 int positionSourisButtonNon(int x, int y);
+
+int positionCase1(int x, int y);
+int positionCase3(int x, int y);
+int positionCase5(int x, int y);
+int positionCase7(int x, int y);
+int positionCase9(int x, int y);
+int positionCase11(int x, int y);
+int positionCase13(int x, int y);
+int positionCase15(int x, int y);
+int positionCase17(int x, int y);
+int positionCase19(int x, int y);
+int positionCase21(int x, int y);
+int positionCase23(int x, int y);
+int positionCase25(int x, int y);
+int positionCase27(int x, int y);
+int positionCase29(int x, int y);
+int positionCase31(int x, int y);
+
 
 void vaPrison(int indiceJoueur);
 
