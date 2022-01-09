@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
@@ -17,7 +18,7 @@
 #include "terrain.h"
 #include "chance.h"
 
-#define NOMBRE_MAX_JOUEURS 6
+#define NOMBRE_MAX_JOUEURS 7
 #define WIDTH_JEU 1920
 #define HEIGHT_JEU 1080
 
