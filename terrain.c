@@ -25,6 +25,7 @@ void init_terrains(){
     terrain[1].positionX = 1200;
     terrain[1].positionY = 915;
     terrain[1].doublon = 3;
+    terrain[1].prixMaison = 50;
 
     terrain[2].frais = 100;
     terrain[2].taxe = 1;
@@ -44,6 +45,8 @@ void init_terrains(){
     terrain[3].positionX = 992;
     terrain[3].positionY = 915;
     terrain[3].doublon = 1;
+    terrain[3].prixMaison = 100;
+
 
 
     terrain[4].achetable = 0;
@@ -64,6 +67,8 @@ void init_terrains(){
     terrain[5].positionX = 784;
     terrain[5].positionY = 915;
     terrain[5].doublon = 7;
+    terrain[5].prixMaison = 150;
+
 
 
 
@@ -85,6 +90,8 @@ void init_terrains(){
     terrain[7].positionX = 576;
     terrain[7].positionY = 915;
     terrain[7].doublon = 5;
+    terrain[7].prixMaison = 150;
+
 
 
     terrain[8].achetable = 0;
@@ -105,6 +112,8 @@ void init_terrains(){
     terrain[9].positionX = 446;
     terrain[9].positionY = 860;
     terrain[9].doublon = 11;
+    terrain[9].prixMaison = 250;
+
 
 
     terrain[9].positionY = 790;
@@ -128,6 +137,8 @@ void init_terrains(){
     terrain[11].positionY = 580;
     terrain[11].positionY = 750;
     terrain[11].doublon = 9;
+    terrain[11].prixMaison = 250;
+
 
 
     terrain[12].achetable = 0;
@@ -148,6 +159,8 @@ void init_terrains(){
     terrain[13].positionX = 446;
     terrain[13].positionY = 370;
     terrain[13].doublon = 15;
+    terrain[13].prixMaison = 300;
+
 
 
     terrain[14].achetable = 0;
@@ -167,8 +180,9 @@ void init_terrains(){
     strcpy(terrain[15].nomTerrain, "Rue Mozart");
     terrain[15].positionX = 446;
     terrain[15].positionY = 160;
-
     terrain[15].doublon = 13;
+    terrain[15].prixMaison = 350;
+
 
 
     terrain[16].achetable = 0;
@@ -188,6 +202,8 @@ void init_terrains(){
     terrain[17].positionX = 576;
     terrain[17].positionY = 25;
     terrain[17].doublon = 19;
+    terrain[17].prixMaison = 350;
+
 
 
     terrain[18].frais = 200;
@@ -206,6 +222,8 @@ void init_terrains(){
     terrain[19].achetable = 1;
     strcpy(terrain[19].nomTerrain, "Place Pigalle");
     terrain[19].doublon = 17;
+    terrain[19].prixMaison = 400;
+
 
     terrain[19].positionX = 784;
     terrain[19].positionY = 25;
@@ -226,6 +244,8 @@ void init_terrains(){
     terrain[21].achetable = 1;
     strcpy(terrain[21].nomTerrain, "Avenue de Matignon");
     terrain[21].doublon = 23;
+    terrain[21].prixMaison = 450;
+
 
     terrain[21].positionX = 992;
     terrain[21].positionY = 25;
@@ -248,6 +268,8 @@ void init_terrains(){
     terrain[23].positionX = 1200;
     terrain[23].positionY = 25;
     terrain[23].doublon = 21;
+    terrain[23].prixMaison = 500;
+
 
 
     terrain[24].achetable = 0;
@@ -268,6 +290,8 @@ void init_terrains(){
     terrain[25].positionX = 1330;
     terrain[25].positionY = 160;
     terrain[25].doublon = 27;
+    terrain[25].prixMaison = 650;
+
 
 
     terrain[26].achetable = 0;
@@ -287,6 +311,8 @@ void init_terrains(){
     strcpy(terrain[27].nomTerrain, "Boulevard des Capucines");
     terrain[27].positionX = 1330;
     terrain[27].positionY = 370;
+    terrain[27].prixMaison = 750;
+
 
     terrain[27].doublon = 25;
 
@@ -310,6 +336,8 @@ void init_terrains(){
     terrain[29].positionX = 1330;
     terrain[29].positionY = 580;
     terrain[29].doublon = 31;
+    terrain[29].prixMaison = 875;
+
 
 
     terrain[30].achetable = 0;
@@ -330,5 +358,7 @@ void init_terrains(){
     terrain[31].positionX = 1330;
     terrain[31].positionY = 790;
     terrain[31].doublon = 29;
+    terrain[31].prixMaison = 1000;
+
 
 }
