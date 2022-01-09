@@ -375,12 +375,10 @@ int fenetreNvPartie(int nbJoueurs) {
     for(int i = 0; i < nbJoueurs; i++){
         tabParametreJoueurs[i].numCase = 0;
     }
-/*
-    for(int i = 1; i <= 31; i += 2){
-        strcpy(tabJoueur[tabordreJoueurs[6]].nomJoueur, "Banque");
-        terrain[i].proprietaire = 6;
 
-    }*/
+    for(int i = 1; i <= 31; i += 2){
+        terrain[i].proprietaire = 6;
+    }
 
     init_terrains(); // initialise les parametre des terrains
 
@@ -495,7 +493,6 @@ int fenetreNvPartie(int nbJoueurs) {
 
         if (tabParametreJoueurs[indiceJoueur].elimine == 1) {
             indiceJoueur = (indiceJoueur + 1) % nbJoueurs;
-            joueursElimine++;
         }
 
         int numJoueur = tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur;
@@ -936,7 +933,7 @@ int fenetreNvPartie(int nbJoueurs) {
             } else if (event.type == ALLEGRO_EVENT_KEY_UP && wait == -1) {
                 switch (event.keyboard.keycode) {
                     case ALLEGRO_KEY_ESCAPE:
-                        quitter();
+                        setWindow();
                         break;
                 }
             }
@@ -2412,6 +2409,7 @@ int fenetreNvPartie(int nbJoueurs) {
                     }
                     if ((event.mouse.button & 1) && positionSourisButtonNon(mouse_state.x, mouse_state.y)){
                         tabParametreJoueurs[indiceJoueur].elimine = 1;
+                        joueursElimine++;
                         choix = 1;
                     }
                     if ((event.mouse.button & 1) && positionSourisButtonMaison(mouse_state.x, mouse_state.y)) {
@@ -2859,6 +2857,7 @@ int fenetreNvPartie(int nbJoueurs) {
                     }
                     if ((event.mouse.button & 1) && positionSourisButtonNon(mouse_state.x, mouse_state.y)){
                         tabParametreJoueurs[indiceJoueur].elimine = 1;
+                        joueursElimine++;
                         choix = 1;
                     }
                     if ((event.mouse.button & 1) && positionSourisButtonMaison(mouse_state.x, mouse_state.y)) {
@@ -3760,10 +3759,6 @@ int fenetreNvPartie(int nbJoueurs) {
             }
         }
 
-        if(tabParametreJoueurs[indiceJoueur].doubleDe == 0){
-            indiceJoueur = (indiceJoueur + 1) % nbJoueurs;
-        }
-
         creerRectangleBlanc(0,0,1920,1080);
 
         creerRectangle(1840, 15, 1870, 45); // rectangle lancer dé
@@ -3832,7 +3827,21 @@ int fenetreNvPartie(int nbJoueurs) {
                 break;
         }
 
+        if(tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur < 0){
+            tabParametreJoueurs[indiceJoueur].elimine = 1;
+            joueursElimine++;
+        }
+
+        if(tabParametreJoueurs[indiceJoueur].doubleDe == 0){
+            indiceJoueur = (indiceJoueur + 1) % nbJoueurs;
+        }
+
         if (joueursElimine == nbJoueurs - 1) { // condition de victoire
+            for(int i = 0; i < nbJoueurs; i++){
+                if(tabParametreJoueurs[i].elimine == 0){
+                    printf("Le gagnant est %s !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", tabJoueur[tabordreJoueurs[i]].nomJoueur);
+                }
+            }
             winner = 1;
         }
     } while (!winner);
@@ -3860,10 +3869,11 @@ void ajouterJoueur(int i){
 }
 
 void  ajouterJoueursTab(int taille_logique){
-    Joueur parametreJ;
     for(int i = 0; i < taille_logique; i++){
         ajouterJoueur(i);
     }
+    strcpy(tabJoueur[6].nomJoueur, "Banque");
+    tabJoueur[6].numJoueur = 6;
 }
 
 void afficherRegle(){

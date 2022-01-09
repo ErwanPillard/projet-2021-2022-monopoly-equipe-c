@@ -20,28 +20,28 @@ void creerRectangleVide(int x1, int y1, int x2, int y2, int epaisseur) {
 
 int positionSouris1(int x, int y) {
     if (x >= 442 && x <= 710 && y >= 430 && y <= 455) {
-        lancerNouvellePartie();
+        return 1;
     }
     return 0;
 }
 
 int positionSouris2(int x, int y) {
     if (x >= 442 && x <= 710 && y >= 470 && y <= 495) {
-        afficherRegle();
+        return 1;
     }
     return 0;
 }
 
 int positionSouris3(int x, int y) {
     if (x >= 442 && x <= 710 && y >= 510 && y <= 535) {
-        afficherNomMembresProjet();
+        return 1;
     }
     return 0;
 }
 
 int positionSouris4(int x, int y) {
     if (x >= 442 && x <= 710 && y >= 550 && y <= 575) {
-        quitter();
+        return 1;
     }
     return 0;
 }
@@ -58,7 +58,6 @@ void setWindow() {
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_BITMAP *imageAcceuil = NULL;
     ALLEGRO_MOUSE_STATE mouse_state;
-    ALLEGRO_EVENT event = {0};
 
 
     if (!al_init()) {
@@ -126,7 +125,9 @@ void setWindow() {
     al_flip_display();
 //Boucle d'évènement
     do {
+        ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
+        al_get_mouse_state(&mouse_state);
 
         if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             fin = 1;
@@ -135,24 +136,20 @@ void setWindow() {
                 case ALLEGRO_KEY_ESCAPE :
                     fin = 1;
                     break;
-
             }
         }
-        al_get_mouse_state(&mouse_state);
 
-        /*if(oldx != mouse_state.x || oldy != mouse_state.y) {
-            oldx = mouse_state.x;
-            oldy = mouse_state.y;
-            printf("coordonnees de la souris : %d-%d\n", mouse_state.x, mouse_state.y);
-        }*/
-
-        if ((mouse_state.buttons & 1) == 1 && positionSouris1(mouse_state.x, mouse_state.y)) {
+        if ((event.mouse.button & 1) && positionSouris1(mouse_state.x, mouse_state.y)) {
+            lancerNouvellePartie();
         }
-        if ((mouse_state.buttons & 1) == 1 && positionSouris2(mouse_state.x, mouse_state.y)) {
+        if ((event.mouse.button & 1) && positionSouris2(mouse_state.x, mouse_state.y)) {
+            afficherRegle();
         }
-        if ((mouse_state.buttons & 1) == 1 && positionSouris3(mouse_state.x, mouse_state.y)) {
+        if ((event.mouse.button & 1) && positionSouris3(mouse_state.x, mouse_state.y)) {
+            afficherNomMembresProjet();
         }
-        if ((mouse_state.buttons & 1) == 1 && positionSouris4(mouse_state.x, mouse_state.y)) {
+        if ((event.mouse.button & 1) && positionSouris4(mouse_state.x, mouse_state.y)) {
+            quitter();
         }
 
     } while (!fin);
