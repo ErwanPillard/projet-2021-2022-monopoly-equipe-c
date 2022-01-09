@@ -21,8 +21,8 @@ int positionSourisButtonNon(int x, int y) {
     return 0;
 }
 
-int positionCaseDepart(int x, int y){
-    if (x >= 870 && x <= 990 && y >= 590 && y <= 660) {
+int positionSourisButtonMaison(int x, int y) {
+    if (x >= 1240 && x <= 1260 && y >= 70 && y <= 90) {
         return 1;
     }
     return 0;
@@ -181,9 +181,6 @@ int fenetreNvPartie(int nbJoueurs) {
     ALLEGRO_KEYBOARD_STATE keyboard_state;
     ALLEGRO_MOUSE_STATE mouse_state;
     ALLEGRO_EVENT_QUEUE *queue = NULL;
-    ALLEGRO_BITMAP *de = NULL;
-    ALLEGRO_BITMAP *valide = NULL;
-    ALLEGRO_BITMAP *refuse = NULL;
     ALLEGRO_TIMER *timer = al_create_timer(3);
 
     if (!al_init()) {
@@ -220,10 +217,15 @@ int fenetreNvPartie(int nbJoueurs) {
 
     al_set_target_backbuffer(display);
 
+    ALLEGRO_BITMAP *de = NULL;
+    ALLEGRO_BITMAP *valide = NULL;
+    ALLEGRO_BITMAP *refuse = NULL;
+    ALLEGRO_BITMAP *maison = NULL;
+
     de = al_load_bitmap("../images/Dé.png");
     valide = al_load_bitmap("../images/Accepté.png");
     refuse = al_load_bitmap("../images/refusé.png");
-
+    maison = al_load_bitmap("../images/maison.png");
 
     if (!al_init_primitives_addon()) {
         printf("Erreur initialisation primitive addon\n");
@@ -242,8 +244,6 @@ int fenetreNvPartie(int nbJoueurs) {
     ALLEGRO_FONT *info2 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
     ALLEGRO_FONT *info3 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
     ALLEGRO_FONT *info4 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
-    ALLEGRO_FONT *oui = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
-    ALLEGRO_FONT *non = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
     ALLEGRO_FONT *descriptionCartes1 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
     ALLEGRO_FONT *descriptionCartes2 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
     ALLEGRO_FONT *descriptionCartes3 = al_load_font("../font/Kiwi_Maru/KiwiMaru-Medium.ttf", 20, 0);
@@ -407,17 +407,18 @@ int fenetreNvPartie(int nbJoueurs) {
 
     creerRectangle(1840, 15, 1870, 45); // rectangle lancer dé
 
-        creerRectangle(1840, 60, 1870, 90); // boutton oui
-        al_draw_text(oui, NOIR ,1840, 60, 0,"✔");
-        creerRectangle(1840, 105, 1870, 135); // boutton non
-        al_draw_text(non, NOIR ,1840, 105, 0,"X");
-        creerRectangleVide(10, 0, 380, 1050, 2);
+    creerRectangle(1840, 60, 1870, 90); // boutton oui
+    creerRectangle(1840, 105, 1870, 135); // boutton non
+    creerRectangle(1840, 150, 1870, 180); // boutton maison
+
+    creerRectangleVide(10, 0, 380, 1050, 2);
 
     creerRectangleVide(1480, 0, 1835, 1050, 2);
 
     al_draw_scaled_bitmap(de, 0, 0, 212, 212, 1840, 15, 25, 25, 0);
     al_draw_scaled_bitmap(valide, 0, 0, 138, 138, 1840, 60, 25, 25, 0);
     al_draw_scaled_bitmap(refuse, 0, 0, 147, 142, 1840, 105, 25, 25, 0);
+    al_draw_scaled_bitmap(maison, 0, 0, 481, 264, 1840, 150, 25, 25, 0);
 
     al_draw_bitmap(plateau, 400,0,0);
 
@@ -505,15 +506,13 @@ int fenetreNvPartie(int nbJoueurs) {
         while (!button1) {
             al_wait_for_event(queue, &event);
             al_get_mouse_state(&mouse_state);
-
             if(oldx != mouse_state.x || oldy != mouse_state.y) {
                 oldx = mouse_state.x;
                 oldy = mouse_state.y;
                 printf("coordonnees de la souris : %d-%d\n", mouse_state.x, mouse_state.y);
             }
-
             if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-                if (positionCaseDepart(mouse_state.x, mouse_state.y)) {
+                if (positionCase1(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
                     al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
                                   "Loyer $%d", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer);
@@ -562,7 +561,7 @@ int fenetreNvPartie(int nbJoueurs) {
             al_get_mouse_state(&mouse_state);
 
             if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-                if (positionCaseDepart(mouse_state.x, mouse_state.y)) {
+                if (positionCase1(mouse_state.x, mouse_state.y)) {
                     creerRectangleBlanc(25, 600, 377, 1000);
                     al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
                                   "Loyer $%d", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer);
@@ -963,7 +962,7 @@ int fenetreNvPartie(int nbJoueurs) {
                     }
                 }
                 if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-                    if (positionCaseDepart(mouse_state.x, mouse_state.y)) {
+                    if (positionCase1(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
                         al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
                                       "Loyer $%d", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer);
@@ -1018,7 +1017,7 @@ int fenetreNvPartie(int nbJoueurs) {
                     }
                 }
                 if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-                    if (positionCaseDepart(mouse_state.x, mouse_state.y)) {
+                    if (positionCase1(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
                         al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
                                       "Loyer $%d", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer);
@@ -1058,16 +1057,13 @@ int fenetreNvPartie(int nbJoueurs) {
             int prixLoyer = testSiMaison(indiceJoueur);
             creerRectangleBlanc(680, 500, 1130, 550);
             al_draw_textf(valeurDe, NOIR, 681, 500, 0,
-                          "Vous devez payer un loyer a %s\n", tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].nomJoueur);
+                          "Vous devez payer un loyer a %s de %d\n", tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].nomJoueur, prixLoyer);
             al_flip_display();
 
-
-
                         //si le propriétaire possede les 2 cartes loyer nu double
-            if(terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire == terrain[tabParametreJoueurs[indiceJoueur].numCase + 2].proprietaire || terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire == terrain[tabParametreJoueurs[indiceJoueur].numCase - 2].proprietaire && terrain[tabParametreJoueurs[indiceJoueur].numCase].numMaison == 0){
+            if(terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire == terrain[terrain[tabParametreJoueurs[indiceJoueur].numCase].doublon].proprietaire){
                 tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer * 2;
                 tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].argentJoueur += prixLoyer * 2;
-
             }
             else{
                 tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer;
@@ -1079,12 +1075,12 @@ int fenetreNvPartie(int nbJoueurs) {
                 al_get_mouse_state(&mouse_state);
 
                 if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-                    if (positionCaseDepart(mouse_state.x, mouse_state.y)) {
+                    if (positionCase1(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
                         al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
-                                      "Loyer $%d", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer);
+                                      "Loyer $%d", terrain[1].loyer);
                         al_draw_textf(descriptionCartes2, NOIR, 25, 630, 0,
-                                      "Avec 1 Maison $%d", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer1M);
+                                      "Avec 1 Maison $%d", terrain[1].loyer1M);
                         al_draw_textf(descriptionCartes3, NOIR, 25, 660, 0,
                                       "Avec 2 Maison $%d", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer2M);
                         al_draw_textf(descriptionCartes4, NOIR, 25, 690, 0,
@@ -1146,7 +1142,7 @@ int fenetreNvPartie(int nbJoueurs) {
                     }
                 }
                 if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-                    if (positionCaseDepart(mouse_state.x, mouse_state.y)) {
+                    if (positionCase1(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
                         al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
                                       "Loyer $%d\n", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer);
@@ -1200,7 +1196,7 @@ int fenetreNvPartie(int nbJoueurs) {
                 }
 
                 if(event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-                    if (positionCaseDepart(mouse_state.x, mouse_state.y)) {
+                    if (positionCase1(mouse_state.x, mouse_state.y)) {
                         creerRectangleBlanc(25, 600, 377, 1000);
                         al_draw_textf(descriptionCartes1, NOIR, 25, 600, 0,
                                       "Loyer $%d", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer);
@@ -1242,22 +1238,17 @@ int fenetreNvPartie(int nbJoueurs) {
         creerRectangleBlanc(0,0,1920,1080);
 
         creerRectangle(1840, 15, 1870, 45); // rectangle lancer dé
-
         creerRectangle(1840, 60, 1870, 90); // boutton oui
-        al_draw_text(oui, NOIR ,1840, 60, 0,"OK");
-
         creerRectangle(1840, 105, 1870, 135); // boutton non
-        al_draw_text(non, NOIR ,1840, 105, 0,"X");
-
+        creerRectangle(1840, 150, 1870, 180); // boutton maison
         creerRectangleVide(10, 0, 380, 1050, 2);
-
         creerRectangleVide(1480, 0, 1835, 1050, 2);
-
         al_draw_bitmap(plateau, 400,0,0);
 
         al_draw_scaled_bitmap(de, 0, 0, 212, 212, 1840, 15, 25, 25, 0);
         al_draw_scaled_bitmap(valide, 0, 0, 138, 138, 1840, 60, 25, 25, 0);
         al_draw_scaled_bitmap(refuse, 0, 0, 147, 142, 1840, 105, 25, 25, 0);
+        al_draw_scaled_bitmap(maison, 0, 0, 481, 264, 1840, 150, 25, 25, 0);
 
         tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX = terrain[tabParametreJoueurs[indiceJoueur].numCase].positionX;
         tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY = terrain[tabParametreJoueurs[indiceJoueur].numCase].positionY;

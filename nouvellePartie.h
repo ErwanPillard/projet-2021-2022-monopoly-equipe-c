@@ -54,6 +54,8 @@ int positionCaseDepart(int x, int y);
 
 int positionSourisButtonOui(int x, int y);
 
+int positionSourisButtonMaison(int x, int y);
+
 int positionSourisButtonNon(int x, int y);
 
 void vaPrison(int indiceJoueur);
