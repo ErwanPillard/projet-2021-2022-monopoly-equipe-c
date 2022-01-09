@@ -8,9 +8,6 @@
 #include <time.h>
 #include "nouvellePartie.h"
 
-
-#define NOMBRE_MAX_JOUEURS 6
-
 #define LARGEUR_CONSOLE 80
 
 int menuPrincipale();

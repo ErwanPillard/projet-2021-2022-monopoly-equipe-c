@@ -225,6 +225,7 @@ int fenetreNvPartie(int nbJoueurs) {
     de = al_load_bitmap("../images/Dé.png");
     valide = al_load_bitmap("../images/Accepté.png");
     refuse = al_load_bitmap("../images/refusé.png");
+    maison = al_load_bitmap("../images/maison.png");
 
 
     if (!al_init_primitives_addon()) {
@@ -873,6 +874,19 @@ int fenetreNvPartie(int nbJoueurs) {
                     button1 = 1;
                     al_flip_display();
                 }
+                if ((event.mouse.button & 1) && positionSourisButtonMaison(mouse_state.x, mouse_state.y)) {
+                    do {
+                        int nbMaison, casePropriete;
+                        printf("Combien de maison :");
+                        scanf("%d", &nbMaison);
+                        printf("Sur quelle case voulez vous poser des maisons / hotels");
+                        scanf("%d", &casePropriete);
+                        if (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur !=
+                            tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur) {
+                            printf("Ce n'est pas votre propriete");
+                        }
+                    } while (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur != tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur);
+                }
             }
             if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
                 quitter();
@@ -1252,6 +1266,19 @@ int fenetreNvPartie(int nbJoueurs) {
                     button2 = 1;
                     al_flip_display();
                 }
+                if ((event.mouse.button & 1) && positionSourisButtonMaison(mouse_state.x, mouse_state.y)) {
+                    do {
+                        int nbMaison, casePropriete;
+                        printf("Combien de maison :");
+                        scanf("%d", &nbMaison);
+                        printf("Sur quelle case voulez vous poser des maisons / hotels");
+                        scanf("%d", &casePropriete);
+                        if (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur !=
+                            tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur) {
+                            printf("Ce n'est pas votre propriete");
+                        }
+                    } while (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur != tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur);
+                }
             }
 
             if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
@@ -1281,138 +1308,6 @@ int fenetreNvPartie(int nbJoueurs) {
         al_draw_textf(valeurDe, NOIR, 1490, 135, 0,
                       "Avancez de %d cases", valeurDeTotale);
         al_flip_display();
-
-        /*
-         tabParametreJoueurs[indiceJoueur].numCase += valeurDeTotale;
-
-        if(tabParametreJoueurs[indiceJoueur].numCase == 32){
-            al_draw_text(valeurDe, NOIR, 1490, 150, 0,"Vous passez par la case départ recevez 200$");
-            tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
-            tabParametreJoueurs[indiceJoueur].numCase %= 32; // il y a 32 case donc on ne peut pas depasser 32
-        }
-
-        if (terrain[tabParametreJoueurs[indiceJoueur].numCase].teleportation == 1) {
-            switch (tabParametreJoueurs[indiceJoueur].numCase) {
-                case 4:
-                    tabParametreJoueurs[indiceJoueur].numCase = 12;
-                    valeurDeTotale += 7;
-                    break;
-                case 12:
-                    tabParametreJoueurs[indiceJoueur].numCase = 20;
-                    valeurDeTotale += 7;
-                    break;
-                case 20:
-                    tabParametreJoueurs[indiceJoueur].numCase = 28;
-                    valeurDeTotale += 7;
-                    break;
-                case 24:
-                    tabParametreJoueurs[indiceJoueur].numCase = 8;
-                    valeurDeTotale += 7;
-                    break;
-                case 28:
-                    tabParametreJoueurs[indiceJoueur].numCase = 4;
-                    valeurDeTotale += 7;
-                    tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
-                    break;
-            }
-
-            creerRectangleBlanc(680, 500, 1130, 550);
-            al_draw_textf(valeurDe, NOIR, 681, 500, 0,"%s", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
-            al_flip_display();
-            int choix = 0;
-            while(!choix) {
-                al_wait_for_event(queue, &event);
-                al_get_mouse_state(&mouse_state);
-                if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-                    if ((event.mouse.button & 1) && positionSourisButtonOui(mouse_state.x, mouse_state.y)){
-                        choix = 1;
-                    }
-                }
-            }
-        }
-
-        for(int i = 0; i < valeurDeTotale; i++){
-
-            //if(tabParametreJoueurs[indiceJoueur].numCase == 4 || tabParametreJoueurs[indiceJoueur].numCase == 12 || tabParametreJoueurs[indiceJoueur].numCase == 20 || tabParametreJoueurs[indiceJoueur].numCase == 28 ){
-
-            //}
-
-            if(numCasePion == 0 || numCasePion == 7){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX -= 130;
-            }
-            if(numCasePion > 0 && numCasePion < 7){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX -= 104;
-            }
-            if(numCasePion == 8){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY -= 120;
-            }
-            if(numCasePion > 8 && numCasePion < 16){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY -= 120;
-            }
-            if(numCasePion == 16 || numCasePion == 23){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX += 130;
-            }
-            if(numCasePion > 16 && numCasePion < 23){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX += 105;
-            }
-            if(numCasePion == 24 && numCasePion == 31){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY += 40;
-            }
-            if(numCasePion > 24 && numCasePion < 31){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY += 30;
-            }
-
-            numCasePion += 1;
-
-            if(tabParametreJoueurs[indiceJoueur].numCase == 32){
-                al_draw_text(valeurDe, NOIR, 1490, 150, 0,"Vous passez par la case départ recevez 200$");
-                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
-                tabParametreJoueurs[indiceJoueur].numCase %= 32; // il y a 32 case donc on ne peut pas depasser 32
-            }
-        }
-        */
-
-        /*
-        for(int i = 0; i < valeurDeTotale; i++){
-
-            //if(tabParametreJoueurs[indiceJoueur].numCase == 4 || tabParametreJoueurs[indiceJoueur].numCase == 12 || tabParametreJoueurs[indiceJoueur].numCase == 20 || tabParametreJoueurs[indiceJoueur].numCase == 28 ){
-
-            //}
-
-            if(tabParametreJoueurs[indiceJoueur].numCase == 0 || tabParametreJoueurs[indiceJoueur].numCase == 7){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX -= 130;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase > 0 && tabParametreJoueurs[indiceJoueur].numCase < 7){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX -= 104;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase == 8){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY -= 110;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase > 8 && tabParametreJoueurs[indiceJoueur].numCase < 16){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY -= 120;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase == 16 || tabParametreJoueurs[indiceJoueur].numCase == 23){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX += 130;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase > 16 && tabParametreJoueurs[indiceJoueur].numCase < 23){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionX += 105;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase == 24 && tabParametreJoueurs[indiceJoueur].numCase == 31){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY += 40;
-            }
-            if(tabParametreJoueurs[indiceJoueur].numCase > 24 && tabParametreJoueurs[indiceJoueur].numCase < 31){
-                tabParametreJoueurs[tabParametreJoueurs[indiceJoueur].pion].pionY += 30;
-            }
-
-            tabParametreJoueurs[indiceJoueur].numCase += 1;
-
-            if(tabParametreJoueurs[indiceJoueur].numCase == 32){
-                al_draw_text(valeurDe, NOIR, 1490, 150, 0,"Vous passez par la case départ recevez 200$");
-                tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur += 200;
-                tabParametreJoueurs[indiceJoueur].numCase %= 32; // il y a 32 case donc on ne peut pas depasser 32
-            }
-        }
-        */
 
         tabParametreJoueurs[indiceJoueur].numCase += valeurDeTotale;
 
@@ -1618,6 +1513,19 @@ int fenetreNvPartie(int nbJoueurs) {
                     if ((event.mouse.button & 1) && positionSourisButtonOui(mouse_state.x, mouse_state.y)){
                         choix = 1;
                     }
+                    if ((event.mouse.button & 1) && positionSourisButtonMaison(mouse_state.x, mouse_state.y)) {
+                        do {
+                            int nbMaison, casePropriete;
+                            printf("Combien de maison :");
+                            scanf("%d", &nbMaison);
+                            printf("Sur quelle case voulez vous poser des maisons / hotels");
+                            scanf("%d", &casePropriete);
+                            if (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur !=
+                                tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur) {
+                                printf("Ce n'est pas votre propriete");
+                            }
+                        } while (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur != tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur);
+                    }
                 }
                 if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
                     quitter();
@@ -1648,6 +1556,19 @@ int fenetreNvPartie(int nbJoueurs) {
                     if ((event.mouse.button & 1) && positionSourisButtonNon(mouse_state.x, mouse_state.y)){
                         tabParametreJoueurs[indiceJoueur].elimine = 1;
                         choix = 1;
+                    }
+                    if ((event.mouse.button & 1) && positionSourisButtonMaison(mouse_state.x, mouse_state.y)) {
+                        do {
+                            int nbMaison, casePropriete;
+                            printf("Combien de maison :");
+                            scanf("%d", &nbMaison);
+                            printf("Sur quelle case voulez vous poser des maisons / hotels");
+                            scanf("%d", &casePropriete);
+                            if (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur !=
+                                tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur) {
+                                printf("Ce n'est pas votre propriete");
+                            }
+                        } while (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur != tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur);
                     }
                 }
                 if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
@@ -2047,6 +1968,19 @@ int fenetreNvPartie(int nbJoueurs) {
                         tabParametreJoueurs[indiceJoueur].elimine = 1;
                         choix = 1;
                     }
+                    if ((event.mouse.button & 1) && positionSourisButtonMaison(mouse_state.x, mouse_state.y)) {
+                        do {
+                            int nbMaison, casePropriete;
+                            printf("Combien de maison :");
+                            scanf("%d", &nbMaison);
+                            printf("Sur quelle case voulez vous poser des maisons / hotels");
+                            scanf("%d", &casePropriete);
+                            if (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur !=
+                                tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur) {
+                                printf("Ce n'est pas votre propriete");
+                            }
+                        } while (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur != tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur);
+                    }
                 }
                 if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
                     quitter();
@@ -2080,6 +2014,19 @@ int fenetreNvPartie(int nbJoueurs) {
                     if ((event.mouse.button & 1) && positionSourisButtonNon(mouse_state.x, mouse_state.y)){
                         choix = 1;
                     }
+                    if ((event.mouse.button & 1) && positionSourisButtonMaison(mouse_state.x, mouse_state.y)) {
+                        do {
+                            int nbMaison, casePropriete;
+                            printf("Combien de maison :");
+                            scanf("%d", &nbMaison);
+                            printf("Sur quelle case voulez vous poser des maisons / hotels");
+                            scanf("%d", &casePropriete);
+                            if (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur !=
+                                tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur) {
+                                printf("Ce n'est pas votre propriete");
+                            }
+                        } while (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur != tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur);
+                    }
                 }
 
                 if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
@@ -2093,7 +2040,6 @@ int fenetreNvPartie(int nbJoueurs) {
                 }
             }
         }
-
         if(tabParametreJoueurs[indiceJoueur].numCase == 26){
             creerRectangleBlanc(680, 500, 1130, 550);
             al_draw_textf(valeurDe, NOIR, 681, 500, 0,"%s", terrain[tabParametreJoueurs[indiceJoueur].numCase].nomTerrain);
@@ -2109,6 +2055,19 @@ int fenetreNvPartie(int nbJoueurs) {
                     }
                     if ((event.mouse.button & 1) && positionSourisButtonNon(mouse_state.x, mouse_state.y)){
                         choix = 1;
+                    }
+                    if ((event.mouse.button & 1) && positionSourisButtonMaison(mouse_state.x, mouse_state.y)) {
+                        do {
+                            int nbMaison, casePropriete;
+                            printf("Combien de maison :");
+                            scanf("%d", &nbMaison);
+                            printf("Sur quelle case voulez vous poser des maisons / hotels");
+                            scanf("%d", &casePropriete);
+                            if (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur !=
+                                tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur) {
+                                printf("Ce n'est pas votre propriete");
+                            }
+                        } while (tabJoueur[tabordreJoueurs[indiceJoueur]].numJoueur != tabJoueur[tabordreJoueurs[terrain[indiceJoueur].proprietaire]].numJoueur);
                     }
                 }
 
