@@ -24,6 +24,7 @@ void init_terrains(){
     strcpy(terrain[1].nomTerrain, "Boulevard de belleville");
     terrain[1].positionX = 1200;
     terrain[1].positionY = 915;
+    terrain[1].doublon = 3;
 
     terrain[2].frais = 100;
     terrain[2].taxe = 1;
@@ -42,6 +43,8 @@ void init_terrains(){
     strcpy(terrain[3].nomTerrain, "Rue Lecourbe");
     terrain[3].positionX = 992;
     terrain[3].positionY = 915;
+    terrain[3].doublon = 1;
+
 
     terrain[4].achetable = 0;
     terrain[4].teleportation = 1;
@@ -60,6 +63,8 @@ void init_terrains(){
     strcpy(terrain[5].nomTerrain, "Rue de Vaugirard");
     terrain[5].positionX = 784;
     terrain[5].positionY = 915;
+    terrain[5].doublon = 7;
+
 
 
     terrain[6].achetable = 0;
@@ -79,6 +84,8 @@ void init_terrains(){
     strcpy(terrain[7].nomTerrain, "Rue de courcel");
     terrain[7].positionX = 576;
     terrain[7].positionY = 915;
+    terrain[7].doublon = 5;
+
 
     terrain[8].achetable = 0;
     strcpy(terrain[8].nomTerrain, "Visite de la prison");
@@ -96,6 +103,10 @@ void init_terrains(){
     terrain[9].achetable = 1;
     strcpy(terrain[9].nomTerrain, "Boulevard de la Villette");
     terrain[9].positionX = 446;
+    terrain[9].positionY = 860;
+    terrain[9].doublon = 11;
+
+
     terrain[9].positionY = 790;
 
     terrain[10].taxe = 1;
@@ -115,6 +126,9 @@ void init_terrains(){
     strcpy(terrain[11].nomTerrain, "Avenue de Neuilly");
     terrain[11].positionX = 446;
     terrain[11].positionY = 580;
+    terrain[11].positionY = 750;
+    terrain[11].doublon = 9;
+
 
     terrain[12].achetable = 0;
     terrain[12].teleportation = 1;
@@ -133,6 +147,8 @@ void init_terrains(){
     strcpy(terrain[13].nomTerrain, "Rue du Paradis");
     terrain[13].positionX = 446;
     terrain[13].positionY = 370;
+    terrain[13].doublon = 15;
+
 
     terrain[14].achetable = 0;
     terrain[14].carteChance = 1;
@@ -152,6 +168,8 @@ void init_terrains(){
     terrain[15].positionX = 446;
     terrain[15].positionY = 160;
 
+    terrain[15].doublon = 13;
+
 
     terrain[16].achetable = 0;
     strcpy(terrain[16].nomTerrain, "Free Parking");
@@ -169,6 +187,8 @@ void init_terrains(){
     strcpy(terrain[17].nomTerrain, "Boulevard Saint-Michel");
     terrain[17].positionX = 576;
     terrain[17].positionY = 25;
+    terrain[17].doublon = 19;
+
 
     terrain[18].frais = 200;
     terrain[18].taxe = 1;
@@ -185,6 +205,8 @@ void init_terrains(){
     terrain[19].loyer1H = 1000;
     terrain[19].achetable = 1;
     strcpy(terrain[19].nomTerrain, "Place Pigalle");
+    terrain[19].doublon = 17;
+
     terrain[19].positionX = 784;
     terrain[19].positionY = 25;
 
@@ -203,6 +225,8 @@ void init_terrains(){
     terrain[21].loyer1H = 1050;
     terrain[21].achetable = 1;
     strcpy(terrain[21].nomTerrain, "Avenue de Matignon");
+    terrain[21].doublon = 23;
+
     terrain[21].positionX = 992;
     terrain[21].positionY = 25;
 
@@ -223,6 +247,8 @@ void init_terrains(){
     strcpy(terrain[23].nomTerrain, "Avenue Henri-Martin");
     terrain[23].positionX = 1200;
     terrain[23].positionY = 25;
+    terrain[23].doublon = 21;
+
 
     terrain[24].achetable = 0;
     terrain[24].teleportation = 1;
@@ -241,6 +267,8 @@ void init_terrains(){
     strcpy(terrain[25].nomTerrain, "Avenue Foch");
     terrain[25].positionX = 1330;
     terrain[25].positionY = 160;
+    terrain[25].doublon = 27;
+
 
     terrain[26].achetable = 0;
     terrain[26].frais = 50;
@@ -259,6 +287,8 @@ void init_terrains(){
     strcpy(terrain[27].nomTerrain, "Boulevard des Capucines");
     terrain[27].positionX = 1330;
     terrain[27].positionY = 370;
+
+    terrain[27].doublon = 25;
 
 
     terrain[28].achetable = 0;
@@ -279,6 +309,8 @@ void init_terrains(){
     strcpy(terrain[29].nomTerrain, "Avenue des Champs-Elysees");
     terrain[29].positionX = 1330;
     terrain[29].positionY = 580;
+    terrain[29].doublon = 31;
+
 
     terrain[30].achetable = 0;
     terrain[30].carteChance = 1;
@@ -297,4 +329,6 @@ void init_terrains(){
     strcpy(terrain[31].nomTerrain, "Rue de la paix");
     terrain[31].positionX = 1330;
     terrain[31].positionY = 790;
+    terrain[31].doublon = 29;
+
 }

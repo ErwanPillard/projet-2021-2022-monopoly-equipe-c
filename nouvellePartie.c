@@ -1,21 +1,21 @@
 #include "nouvellePartie.h"
 
 int positionSourisButtonDe(int x, int y) {
-    if (x >= 1240 && x <= 1260 && y >= 10 && y <= 30) {
+    if (x >= 1486 && x <= 1511 && y >= 12 && y <= 36) {
         return 1;
         }
     return 0;
 }
 
 int positionSourisButtonOui(int x, int y) {
-    if (x >= 1240 && x <= 1260 && y >= 40 && y <= 60) {
+    if (x >= 1486 && x <= 1511 && y >= 48 && y <= 70) {
         return 1;
     }
     return 0;
 }
 
 int positionSourisButtonNon(int x, int y) {
-    if (x >= 1240 && x <= 1260 && y >= 70 && y <= 90) {
+    if (x >= 1486 && x <= 1511 && y >= 83 && y <= 106) {
         return 1;
     }
     return 0;
@@ -818,10 +818,14 @@ int fenetreNvPartie(int nbJoueurs) {
             al_draw_textf(valeurDe, NOIR, 681, 500, 0,
                           "Vous devez payer un loyer a %s\n", tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].nomJoueur);
             al_flip_display();
-            //si le propriétaire possede les 2 cartes loyer nu double
+
+
+
+                        //si le propriétaire possede les 2 cartes loyer nu double
             if(terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire == terrain[tabParametreJoueurs[indiceJoueur].numCase + 2].proprietaire || terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire == terrain[tabParametreJoueurs[indiceJoueur].numCase - 2].proprietaire && terrain[tabParametreJoueurs[indiceJoueur].numCase].numMaison == 0){
                 tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer * 2;
                 tabJoueur[tabordreJoueurs[terrain[tabParametreJoueurs[indiceJoueur].numCase].proprietaire]].argentJoueur += prixLoyer * 2;
+
             }
             else{
                 tabJoueur[tabordreJoueurs[indiceJoueur]].argentJoueur -= prixLoyer;

@@ -14,6 +14,7 @@ typedef struct{
     int carteChance;
     int carteCommunaute;
     int teleportation;
+    int doublon;
     int taxe;
     int loyer;
     int loyer1M;
