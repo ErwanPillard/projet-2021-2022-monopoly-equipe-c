@@ -96,14 +96,13 @@ void init_terrains(){
     terrain[9].achetable = 1;
     strcpy(terrain[9].nomTerrain, "Boulevard de la Villette");
     terrain[9].positionX = 446;
-    terrain[9].positionY = 860;
-
+    terrain[9].positionY = 790;
 
     terrain[10].taxe = 1;
     terrain[10].frais = 100;
     strcpy(terrain[10].nomTerrain, "Impot sur la fortune payez 100$");
     terrain[10].positionX = 446;
-    terrain[10].positionY = 805;
+    terrain[10].positionY = 685;
 
     terrain[11].prix = 140;
     terrain[11].loyer = 10;
@@ -115,13 +114,13 @@ void init_terrains(){
     terrain[11].achetable = 1;
     strcpy(terrain[11].nomTerrain, "Avenue de Neuilly");
     terrain[11].positionX = 446;
-    terrain[11].positionY = 750;
+    terrain[11].positionY = 580;
 
     terrain[12].achetable = 0;
     terrain[12].teleportation = 1;
     strcpy(terrain[12].nomTerrain, "Avancez a la case 21");
     terrain[12].positionX = 446;
-    terrain[12].positionY = 695;
+    terrain[12].positionY = 475;
 
     terrain[13].prix = 180;
     terrain[13].loyer = 12;
@@ -132,10 +131,14 @@ void init_terrains(){
     terrain[13].loyer1H = 900;
     terrain[13].achetable = 1;
     strcpy(terrain[13].nomTerrain, "Rue du Paradis");
+    terrain[13].positionX = 446;
+    terrain[13].positionY = 370;
 
     terrain[14].achetable = 0;
     terrain[14].carteChance = 1;
     strcpy(terrain[14].nomTerrain, "Tirez une carte chance");
+    terrain[14].positionX = 446;
+    terrain[14].positionY = 265;
 
     terrain[15].prix = 200;
     terrain[15].loyer = 14;
@@ -146,9 +149,14 @@ void init_terrains(){
     terrain[15].loyer1H = 950;
     terrain[15].achetable = 1;
     strcpy(terrain[15].nomTerrain, "Rue Mozart");
+    terrain[15].positionX = 446;
+    terrain[15].positionY = 160;
+
 
     terrain[16].achetable = 0;
     strcpy(terrain[16].nomTerrain, "Free Parking");
+    terrain[16].positionX = 446;
+    terrain[16].positionY = 25;
 
     terrain[17].prix = 220;
     terrain[17].loyer = 14;
@@ -159,10 +167,14 @@ void init_terrains(){
     terrain[17].loyer1H = 950;
     terrain[17].achetable = 1;
     strcpy(terrain[17].nomTerrain, "Boulevard Saint-Michel");
+    terrain[17].positionX = 576;
+    terrain[17].positionY = 25;
 
     terrain[18].frais = 200;
     terrain[18].taxe = 1;
     strcpy(terrain[18].nomTerrain, "Taxe sur les produits de luxe payez 200$");
+    terrain[18].positionX = 680;
+    terrain[18].positionY = 25;
 
     terrain[19].prix = 220;
     terrain[19].loyer = 16;
@@ -173,10 +185,14 @@ void init_terrains(){
     terrain[19].loyer1H = 1000;
     terrain[19].achetable = 1;
     strcpy(terrain[19].nomTerrain, "Place Pigalle");
+    terrain[19].positionX = 784;
+    terrain[19].positionY = 25;
 
     terrain[20].achetable = 0;
     terrain[20].teleportation = 1;
     strcpy(terrain[20].nomTerrain, "Avancez a la case 29");
+    terrain[20].positionX = 888;
+    terrain[20].positionY = 25;
 
     terrain[21].prix = 240;
     terrain[21].loyer = 18;
@@ -187,10 +203,14 @@ void init_terrains(){
     terrain[21].loyer1H = 1050;
     terrain[21].achetable = 1;
     strcpy(terrain[21].nomTerrain, "Avenue de Matignon");
+    terrain[21].positionX = 992;
+    terrain[21].positionY = 25;
 
     terrain[22].achetable = 0;
     terrain[22].carteCommunaute = 1;
     strcpy(terrain[22].nomTerrain, "Tirez une carte communaute");
+    terrain[22].positionX = 1096;
+    terrain[22].positionY = 25;
 
     terrain[23].prix = 260;
     terrain[23].loyer = 20;
@@ -201,10 +221,14 @@ void init_terrains(){
     terrain[23].loyer1H = 1100;
     terrain[23].achetable = 1;
     strcpy(terrain[23].nomTerrain, "Avenue Henri-Martin");
+    terrain[23].positionX = 1200;
+    terrain[23].positionY = 25;
 
     terrain[24].achetable = 0;
     terrain[24].teleportation = 1;
     strcpy(terrain[24].nomTerrain, "Allez en prison");
+    terrain[24].positionX = 1330;
+    terrain[24].positionY = 25;
 
     terrain[25].prix = 280;
     terrain[25].loyer = 26;
@@ -215,10 +239,14 @@ void init_terrains(){
     terrain[25].loyer1H = 1275;
     terrain[25].achetable = 1;
     strcpy(terrain[25].nomTerrain, "Avenue Foch");
+    terrain[25].positionX = 1330;
+    terrain[25].positionY = 160;
 
     terrain[26].achetable = 0;
     terrain[26].frais = 50;
     strcpy(terrain[26].nomTerrain, "Vous trouver 50$ par terre");
+    terrain[26].positionX = 1330;
+    terrain[26].positionY = 265;
 
     terrain[27].prix = 300;
     terrain[27].loyer = 28;
@@ -229,10 +257,16 @@ void init_terrains(){
     terrain[27].loyer1H = 1400;
     terrain[27].achetable = 1;
     strcpy(terrain[27].nomTerrain, "Boulevard des Capucines");
+    terrain[27].positionX = 1330;
+    terrain[27].positionY = 370;
+
 
     terrain[28].achetable = 0;
     terrain[28].teleportation = 1;
     strcpy(terrain[28].nomTerrain, "Avancez a la case 5. Vous passez par la case de depart recevez 200$");
+    terrain[28].positionX = 1330;
+    terrain[28].positionY = 475;
+
 
     terrain[29].prix = 400;
     terrain[29].loyer = 35;
@@ -243,10 +277,14 @@ void init_terrains(){
     terrain[29].loyer1H = 1500;
     terrain[29].achetable = 1;
     strcpy(terrain[29].nomTerrain, "Avenue des Champs-Elysees");
+    terrain[29].positionX = 1330;
+    terrain[29].positionY = 580;
 
     terrain[30].achetable = 0;
     terrain[30].carteChance = 1;
     strcpy(terrain[30].nomTerrain, "Tirez une carte chance");
+    terrain[30].positionX = 1330;
+    terrain[30].positionY = 685;
 
     terrain[31].prix = 450;
     terrain[31].loyer = 50;
@@ -257,4 +295,6 @@ void init_terrains(){
     terrain[31].loyer1H = 2000;
     terrain[31].achetable = 1;
     strcpy(terrain[31].nomTerrain, "Rue de la paix");
+    terrain[31].positionX = 1330;
+    terrain[31].positionY = 790;
 }

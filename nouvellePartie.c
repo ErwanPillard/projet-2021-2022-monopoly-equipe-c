@@ -424,7 +424,7 @@ int fenetreNvPartie(int nbJoueurs) {
                     valeurLancementDe1 = random(7);
                     al_draw_textf(valeurDe, NOIR, 1490, 75, 0,
                                   "Dé 1 %d", valeurLancementDe1);
-                    printf("Dé 1 %d",valeurLancementDe1);
+                    //printf("De 1 %d",valeurLancementDe1);
                     button1 = 1;
                     al_flip_display();
                 }
@@ -473,7 +473,7 @@ int fenetreNvPartie(int nbJoueurs) {
                     valeurLancementDe2 = random(7);
                     al_draw_textf(valeurDe, NOIR, 1490, 105, 0,
                                   "Dé 2 %d", valeurLancementDe2);
-                    printf("Dé 2 %d",valeurLancementDe2);
+                    //printf("De 2 %d",valeurLancementDe2);
                     button2 = 1;
                     al_flip_display();
                 }
@@ -499,7 +499,7 @@ int fenetreNvPartie(int nbJoueurs) {
 
         valeurDeTotale = valeurLancementDe2 + valeurLancementDe1;
 
-        //valeurDeTotale = 1;
+        //valeurDeTotale = 2;
 
         // int numCase = tabParametreJoueurs[indiceJoueur].numCase
 
@@ -846,12 +846,12 @@ int fenetreNvPartie(int nbJoueurs) {
                         al_draw_textf(descriptionCartes5, NOIR, 25, 720, 0,
                                       "Avec 4 Maison $%d", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer4M);
                         al_draw_textf(descriptionCartes6, NOIR, 25, 750, 0,
-                                      "Avec HOTEL $%d\n", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer1H);
+                                      "Avec HOTEL $%d", terrain[tabParametreJoueurs[indiceJoueur].numCase].loyer1H);
                         al_draw_textf(descriptionCartes7, NOIR, 25, 780, 0,
-                                      "Prix des maisons chacune $%d\n",
+                                      "Prix des maisons chacune $%d",
                                       terrain[tabParametreJoueurs[indiceJoueur].numCase].prixMaison);
                         al_draw_textf(descriptionCartes8, NOIR, 25, 810, 0,
-                                      "Prix de un hotel $%d\n",
+                                      "Prix de un hotel $%d",
                                       terrain[tabParametreJoueurs[indiceJoueur].numCase].prixMaison * 5);
                         al_flip_display();
                     }
@@ -1047,10 +1047,10 @@ int fenetreNvPartie(int nbJoueurs) {
         if (terrain[tabParametreJoueurs[indiceJoueur].numCase].teleportation == 1) {
             switch (tabParametreJoueurs[indiceJoueur].numCase) {
                 case 4:
-                    tabParametreJoueurs[indiceJoueur].numCase = 12;
+                    //tabParametreJoueurs[indiceJoueur].numCase = 12;
                     break;
                 case 12:
-                    tabParametreJoueurs[indiceJoueur].numCase = 20;
+                    //tabParametreJoueurs[indiceJoueur].numCase = 20;
                     break;
                 case 20:
                     tabParametreJoueurs[indiceJoueur].numCase = 28;
