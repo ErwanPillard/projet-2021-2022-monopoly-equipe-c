@@ -135,7 +135,6 @@ void init_terrains(){
     strcpy(terrain[11].nomTerrain, "Avenue de Neuilly");
     terrain[11].positionX = 446;
     terrain[11].positionY = 580;
-    terrain[11].positionY = 750;
     terrain[11].doublon = 9;
     terrain[11].prixMaison = 250;
 
